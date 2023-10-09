@@ -1,0 +1,54 @@
+{
+  "profile1": {
+    "name_suffix": "MR",
+    "name_prefix": "Prof",
+    "name_first": "Potter",
+    "name_middle": "James",
+    "name_last": "Harry",
+    "vip_code": "GOLD",
+    "company_name": "Hogwarts",
+    "prefered_language": "E",
+    "profile_id": "123456",
+    "loyalty": {
+      "loyalty_program_type": "Dreams Loyalty Program",
+      "loyalty_level": "GOLD",
+      "loyalty_membership_id": "123456789"
+    },
+    "phone_mobile": "+447575111222",
+    "email": {
+      "email_type": "Email Address",
+      "email_is_primary": true,
+      "email_address": "harry.potter@hogwarts.com"
+    },
+    "preferences": [
+      "AC-ON",
+      "FLOOR-01",
+      "INTERESTS-SPA",
+      "INTERESTS-SUM",
+      "ROOM FEATURES-QBED",
+      "ROOM FEATURES-KING",
+      "ROOM FEATURES-BC",
+      "ROOM FEATURES-COFFEE",
+      "ROOM FEATURES-SAU",
+      "ROOM FEATURES-WF",
+      "SMOKING-NS",
+      "SPECIALS-IRB"
+    ]
+  },
+  "profile2": {
+    "name_suffix": "MRS",
+    "name_prefix": "Prof",
+    "name_first": "Potter",
+    "name_middle": "Weasley",
+    "name_last": "Ginny",
+    "vip_code": "EMERALD",
+    "prefered_language": "E",
+    "profile_id": "654321",
+    "phone_mobile": "07674555888",
+    "email": {
+      "email_type": "Email Address",
+      "email_is_primary": true,
+      "email_address": "ellie@gmail.com"
+    }
+  }
+}

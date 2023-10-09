@@ -1,0 +1,802 @@
+{
+  "read": {
+    "reservations": {
+      "reservation": [
+        {
+          "reservationIdList": [
+            { "id": "000001", "type": "Reservation" },
+            { "id": "000007", "type": "Confirmation" }
+          ],
+          "externalReferences": [{ "id": "12345678", "idContext": "ORS" }],
+          "sourceOfSale": { "sourceType": "PMS", "sourceCode": "HOGSANDBOX" },
+          "roomStay": {
+            "registrationNumber": { "id": "", "type": "Reservation" },
+            "currentRoomInfo": {
+              "roomType": "DBL",
+              "roomId": "205",
+              "roomOwnershipType": "Regular"
+            },
+            "roomRates": [
+              {
+                "total": { "amountBeforeTax": 75 },
+                "rates": {
+                  "rate": [
+                    {
+                      "base": {
+                        "amountBeforeTax": 75,
+                        "currencyCode": "USD",
+                        "baseAmount": 75
+                      },
+                      "shareDistributionInstruction": "Full",
+                      "total": { "amountBeforeTax": 75 },
+                      "start": "2023-07-23",
+                      "end": "2023-07-23"
+                    }
+                  ]
+                },
+                "stayProfiles": [
+                  {
+                    "profileIdList": [
+                      { "id": "727985", "type": "Profile" },
+                      { "id": "117474", "type": "CorporateId" }
+                    ],
+                    "profile": {
+                      "company": { "companyName": "HOGWARTS-OPT-Test" }
+                    },
+                    "reservationProfileType": "Company"
+                  },
+                  {
+                    "profileIdList": [
+                      { "id": "530352", "type": "Profile" },
+                      { "id": "21164", "type": "CorporateId" }
+                    ],
+                    "profile": { "company": { "companyName": "VENDORX" } },
+                    "reservationProfileType": "Group"
+                  },
+                  {
+                    "profileIdList": [
+                      { "id": "711830", "type": "Profile" },
+                      { "id": "111585", "type": "CorporateId" }
+                    ],
+                    "profile": { "company": { "companyName": "TUI" } },
+                    "reservationProfileType": "TravelAgent"
+                  },
+                  {
+                    "profileIdList": [{ "id": "92346", "type": "Profile" }],
+                    "profile": { "company": { "companyName": "Source.com" } },
+                    "reservationProfileType": "Source"
+                  }
+                ],
+                "guestCounts": {
+                  "childAges": [{ "age": 5 }, { "age": 7 }],
+                  "childBuckets": {
+                    "bucket1Count": 0,
+                    "bucket2Count": 2,
+                    "bucket3Count": 0,
+                    "bucket4Count": 0,
+                    "bucket5Count": 0
+                  },
+                  "adults": 1,
+                  "children": 2
+                },
+                "taxFreeGuestCounts": { "adults": 0, "children": 0 },
+                "roomType": "DBL",
+                "ratePlanCode": "RACKBB",
+                "start": "2023-07-23",
+                "end": "2023-07-23",
+                "suppressRate": false,
+                "marketCode": "LEISURE",
+                "marketCodeDescription": "Leisure",
+                "sourceCode": "WEB",
+                "sourceCodeDescription": "Web Booking",
+                "numberOfUnits": 1,
+                "roomId": "205",
+                "pseudoRoom": false,
+                "roomTypeCharged": "SGL",
+                "houseUseOnly": false,
+                "complimentary": false,
+                "fixedRate": true,
+                "discountAllowed": true,
+                "bogoDiscount": false,
+                "allowAutoCheckIn": false
+              }
+            ],
+            "guestCounts": {
+              "childBuckets": {
+                "bucket1Count": 0,
+                "bucket2Count": 2,
+                "bucket3Count": 0,
+                "bucket4Count": 0,
+                "bucket5Count": 0
+              },
+              "adults": 1,
+              "children": 2
+            },
+            "arrivalDate": "2023-07-23",
+            "departureDate": "2023-07-24",
+            "expectedTimes": {
+              "reservationExpectedArrivalTime": "2023-07-23 15:16:39.0",
+              "reservationExpectedDepartureTime": "2023-07-24 11:48:00.0"
+            },
+            "guarantee": {
+              "guaranteeCode": "CHECKED IN",
+              "shortDescription": "Checked In"
+            },
+            "total": { "amountBeforeTax": 75 },
+            "totalPoints": { "points": 0 },
+            "roomNumberLocked": false,
+            "printRate": false,
+            "bookingMedium": "TEL",
+            "bookingMediumDescription": "Telephone"
+          },
+          "reservationGuests": [
+            {
+              "profileInfo": {
+                "profileIdList": [{ "id": "123456", "type": "Profile" }],
+                "profile": {
+                  "customer": {
+                    "personName": [
+                      {
+                        "givenName": "Potter",
+                        "middleName": "James",
+                        "surname": "Harry",
+                        "nameTitle": "MR",
+                        "nameType": "Primary"
+                      },
+                      {
+                        "nameTitle": "Prof",
+                        "salutation": "Professor <XLASTNAME>",
+                        "nameType": "Alternate"
+                      },
+                      { "nameType": "External" }
+                    ],
+                    "gender": "Male",
+                    "birthDate": "1979-06-12",
+                    "language": "E",
+                    "nationality": "US",
+                    "vipStatus": "GOLD",
+                    "vipDescription": "Gold Level"
+                  },
+                  "addresses": {
+                    "addressInfo": [
+                      {
+                        "address": {
+                          "isValidated": false,
+                          "addressLine": ["4 Private Drive", null, null, null],
+                          "cityName": "Surrey",
+                          "postalCode": "SS4 2DG",
+                          "country": { "code": "GB" },
+                          "language": "E",
+                          "type": "HOME",
+                          "primaryInd": true
+                        },
+                        "id": "675060",
+                        "type": "Address"
+                      }
+                    ]
+                  },
+                  "telephones": {
+                    "telephoneInfo": [
+                      {
+                        "telephone": {
+                          "phoneTechType": "PHONE",
+                          "phoneUseType": "MOBILE",
+                          "phoneNumber": "+447575111222",
+                          "primaryInd": true
+                        },
+                        "id": "625908",
+                        "type": "Communication"
+                      }
+                    ]
+                  },
+                  "emails": {
+                    "emailInfo": [
+                      {
+                        "email": {
+                          "emailAddress": "harry.potter@hogwarts.com",
+                          "type": "EMAIL",
+                          "primaryInd": true
+                        },
+                        "id": "625909",
+                        "type": "Email"
+                      }
+                    ]
+                  },
+                  "profileType": "Guest"
+                }
+              },
+              "arrivalTransport": { "transportationReqd": false },
+              "departureTransport": { "transportationReqd": false },
+              "primary": true
+            },
+            {
+              "profileInfo": {
+                "profileIdList": [
+                  { "id": "654321", "type": "Profile" },
+                  { "id": "118475", "type": "Reservation" }
+                ],
+                "profile": {
+                  "customer": {
+                    "personName": [
+                      {
+                        "givenName": "Potter",
+                        "surname": "Ginny",
+                        "nameTitle": "MRS"
+                      }
+                    ]
+                  },
+                  "addresses": { "addressInfo": [{ "address": {} }] }
+                }
+              },
+              "primary": false
+            }
+          ],
+          "additionalGuestInfo": {
+            "lastStay": {},
+            "guestClassification": "LEI",
+            "guestStatus": "KOTELES"
+          },
+          "reservationProfiles": {
+            "reservationProfile": [
+              {
+                "profileIdList": [
+                  { "id": "727985", "type": "Profile" },
+                  { "id": "117474", "type": "CorporateId" }
+                ],
+                "profile": {
+                  "company": { "companyName": "HOGWARTS-OPT-Test" },
+                  "telephones": {
+                    "telephoneInfo": [
+                      { "telephone": { "phoneNumber": "9823456" } }
+                    ]
+                  },
+                  "emails": {
+                    "emailInfo": [
+                      { "email": { "emailAddress": "hogwarts@g.com" } }
+                    ]
+                  }
+                },
+                "reservationProfileType": "Company"
+              },
+              {
+                "profileIdList": [
+                  { "id": "711830", "type": "Profile" },
+                  { "id": "111585", "type": "CorporateId" }
+                ],
+                "profile": {
+                  "company": { "companyName": "TUI" },
+                  "commissionInfoList": []
+                },
+                "reservationProfileType": "TravelAgent"
+              },
+              {
+                "profileIdList": [{ "id": "530352", "type": "Profile" }],
+                "profile": {
+                  "company": { "companyName": "VENDORX" },
+                  "addresses": {
+                    "addressInfo": [
+                      {
+                        "address": {
+                          "addressLine": ["1234", "5678", "345"],
+                          "cityName": "CBE",
+                          "postalCode": "546789",
+                          "county": "DE",
+                          "state": "BA",
+                          "country": { "code": "DE" },
+                          "type": "HOME"
+                        }
+                      }
+                    ]
+                  },
+                  "telephones": {
+                    "telephoneInfo": [
+                      { "telephone": { "phoneNumber": "8889990001" } }
+                    ]
+                  },
+                  "emails": {
+                    "emailInfo": [
+                      {
+                        "email": { "emailAddress": "someone@vendor.com" }
+                      }
+                    ]
+                  }
+                },
+                "reservationProfileType": "Group"
+              },
+              {
+                "profileIdList": [{ "id": "92346", "type": "Profile" }],
+                "profile": {
+                  "company": { "companyName": "Source.com" },
+                  "commissionInfoList": []
+                },
+                "reservationProfileType": "Source"
+              }
+            ],
+            "commissionPayoutTo": "TravelAgent"
+          },
+          "reservationPackages": [
+            {
+              "packageHeaderType": {
+                "primaryDetails": {
+                  "description": "Breakfast (Inclusive)",
+                  "shortDescription": "Breakfast (Inclusive)"
+                },
+                "transactionDetails": {
+                  "allowance": false,
+                  "currency": "USD",
+                  "postingType": "D",
+                  "calculationRule": "P"
+                },
+                "postingAttributes": {
+                  "addToRate": false,
+                  "printSeparateLine": false,
+                  "postNextDay": false,
+                  "forecastNextDay": true
+                }
+              },
+              "scheduleList": [
+                {
+                  "consumptionDate": "2023-07-23",
+                  "unitPrice": 25,
+                  "totalQuantity": 3,
+                  "computedResvPrice": 75,
+                  "unitAllowance": 0,
+                  "reservationDate": "2023-07-23",
+                  "originalUnitPrice": 25,
+                  "originalUnitAllowance": 0
+                }
+              ],
+              "consumptionDetails": {
+                "defaultQuantity": 1,
+                "totalQuantity": 3,
+                "allowanceConsumed": false
+              },
+              "packageCode": "BKFSTINC",
+              "internalId": 54871,
+              "ratePlanCode": "RACKBB",
+              "source": "RateHeader"
+            }
+          ],
+          "preferenceCollection": [
+            {
+              "preference": [
+                {
+                  "preferenceValue": "CHB",
+                  "description": "Chocolate Box",
+                  "global": false,
+                  "source": "OPERA",
+                  "hotels": ["HOGSANDBOX"],
+                  "preferenceId": "13574",
+                  "excludedPreferencesCount": 0
+                },
+                {
+                  "preferenceValue": "ARP",
+                  "description": "Airport Transfer",
+                  "global": false,
+                  "source": "OPERA",
+                  "hotels": ["HOGSANDBOX"],
+                  "preferenceId": "13690",
+                  "excludedPreferencesCount": 0
+                },
+                {
+                  "preferenceValue": "WB",
+                  "description": "Water Boiler",
+                  "global": false,
+                  "source": "OPERA",
+                  "hotels": ["HOGSANDBOX"],
+                  "preferenceId": "13739",
+                  "excludedPreferencesCount": 0
+                }
+              ],
+              "preferenceType": "SPECIALS",
+              "preferenceTypeDescription": "Specials"
+            },
+            {
+              "preference": [
+                {
+                  "preferenceValue": "QBED",
+                  "description": "Queen Bed",
+                  "global": false,
+                  "source": "OPERA",
+                  "hotels": ["HOGSANDBOX"],
+                  "preferenceId": "13575",
+                  "excludedPreferencesCount": 0
+                },
+                {
+                  "preferenceValue": "JA",
+                  "description": "Jacuzzi Tub",
+                  "global": false,
+                  "source": "OPERA",
+                  "hotels": ["HOGSANDBOX"],
+                  "preferenceId": "13644",
+                  "excludedPreferencesCount": 0
+                },
+                {
+                  "preferenceValue": "SA",
+                  "description": "Special Access",
+                  "global": false,
+                  "source": "OPERA",
+                  "hotels": ["HOGSANDBOX"],
+                  "preferenceId": "13672",
+                  "excludedPreferencesCount": 0
+                }
+              ],
+              "preferenceType": "ROOM FEATURES",
+              "preferenceTypeDescription": "Room Features"
+            }
+          ],
+          "cashiering": {
+            "revenuesAndBalances": {
+              "totalFixedCharge": { "currencyCode": "USD" },
+              "totalPayment": { "amount": 181, "currencyCode": "USD" },
+              "roomRevenue": { "amount": 0, "currencyCode": "USD" },
+              "foodAndBevRevenue": {
+                "amount": 69.473684210527,
+                "currencyCode": "USD"
+              },
+              "otherRevenue": {
+                "amount": 62.322580645161,
+                "currencyCode": "USD"
+              },
+              "nonRevenue": {
+                "amount": 49.203735144312,
+                "currencyCode": "USD"
+              },
+              "totalRevenue": {
+                "amount": 131.796264855688,
+                "currencyCode": "USD"
+              },
+              "balance": { "amount": 0, "currencyCode": "USD" },
+              "compBalance": { "currencyCode": "USD" }
+            },
+            "billingPrivileges": {
+              "postingRestriction": true,
+              "preStayCharging": false,
+              "postStayCharging": true,
+              "videoCheckout": true,
+              "autoSettlement": false
+            },
+            "compAccounting": { "compPostings": "N" },
+            "reverseCheckInAllowed": false,
+            "reverseAdvanceCheckInAllowed": false,
+            "transactionsPosted": true
+          },
+          "linkedReservation": {},
+          "extSystemSync": true,
+          "hotelId": "HOGSANDBOX",
+          "roomStayReservation": true,
+          "reservationStatus": "CheckedOut",
+          "computedReservationStatus": "CheckedOut",
+          "walkIn": false,
+          "printRate": false,
+          "createDateTime": "2023-07-23 00:39:11.0",
+          "creatorId": "HOGWARTS_INTEGRATION@IHOGWARTS",
+          "lastModifyDateTime": "2023-07-25 01:50:46.0",
+          "lastModifierId": "DUMBLEDORE_HOGWARTS@HOGWARTS",
+          "createBusinessDate": "2023-07-22",
+          "displayColor": "YELLOW",
+          "displayColorDetails": {
+            "displayColor": "Yellow",
+            "colorDefinition": "VIP_LEVEL",
+            "colorDescription": "Gold Level"
+          },
+          "preRegistered": false,
+          "upgradeEligible": false,
+          "allowAutoCheckin": false,
+          "hasOpenFolio": false,
+          "allowMobileCheckout": false,
+          "allowMobileViewFolio": false,
+          "allowPreRegistration": false,
+          "optedForCommunication": false
+        }
+      ]
+    },
+    "masterInfoList": [
+      {
+        "codeInfo": [{ "description": "Great Britain", "code": "GB" }],
+        "codeType": "Country"
+      },
+      { "codeType": "State" },
+      {
+        "codeInfo": [{ "description": "Home Address", "code": "HOME" }],
+        "codeType": "AddressType"
+      },
+      {
+        "codeInfo": [{ "description": "Per Person", "code": "P" }],
+        "codeType": "CalculationRule"
+      },
+      {
+        "codeInfo": [{ "description": "Every Night", "code": "D" }],
+        "codeType": "PostingRythym"
+      }
+    ],
+    "links": [
+      {
+        "href": "https://hogsandbox.hogwards.co.uk/rsv/v1/hotels/HOGSANDBOX/reservations/000001",
+        "rel": "self",
+        "templated": false,
+        "method": "PUT",
+        "operationId": "putReservation"
+      },
+      {
+        "href": "https://hogsandbox.hogwards.co.uk/rsv/v1/hotels/HOGSANDBOX/reservations/000001/cancellations",
+        "rel": "self",
+        "templated": false,
+        "method": "POST",
+        "operationId": "postCancelReservation"
+      },
+      {
+        "href": "https://hogsandbox.hogwards.co.uk/fof/v1/hotels/HOGSANDBOX/reservations/000001/roomAssignments",
+        "rel": "self",
+        "templated": false,
+        "method": "POST",
+        "operationId": "postRoomAssignment"
+      }
+    ]
+  },
+  "search": {
+    "reservations": {
+      "reservationInfo": [
+        {
+          "reservationIdList": [
+            { "id": "111111", "type": "Reservation" },
+            { "id": "1111111", "type": "Confirmation" }
+          ],
+          "roomStay": {
+            "arrivalDate": "2023-09-08",
+            "departureDate": "2023-09-09",
+            "originalTimeSpan": {
+              "startDate": "2023-09-08",
+              "endDate": "2023-09-09"
+            },
+            "expectedTimes": {
+              "reservationExpectedArrivalTime": "2023-09-08 03:56:41.0",
+              "reservationExpectedDepartureTime": "2023-09-09 02:34:00.0"
+            },
+            "adultCount": 1,
+            "childCount": 0,
+            "roomClass": "STD",
+            "roomType": "SGL",
+            "numberOfRooms": 1,
+            "roomId": "701",
+            "roomOwnershipType": "Regular",
+            "ratePlanCode": "RACKBB",
+            "rateAmount": { "amount": 150, "currencyCode": "USD" },
+            "rateSuppressed": false,
+            "bookingChannelCode": "TEL",
+            "fixedRate": true,
+            "guarantee": {
+              "guaranteeCode": "CHECKED IN",
+              "shortDescription": "Checked In"
+            },
+            "marketCode": "LEISURE",
+            "sourceCode": "WEB",
+            "sourceCodeDescription": "Web Booking",
+            "balance": { "amount": 0, "currencyCode": "USD" },
+            "roomTypeCharged": "SGL",
+            "roomNumberLocked": false,
+            "pseudoRoom": false
+          },
+          "reservationGuest": {
+            "givenName": "Harry",
+            "surname": "Potter",
+            "email": "harry.potter@oracle.com",
+            "language": "E",
+            "vip": {},
+            "address": { "country": {} },
+            "anonymization": {},
+            "accompanyGuests": [],
+            "guestLastStayInformation": { "lastStayRoom": "701" },
+            "guestRestricted": false,
+            "nameType": "Guest",
+            "id": "999999",
+            "type": "Profile"
+          },
+          "sharedGuests": [],
+          "attachedProfiles": [],
+          "reservationPaymentMethod": { "paymentMethod": "CA" },
+          "reservationFolioWindows": [],
+          "commissionsInfo": { "commissionsPaid": false },
+          "sourceOfSale": { "sourceType": "PMS", "sourceCode": "HOGSANDBOX" },
+          "waitlist": {},
+          "advanceCheckIn": { "advanceCheckedIn": false },
+          "hotelId": "HOGSANDBOX",
+          "hotelName": "Hogwarts Sandbox Hotel",
+          "roomStayReservation": true,
+          "createDateTime": "2023-09-08 03:55:54.0",
+          "lastModifyDateTime": "2023-09-11 02:38:40.0",
+          "reservationStatus": "CheckedOut",
+          "computedReservationStatus": "CheckedOut",
+          "walkInIndicator": false,
+          "commissionPayoutTo": "None",
+          "paymentMethod": "CA",
+          "preRegistered": false,
+          "openFolio": false,
+          "allowMobileCheckout": false,
+          "optedForCommunication": false
+        },
+        {
+          "reservationIdList": [
+            { "id": "222222", "type": "Reservation" },
+            { "id": "2222222", "type": "Confirmation" }
+          ],
+          "roomStay": {
+            "arrivalDate": "2023-09-09",
+            "departureDate": "2023-09-10",
+            "originalTimeSpan": {
+              "startDate": "2023-09-09",
+              "endDate": "2023-09-10"
+            },
+            "expectedTimes": {
+              "reservationExpectedDepartureTime": "2023-09-10"
+            },
+            "adultCount": 1,
+            "childCount": 1,
+            "roomClass": "SUI",
+            "roomType": "SUI",
+            "numberOfRooms": 1,
+            "roomOwnershipType": "Regular",
+            "ratePlanCode": "BAR1",
+            "rateAmount": { "amount": 550, "currencyCode": "USD" },
+            "rateSuppressed": false,
+            "bookingChannelCode": "TEL",
+            "fixedRate": true,
+            "guarantee": {
+              "guaranteeCode": "6PM",
+              "shortDescription": "Active Guarantee Test"
+            },
+            "marketCode": "LEISURE",
+            "sourceCode": "WEB",
+            "sourceCodeDescription": "Web Booking",
+            "balance": { "amount": 0, "currencyCode": "USD" },
+            "roomTypeCharged": "SUI",
+            "roomNumberLocked": false,
+            "pseudoRoom": false
+          },
+          "reservationGuest": {
+            "givenName": "Harry",
+            "surname": "Potter",
+            "email": "harry.potter@oracle.com",
+            "language": "E",
+            "vip": {},
+            "address": { "country": {} },
+            "anonymization": {},
+            "accompanyGuests": [],
+            "guestRestricted": false,
+            "nameType": "Guest",
+            "id": "888888",
+            "type": "Profile"
+          },
+          "sharedGuests": [],
+          "attachedProfiles": [],
+          "reservationPaymentMethod": { "paymentMethod": "CA" },
+          "reservationFolioWindows": [],
+          "commissionsInfo": { "commissionsPaid": false },
+          "sourceOfSale": { "sourceType": "PMS", "sourceCode": "HOGSANDBOX" },
+          "waitlist": {},
+          "advanceCheckIn": { "advanceCheckedIn": false },
+          "hotelId": "HOGSANDBOX",
+          "hotelName": "Hogwarts Sandbox Hotel",
+          "roomStayReservation": true,
+          "createDateTime": "2023-09-09 05:07:44.0",
+          "lastModifyDateTime": "2023-09-11 02:37:36.0",
+          "reservationStatus": "NoShow",
+          "computedReservationStatus": "NoShow",
+          "walkInIndicator": false,
+          "commissionPayoutTo": "None",
+          "paymentMethod": "CA",
+          "preRegistered": false,
+          "openFolio": false,
+          "allowMobileCheckout": false,
+          "optedForCommunication": false
+        },
+        {
+          "reservationIdList": [
+            { "id": "333333", "type": "Reservation" },
+            { "id": "3333333", "type": "Confirmation" }
+          ],
+          "roomStay": {
+            "arrivalDate": "2023-09-12",
+            "departureDate": "2023-09-13",
+            "originalTimeSpan": {
+              "startDate": "2023-09-12",
+              "endDate": "2023-09-13"
+            },
+            "expectedTimes": {
+              "reservationExpectedArrivalTime": "2023-09-12 06:00:55.0",
+              "reservationExpectedDepartureTime": "2023-09-13 02:14:00.0"
+            },
+            "adultCount": 1,
+            "childCount": 0,
+            "roomClass": "STD",
+            "roomType": "SGL",
+            "numberOfRooms": 1,
+            "roomId": "708",
+            "roomOwnershipType": "Regular",
+            "ratePlanCode": "BAR20",
+            "rateAmount": { "amount": 110, "currencyCode": "USD" },
+            "rateSuppressed": false,
+            "bookingChannelCode": "TEL",
+            "fixedRate": true,
+            "guarantee": {
+              "guaranteeCode": "CHECKED IN",
+              "shortDescription": "Checked In"
+            },
+            "marketCode": "LEISURE",
+            "sourceCode": "WEB",
+            "sourceCodeDescription": "Web Booking",
+            "balance": { "amount": 0, "currencyCode": "USD" },
+            "roomTypeCharged": "SGL",
+            "roomNumberLocked": false,
+            "pseudoRoom": false
+          },
+          "reservationGuest": {
+            "givenName": "Harry",
+            "surname": "Potter",
+            "email": "harry.potter@oracle.com",
+            "language": "E",
+            "vip": {},
+            "address": { "country": {} },
+            "anonymization": {},
+            "accompanyGuests": [],
+            "guestLastStayInformation": { "lastStayRoom": "708" },
+            "guestRestricted": false,
+            "nameType": "Guest",
+            "id": "777777",
+            "type": "Profile"
+          },
+          "sharedGuests": [],
+          "attachedProfiles": [],
+          "reservationPaymentMethod": { "paymentMethod": "CA" },
+          "reservationFolioWindows": [],
+          "commissionsInfo": { "commissionsPaid": false },
+          "sourceOfSale": { "sourceType": "PMS", "sourceCode": "HOGSANDBOX" },
+          "waitlist": {},
+          "advanceCheckIn": { "advanceCheckedIn": false },
+          "hotelId": "HOGSANDBOX",
+          "hotelName": "Hogwarts Sandbox Hotel",
+          "roomStayReservation": true,
+          "createDateTime": "2023-09-12 05:50:23.0",
+          "lastModifyDateTime": "2023-09-14 02:18:52.0",
+          "reservationStatus": "CheckedOut",
+          "computedReservationStatus": "CheckedOut",
+          "walkInIndicator": false,
+          "commissionPayoutTo": "None",
+          "paymentMethod": "CA",
+          "preRegistered": false,
+          "openFolio": false,
+          "allowMobileCheckout": false,
+          "optedForCommunication": false
+        }
+      ],
+      "totalPages": 1,
+      "offset": 200,
+      "limit": 200,
+      "hasMore": false,
+      "totalResults": 3
+    },
+    "links": [
+      {
+        "href": "https://hogsandbox.hogwards.co.uk/rsv/v1/hotels/HOGSANDBOX/reservations",
+        "rel": "other",
+        "templated": false,
+        "method": "POST",
+        "operationId": "postReservation"
+      },
+      {
+        "href": "https://hogsandbox.hogwards.co.uk/rsv/v1/hotels/HOGSANDBOX/reservations/111111",
+        "rel": "self",
+        "templated": false,
+        "method": "GET",
+        "operationId": "getReservation"
+      },
+      {
+        "href": "https://hogsandbox.hogwards.co.uk/rsv/v1/hotels/HOGSANDBOX/reservations/111111",
+        "rel": "self",
+        "templated": false,
+        "method": "PUT",
+        "operationId": "putReservation"
+      }
+    ]
+  }
+}

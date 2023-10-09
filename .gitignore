@@ -1,0 +1,15 @@
+.idea/
+.vscode/
+node_modules/
+dist/
+build/
+tmp/
+temp/
+pocs/
+archive/
+coverage/
+.env*
+*.env
+.npmrc
+transform*
+package-lock.json
