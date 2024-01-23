@@ -1,0 +1,36 @@
+name: Daily Unit Test Run
+
+on:
+  schedule:
+    - cron: "0 11 * * *"
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: "20.0.0"
+
+      - name: Install poly
+        run: npm install poly
+
+      - name: Set environment variables
+        run: |
+          echo "POLY_API_BASE_URL=${{ secrets.POLY_API_BASE_URL }}" >> $GITHUB_ENV
+          echo "POLY_API_KEY=${{ secrets.POLY_API_KEY }}" >> $GITHUB_ENV
+
+      - name: Generate with poly
+        run: npx poly generate
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run unit tests
+        run: npm run test

@@ -1,0 +1,247 @@
+{
+  "full": {
+    "primary_guest": {
+      "name_suffix": "MR",
+      "name_prefix": "Prof",
+      "name_first": "Potter",
+      "name_middle": "James",
+      "name_last": "Harry",
+      "vip_code": "GOLD",
+      "company_name": "Hogwarts",
+      "prefered_language": "E",
+      "profile_id": "123456",
+      "loyalty": {
+        "loyalty_program_type": "Dreams Loyalty Program",
+        "loyalty_level": "GOLD",
+        "loyalty_membership_id": "123456789"
+      },
+      "phone_mobile": "+447575111222",
+      "email": {
+        "email_type": "Email Address",
+        "email_is_primary": true,
+        "email_address": "harry.potter@hogwarts.com"
+      },
+      "preferences": [
+        "AC-ON",
+        "FLOOR-01",
+        "INTERESTS-SPA",
+        "INTERESTS-SUM",
+        "ROOM FEATURES-QBED",
+        "ROOM FEATURES-KING",
+        "ROOM FEATURES-BC",
+        "ROOM FEATURES-COFFEE",
+        "ROOM FEATURES-SAU",
+        "ROOM FEATURES-WF",
+        "SMOKING-NS",
+        "SPECIALS-IRB"
+      ]
+    },
+    "additional_guests": [
+      {
+        "name_suffix": "MRS",
+        "name_prefix": "Prof",
+        "name_first": "Potter",
+        "name_middle": "Weasley",
+        "name_last": "Ginny",
+        "vip_code": "EMERALD",
+        "prefered_language": "E",
+        "profile_id": "654321",
+        "phone_mobile": "07674555888",
+        "email": {
+          "email_type": "Email Address",
+          "email_is_primary": true,
+          "email_address": "ellie@gmail.com"
+        }
+      }
+    ],
+    "property": { "property_code": "HOGSANDBOX", "chain_code": "" },
+    "arrival_date": "2023-07-23",
+    "departure_date": "2023-07-24",
+    "arrival_estimated_time": "2023-07-23T15:16:39.000Z",
+    "departure_estimated_time": "2023-07-24T11:48:00.000Z",
+    "number_of_adults": 1,
+    "number_of_children": 2,
+    "room_type_code": "DBL",
+    "room_number": "205",
+    "company_name": "HOGWARTS-OPT-Test; Harry",
+    "reservation_status_pms": "CheckedOut",
+    "group_code": "530352",
+    "pms_reservation_id": "000001",
+    "pms_confirmation_code": "000007",
+    "pms_reservation_id_share_with": "",
+    "external_confirmation_code": ["ORS:12345678"],
+    "reservation_preference_code": [
+      "SPECIALS:CHB",
+      "SPECIALS:ARP",
+      "SPECIALS:WB",
+      "ROOM FEATURES:QBED",
+      "ROOM FEATURES:JA",
+      "ROOM FEATURES:SA"
+    ],
+    "currency_code": "USD",
+    "is_posting_allowed": true,
+    "room_rate_info": [
+      {
+        "end_date": "2023-07-23",
+        "number_of_adults": 1,
+        "number_of_children": 2,
+        "rate_plan_code": "RACKBB",
+        "rate_plan_name": "RACKBB",
+        "room_rate": "75.00"
+      }
+    ]
+  },
+  "self": {
+    "primary_guest": {
+      "name_suffix": "MR",
+      "name_prefix": "Prof",
+      "name_first": "Potter",
+      "name_middle": "James",
+      "name_last": "Harry",
+      "vip_code": "GOLD",
+      "prefered_language": "E",
+      "profile_id": "123456",
+      "phone_mobile": {
+        "phoneTechType": "PHONE",
+        "phoneUseType": "MOBILE",
+        "phoneNumber": "+447575111222",
+        "primaryInd": true
+      },
+      "email": {
+        "email_is_primary": true,
+        "email_address": "harry.potter@hogwarts.com"
+      },
+      "preferences": []
+    },
+    "additional_guests": [
+      {
+        "name_suffix": "MRS",
+        "name_first": "Potter",
+        "name_last": "Ginny",
+        "profile_id": "654321",
+        "preferences": []
+      }
+    ],
+    "property": { "property_code": "HOGSANDBOX", "chain_code": "" },
+    "arrival_date": "2023-07-23",
+    "departure_date": "2023-07-24",
+    "arrival_estimated_time": "2023-07-23T15:16:39.000Z",
+    "departure_estimated_time": "2023-07-24T11:48:00.000Z",
+    "number_of_adults": 1,
+    "number_of_children": 2,
+    "room_type_code": "DBL",
+    "room_number": "205",
+    "company_name": "HOGWARTS-OPT-Test; Harry",
+    "reservation_status_pms": "CheckedOut",
+    "group_code": "530352",
+    "pms_reservation_id": "000001",
+    "pms_confirmation_code": "000007",
+    "pms_reservation_id_share_with": "",
+    "external_confirmation_code": ["ORS:12345678"],
+    "reservation_preference_code": [
+      "SPECIALS:CHB",
+      "SPECIALS:ARP",
+      "SPECIALS:WB",
+      "ROOM FEATURES:QBED",
+      "ROOM FEATURES:JA",
+      "ROOM FEATURES:SA"
+    ],
+    "currency_code": "USD",
+    "is_posting_allowed": true,
+    "room_rate_info": [
+      {
+        "end_date": "2023-07-23",
+        "number_of_adults": 1,
+        "number_of_children": 2,
+        "rate_plan_code": "RACKBB",
+        "rate_plan_name": "RACKBB",
+        "room_rate": "75.00"
+      }
+    ]
+  },
+  "search": [
+    {
+      "primary_guest": {
+        "name_suffix": "Harry",
+        "name_first": "Harry",
+        "name_last": "Potter",
+        "prefered_language": "E",
+        "profile_id": "999999",
+        "email": "harry.potter@oracle.com",
+        "preferences": []
+      },
+      "additional_guests": [],
+      "property": { "property_code": "HOGSANDBOX", "chain_code": "" },
+      "arrival_date": "2023-09-08",
+      "departure_date": "2023-09-09",
+      "arrival_estimated_time": "2023-09-08T03:56:41.000Z",
+      "departure_estimated_time": "2023-09-09T02:34:00.000Z",
+      "number_of_adults": 1,
+      "number_of_children": 0,
+      "room_type_code": "SGL",
+      "room_number": "701",
+      "company_name": "",
+      "reservation_status_pms": "CheckedOut",
+      "group_code": "",
+      "pms_reservation_id": "111111",
+      "pms_confirmation_code": "1111111",
+      "external_confirmation_code": "",
+      "currency_code": "USD"
+    },
+    {
+      "primary_guest": {
+        "name_suffix": "Harry",
+        "name_first": "Harry",
+        "name_last": "Potter",
+        "prefered_language": "E",
+        "profile_id": "888888",
+        "email": "harry.potter@oracle.com",
+        "preferences": []
+      },
+      "additional_guests": [],
+      "property": { "property_code": "HOGSANDBOX", "chain_code": "" },
+      "arrival_date": "2023-09-09",
+      "departure_date": "2023-09-10",
+      "arrival_estimated_time": null,
+      "departure_estimated_time": "2023-09-10T00:00:00.000Z",
+      "number_of_adults": 1,
+      "number_of_children": 1,
+      "room_type_code": "SUI",
+      "company_name": "",
+      "reservation_status_pms": "NoShow",
+      "group_code": "",
+      "pms_reservation_id": "222222",
+      "pms_confirmation_code": "2222222",
+      "external_confirmation_code": "",
+      "currency_code": "USD"
+    },
+    {
+      "primary_guest": {
+        "name_suffix": "Harry",
+        "name_first": "Harry",
+        "name_last": "Potter",
+        "prefered_language": "E",
+        "profile_id": "777777",
+        "email": "harry.potter@oracle.com",
+        "preferences": []
+      },
+      "additional_guests": [],
+      "property": { "property_code": "HOGSANDBOX", "chain_code": "" },
+      "arrival_date": "2023-09-12",
+      "departure_date": "2023-09-13",
+      "arrival_estimated_time": "2023-09-12T06:00:55.000Z",
+      "departure_estimated_time": "2023-09-13T02:14:00.000Z",
+      "number_of_adults": 1,
+      "number_of_children": 0,
+      "room_type_code": "SGL",
+      "room_number": "708",
+      "company_name": "",
+      "reservation_status_pms": "CheckedOut",
+      "group_code": "",
+      "pms_reservation_id": "333333",
+      "pms_confirmation_code": "3333333",
+      "external_confirmation_code": "",
+      "currency_code": "USD"
+    }
+  ]
+}

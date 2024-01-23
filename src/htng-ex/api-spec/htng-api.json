@@ -1,0 +1,704 @@
+{
+    "openapi": "3.1.0",
+    "x-stoplight": {
+        "id": "80205e361161f"
+    },
+    "info": {
+        "title": "HTNG-API",
+        "version": "1.0"
+    },
+    "servers": [
+        {
+            "url": "https://pms.htng.io/v1"
+        },
+        {
+            "url": "https://hapicloud-dev.apigee.net/v3/",
+            "description": ""
+        }
+    ],
+    "paths": {
+        "auth/login": {
+            "parameters": [],
+            "post": {
+                "summary": "Login",
+                "operationId": "postauth-login",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    }
+                },
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "description": "",
+                                "type": "object",
+                                "properties": {
+                                    "apiKey": {
+                                        "type": "string",
+                                        "minLength": 1
+                                    },
+                                    "apiName": {
+                                        "type": "string",
+                                        "minLength": 1
+                                    }
+                                },
+                                "required": [
+                                    "apiKey",
+                                    "apiName"
+                                ],
+                                "x-examples": {
+                                    "example-1": {
+                                        "apiKey": "xxxxx",
+                                        "apiName": "name"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "description": ""
+                }
+            }
+        },
+        "/guest/{guestId}": {
+            "get": {
+                "summary": "Guest",
+                "tags": [],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Guest"
+                                }
+                            }
+                        }
+                    }
+                },
+                "operationId": "get-guest"
+            },
+            "parameters": [
+                {
+                    "schema": {
+                        "type": "string"
+                    },
+                    "name": "guestId",
+                    "in": "path",
+                    "required": true,
+                    "description": "the Guest's id"
+                }
+            ]
+        },
+        "/reservation/{reservationId}": {
+            "get": {
+                "summary": "Reservation",
+                "tags": [],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Reservation"
+                                }
+                            }
+                        }
+                    }
+                },
+                "operationId": "get-reservation"
+            },
+            "parameters": [
+                {
+                    "schema": {
+                        "type": "string"
+                    },
+                    "name": "reservationId",
+                    "in": "path",
+                    "required": true,
+                    "description": "The reservationId"
+                }
+            ]
+        },
+        "/reservations/{fromDate}/{toDate}": {
+            "get": {
+                "summary": "Reservations",
+                "tags": [],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Reservation"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": ""
+                                }
+                            }
+                        }
+                    },
+                    "529": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "description": "",
+                                    "type": "object",
+                                    "properties": {
+                                        "errorType": {
+                                            "type": "string",
+                                            "minLength": 1
+                                        },
+                                        "code": {
+                                            "type": "string",
+                                            "minLength": 1
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "minLength": 1
+                                        }
+                                    },
+                                    "required": [
+                                        "errorType",
+                                        "code",
+                                        "message"
+                                    ],
+                                    "x-examples": {
+                                        "example-1": {
+                                            "errorType": "No Valid Reservation",
+                                            "code": "529",
+                                            "message": "oh no"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "operationId": "get-reservations"
+            },
+            "parameters": [
+                {
+                    "schema": {
+                        "type": "string"
+                    },
+                    "name": "fromDate",
+                    "in": "path",
+                    "required": true,
+                    "description": "ISO Date"
+                },
+                {
+                    "schema": {
+                        "type": "string"
+                    },
+                    "name": "toDate",
+                    "in": "path",
+                    "required": true,
+                    "description": "ISO Date"
+                }
+            ]
+        }
+    },
+    "components": {
+        "schemas": {
+            "User": {
+                "title": "User",
+                "type": "object",
+                "description": "",
+                "examples": [
+                    {
+                        "id": 142,
+                        "firstName": "Alice",
+                        "lastName": "Smith",
+                        "email": "alice.smith@gmail.com",
+                        "dateOfBirth": "1997-10-31",
+                        "emailVerified": true,
+                        "signUpDate": "2019-08-24"
+                    }
+                ],
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "description": "Unique identifier for the given user."
+                    },
+                    "firstName": {
+                        "type": "string"
+                    },
+                    "lastName": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string",
+                        "format": "email"
+                    },
+                    "dateOfBirth": {
+                        "type": "string",
+                        "format": "date",
+                        "example": "1997-10-31"
+                    },
+                    "emailVerified": {
+                        "type": "boolean",
+                        "description": "Set to true if the user's email has been verified."
+                    },
+                    "createDate": {
+                        "type": "string",
+                        "format": "date",
+                        "description": "The date that the user was created."
+                    }
+                },
+                "required": [
+                    "id",
+                    "firstName",
+                    "lastName",
+                    "email",
+                    "emailVerified"
+                ]
+            },
+            "Email": {
+                "title": "Email",
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    }
+                }
+            },
+            "Email_2": {
+                "title": "Email",
+                "type": "object",
+                "x-tags": [
+                    "email"
+                ],
+                "description": "The Email entity is included with the Guest entity and allows for one or more email related to the guest to be sent.  \n",
+                "properties": {
+                    "email_type": {
+                        "type": "string",
+                        "example": "Personal",
+                        "description": "Indicates if the email address is business, personal or other. The code values are specified by the hotel.\n\nThis field will vary from hotel to hotel based on the programs they accept making this field a hotel enumeration.",
+                        "readOnly": true
+                    },
+                    "email_is_primary": {
+                        "type": "boolean",
+                        "description": "This flag indicates whether this is the guests preferred email address for communications.",
+                        "readOnly": true
+                    },
+                    "email_address": {
+                        "type": "string",
+                        "example": "john.smith@provider.com",
+                        "description": "An email address associated with the guest.",
+                        "readOnly": true
+                    }
+                },
+                "required": [
+                    "email_address"
+                ]
+            },
+            "Guest": {
+                "title": "Guest",
+                "type": "object",
+                "x-tags": [
+                    ""
+                ],
+                "description": "The Guest entity is used within the Reservation entity to specify information about the guests related to the reservation. There are two instances of the Guest entity in the Reservation, one for the primary guest and an array for additional guests",
+                "properties": {
+                    "name_suffix": {
+                        "type": "string",
+                        "example": "Jr.",
+                        "description": "Holds various name suffixes and letters (e.g. Jr., Sr., III, Ret., Esq., MD, PhD).",
+                        "readOnly": true
+                    },
+                    "name_prefix": {
+                        "type": "string",
+                        "example": "Mr.",
+                        "description": "Salutation of honorific (e.g. Mr., Mrs., Ms., Miss, Dr.).",
+                        "readOnly": true
+                    },
+                    "name_first": {
+                        "type": "string",
+                        "example": "John",
+                        "description": "Given name, first name or names.",
+                        "readOnly": true
+                    },
+                    "name_middle": {
+                        "type": "string",
+                        "example": "Michael",
+                        "description": "The middle name or initial of the person name.",
+                        "readOnly": true
+                    },
+                    "name_last": {
+                        "type": "string",
+                        "example": "Smith",
+                        "description": "Family name, last name. This is the only required field for name, and hence any variations on the standard name would be here. For instance if a guest is only a single named guest (i.e. Madonna) it would go into this field. The same for aliases that are a single name.",
+                        "readOnly": true
+                    },
+                    "vip_code": {
+                        "type": "string",
+                        "example": "VIP1",
+                        "description": "A category applied to the guest that is aligned with the level of services that they recieve during their stay. This is typically aligned to the \"level of importance\" that a guest holds for the hotel or the brand, and is assigned on a contextual basis.\n\nThis field is very stay specific, and has to do with why you are at the hotel at this time. For instance, an event planned may be a certain VIP Code during an event, and a different VIP code or no VIP code when staying for leisure. Also the VIP code is not consistent across a brand. A guest could be a VIP in one hotel and not another.\n\nThere is no direct relationship between vip code and rate code, though both can impact service level. For more sophisticated business rules multiple attributes can determine service level (VIP Code, Rate Code, Room Rate, Group Code, etc)",
+                        "readOnly": true
+                    },
+                    "company_name": {
+                        "type": "string",
+                        "example": "IBM",
+                        "description": "Unlike the company name in the Reservation, this is a string field provided by the guest. This is not a specific entity in the PMS and therefore does not drive rates. The company at the reservation could be different from the company at the guest level, for this reason, the reservation company drives rate details and the guest company name is more informational. This field is not typically required.",
+                        "readOnly": true
+                    },
+                    "prefered_language": {
+                        "type": "string",
+                        "example": " en",
+                        "description": "ISO 639-1 - The language that the guest prefers to communicate in.  The language may not be supported by the hotel. If the hotel supports this language it may be used to communicate with the guest while on property.",
+                        "readOnly": true
+                    },
+                    "profile_id": {
+                        "type": "string",
+                        "example": "789125",
+                        "description": "Unique ID within the database instance for the guest profile. Issued by the PMS. This is different from the loyalty ID for the guest that is unique across the brand.",
+                        "readOnly": true
+                    },
+                    "loyalty": {
+                        "$ref": "#/components/schemas/Loyalty"
+                    },
+                    "phone_mobile": {
+                        "type": "string",
+                        "example": "312-555-1212",
+                        "description": "This is an SMS enabled phone number that is capable of receiving text messages.\n\n**We acknowledge in the current world there are opt in, opt out compliance issues; they will not be handled in this specification.",
+                        "readOnly": true
+                    },
+                    "email": {
+                        "$ref": "#/components/schemas/Email_2"
+                    },
+                    "preferences": {
+                        "type": "array",
+                        "description": "A set of codes that represent desired options for a given guest. This list serves as instructions for various departments in things like room selection, service delivery, and charge routing etc. These are preferences that the guest adds or requests to be added to their profile to be utilized across stays.The preferences are codes that to the staff represent options such as King Bed, Non-smoking Room, High Floor, Extra bed, Birthday, ADA, VIP. It is possible that there could be preferences that are in conflict with each other.\n\nGenerally there are preferences at the profile level as well as the reservation level. The preferences on the profile level may be applied at the reservation level, but the reservation level preferences are specific to that particular stay. Guest preference may influence the reservation preferences; however, reservation preferences may override the guest preferences as a guest may have specific needs for that stay.\n\nExample: K1,NS,HF",
+                        "items": {
+                            "type": "string",
+                            "example": "K1,NS,NF",
+                            "readOnly": true
+                        },
+                        "readOnly": true
+                    }
+                },
+                "required": [
+                    "name_last",
+                    "profile_id",
+                    "preferences"
+                ]
+            },
+            "Loyalty": {
+                "title": "Loyalty",
+                "type": "object",
+                "x-tags": [
+                    "Loyalty"
+                ],
+                "description": "The Loyalty entity is included within the Guest entity and allows data for one or more loyalty programs related to the guest to be sent.",
+                "properties": {
+                    "loyalty_program_type": {
+                        "type": "string",
+                        "example": "BA",
+                        "description": "This field represents a loyalty program that the guest and the hotel are associated with. Typical loyalty programs may include hotel , airline, car rental or other programs.\n\nThis field will vary from hotel to hotel based on the programs they accept making this field a hotel enumeration.",
+                        "readOnly": true
+                    },
+                    "loyalty_level": {
+                        "type": "string",
+                        "example": "GOLD",
+                        "description": "Tier is dependent on the loyalty program and the level that they support. We may not know the level for all programs, but it will typically be sent with hotel loyalty information.\n\nThis field will vary from hotel to hotel based on the programs they accept making this field a hotel enumeration.",
+                        "readOnly": true
+                    },
+                    "loyalty_membership_id": {
+                        "type": "string",
+                        "example": "G1234567X",
+                        "description": "This is the unique identifier issued by the loyalty company to identify the loyalty member.",
+                        "readOnly": true
+                    }
+                },
+                "required": [
+                    "loyalty_program_type",
+                    "loyalty_membership_id"
+                ]
+            },
+            "Property": {
+                "title": "Property",
+                "type": "object",
+                "description": "The Property entity is contained within the Reservation entity and is used to identify the hotel.",
+                "examples": [
+                    {
+                        "property_code": "string",
+                        "chain_code": "string"
+                    }
+                ],
+                "properties": {
+                    "property_code": {
+                        "type": "string",
+                        "description": "A unique identifier for a hotel, that is unique within the chain if it belongs to a chain.",
+                        "example": "ORDEC",
+                        "readOnly": true
+                    },
+                    "chain_code": {
+                        "type": "string",
+                        "description": "A unique identfier for the parent company, e.g. Hyatt, Marriott, Hilton, etc.  Chain code is optional for the case where a hotel is an independent and not affiliated with a chain.",
+                        "example": "IHG",
+                        "readOnly": true
+                    }
+                },
+                "required": [
+                    "property_code"
+                ]
+            },
+            "Reservation": {
+                "type": "object",
+                "title": "Reservation",
+                "x-tags": [
+                    "Reservation"
+                ],
+                "description": "The Reservation entity includes a limited set of data fields, those that support a wide variety of use cases for vendor products that integrate with property management systems. The Reservation entity does not and is not intended to include a full set of reservation elements but just those needed to support the express model.\n",
+                "properties": {
+                    "primary_guest": {
+                        "$ref": "#/components/schemas/Guest"
+                    },
+                    "additional_guests": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Guest"
+                        },
+                        "readOnly": true
+                    },
+                    "property": {
+                        "$ref": "#/components/schemas/Property"
+                    },
+                    "arrival_date": {
+                        "type": "string",
+                        "example": "2022-09-15",
+                        "format": "date-time",
+                        "description": "ISO 8601 Format - The date that the guest is arriving and the stay begins. This field contains time but may just be a date that is sent.",
+                        "readOnly": true
+                    },
+                    "departure_date": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2022-09-17",
+                        "description": "ISO 8601 Format - The date that the guest is departing and the stay ends. This field contains time but may just be a date that is sent.",
+                        "readOnly": true
+                    },
+                    "arrival_estimated_time": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2022-09-15T17:30:00+00:00.000Z",
+                        "description": "ISO 8601 Format - Aka ETA. Estimate of arrival provided by the guest.",
+                        "readOnly": true
+                    },
+                    "departure_estimated_time": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2022-09-17T07:30:00+00:00.000Z",
+                        "description": "ISO 8601 Format - Aka ETD. Guest supplied estimate of departure.",
+                        "readOnly": true
+                    },
+                    "number_of_adults": {
+                        "type": "number",
+                        "example": 2,
+                        "description": "Count of adults on the reservation. The number reflected here is a snapshot of what is current. This may change throughout the stay as additional guests arrive/depart within a resvation.",
+                        "readOnly": true
+                    },
+                    "number_of_children": {
+                        "type": "number",
+                        "example": 3,
+                        "description": "Count of children on the reservation. The number reflected here is a snapshot of what is current. This may change throughout the stay as additional guests arrive/depart within a resvation.\n",
+                        "readOnly": true
+                    },
+                    "room_type_code": {
+                        "type": "string",
+                        "description": "A code that describes the \"kind\" of room, which is the specific product being sold to the guest. This groups rooms based on configuration, size, view, and other important booking or operational attributes. (i.e King, Suite, Double Double, Beach King).\n\nThis is used by both the booking system to know how to price the room as well as by operations such as housekeeping to know how to service the room.\n\nThe Room Type is configured at every hotel to segment their inventory and provide differentiation in pricing. This helps hotels track what is available in the inventory for any type.\n\nThis field is a Hotel Enumeration and the available room types are unique per hotel.",
+                        "example": "KOCV",
+                        "readOnly": true
+                    },
+                    "room_type_name": {
+                        "type": "string",
+                        "maxLength": 255,
+                        "description": "A human readable name of the room that is friendly for consumers. This is here for convenience, the Room Type Code can be used for programmatic cases.",
+                        "example": "King Suite Beachside",
+                        "readOnly": true
+                    },
+                    "room_number": {
+                        "type": "string",
+                        "description": "The number or name of the room the guest is staying in. This could be a virtual room (combining multiple rooms). When a reservation is made, rooms are typically not assigned until check-in or pre-check-in. When a room gets assigned depends on the property SOPs.\n\nSince the Room is not known until later in the life cycle of the Reservation, once it is assigned it may cause other changes in the reservation. The Room drives a lot of other Reservation fields such as the Room Type, Rate, etc. If a guest gets assigned a Room that is not of the same Room Type as was booked, the Room Type will be updated to reflect the one that the guest is staying in. Other fields such as Rate may also be updated.",
+                        "example": "00123B (Hotel Enum)",
+                        "readOnly": true
+                    },
+                    "company_name": {
+                        "type": "string",
+                        "description": "This refers to the company that is linked to the reservation as an entity and is typically credited with generating this reservation. This company is not necessarily the organization the guest works for. It could be a travel agent, wedding organizer, bus tour organizer etc.\n\nIn the case of the business traveler, the idea of a company is not always straightforward. For instance Brian may be an employee at Apigee, a wholly owned subsidiary of Google, going to a conference on behalf of HTNG. This field now has 3 potential companies, all of which are valid in different contexts. The value of the field is decided by the individual making the booking and there is not a consistent approach between hotels.\n\nThe name is not expected to be unique. For instance there could be many reservations that return the \"IBM\" company, and that may not actually be the same company. Behind the scenes the company has a unique ID which is used to link the reservation. That ID is not accessible in this particular spec, as we do not think it is relevant for our use cases.",
+                        "example": "IBM",
+                        "readOnly": true
+                    },
+                    "reservation_status_pms": {
+                        "type": "string",
+                        "example": "Reserved",
+                        "description": "The state of the world according to the PMS about this particular reservation in it's Booking lifecycle. This is automatically set in the PMS based on where the guest is in their journey. Sample statuses are Booked, Arriving, In-House, Departed, No-Show, Canceled etc. \n\nThe statuses very by PMS system and as such this field is defined as a PMS Enumeration.",
+                        "readOnly": true
+                    },
+                    "reservation_status_htng": {
+                        "type": "string",
+                        "example": "PreConfirmed",
+                        "description": "A standard set of statuses that aligns all the different Reservation Status nomenclature in  various PMS systems. Since the ideas of a status is the same, this applies a common naming structure, mapping per PMS.\n\nThis field is defined as an HTNG Enumeration.",
+                        "enum": [
+                            "Reserved",
+                            "NoShow",
+                            "PreCheckedIn",
+                            "InHouse",
+                            "CheckedOut",
+                            "Canceled",
+                            "PreConfirmed"
+                        ],
+                        "readOnly": true
+                    },
+                    "group_code": {
+                        "type": "string",
+                        "description": "A unique identifier for a specific negotiated sale that identifies a set of guests coming to the hotel for a meeting or event. This Group Code is created when a hotel sales department executes a contract for a block of rooms at a specific time, for a specific price. Groups typically negotiate rates and other details and hence the terms for the group and the rates will be very specific. The group code links all the reservations that relate to this specific sale and specific contract.",
+                        "example": "IBMA",
+                        "readOnly": true
+                    },
+                    "pms_reservation_id": {
+                        "type": "string",
+                        "description": " A unique identifier for a reservation within an instance of the PMS in a given property. This is the primary ID for any API calls. This is meant to be unique across time (unlike some confirmation numbers).",
+                        "example": "2312543",
+                        "readOnly": true
+                    },
+                    "pms_reservation_id_share_with": {
+                        "type": "array",
+                        "description": "A set of unique Reservation IDs that this reservation is shared with. When there are multiple reservations for a given room its important for systems like key locks to understand both reservations are sharing the same room so that the generated keys do not lock each other out. This allows multiple reservations to be in the same room in such cases as multiple people sharing the same room for a conference. It is useful for having separate folios, different stay dates. If none of these apply, the PMS would just have multiple guests in a single room. For in house reservation this information may also be deduced by the reservation start end date and room number overlapping the reservation. However on a pre arrival reservation there is no way to indicate that two reservations will be staying together except by this method.\n\nExample:  2156,2157,2158",
+                        "items": {
+                            "type": "string",
+                            "example": "2156,2157,2158"
+                        },
+                        "readOnly": true
+                    },
+                    "pms_confirmation_code": {
+                        "type": "string",
+                        "description": "An alphanumeric code issued by the PMS that is unique at the time of issuance across all active reservations. This is intended to be a human readable code used to find a reservation in kiosks, apps, calls, etc.",
+                        "example": "AC1X543",
+                        "readOnly": true
+                    },
+                    "external_confirmation_code": {
+                        "type": "array",
+                        "description": "Similar to a pms_confirmation_id, this would be the human readable ID that is issued by a system outside the PMS. There external systems could be CRS (Central Reservation System), OTA (On-line travel agent), GDS (Global Distribution System), RMH (Revenue Management System). The guest will have a confirmation number based on where the reservation is booked. If a guest books on an OTA it may be an Expedia confirmation, if they book on a hotel website it may be the CRS confirmation.\n\nExample:  Expedia:112DHSG,Sabre:KDJDJ21",
+                        "items": {
+                            "type": "string",
+                            "example": "Expedia:112DHSG,Sabre:KDJDJ21",
+                            "readOnly": true
+                        },
+                        "readOnly": true
+                    },
+                    "reservation_preference_code": {
+                        "type": "array",
+                        "description": "A set of codes that represent desired options for a given stay. This list serves as instructions for various departments in things like room selection, service delivery, and charge routing etc. These options are aggregated at the reservation level from various sources (Reservation booking, VIP code, guest profile, group profile, and rate plan). The preferences are codes that to the staff represent options such as King Bed, Non-smoking Room, High Floor, Extra bed, Birthday, ADA, VIP.\n\nExample:  K1,NS,HF",
+                        "items": {
+                            "type": "string",
+                            "example": "K1,NS,HF",
+                            "readOnly": true
+                        },
+                        "readOnly": true
+                    },
+                    "currency_code": {
+                        "type": "string",
+                        "description": "ISO 4217 Format - This is the currency code that corresponds to the rate_plan_code and room_rate fields. It should be the same as the base currency that hotel operates in but it could be a different currency if the hotel and the PMS support multi-currency functionality.",
+                        "example": "USD ",
+                        "readOnly": true
+                    },
+                    "is_posting_allowed": {
+                        "type": "boolean",
+                        "description": "Indicates whether this folio allows charges, typically as a result of a CC on file.  This includes charges from other systems (outside of the PMS) related to outlets such as a gift shop, restaurant, spa, etc.",
+                        "readOnly": true
+                    },
+                    "room_rate_info": {
+                        "type": "array",
+                        "description": "An array of room_rate objects which allows for the rates for all days of the reservation to be sent.  The start_date and end_date may be used to send the rate for a range of dates, or the rate may be sent for each individual day of the stay.",
+                        "items": {
+                            "$ref": "#/components/schemas/RoomRate"
+                        }
+                    }
+                },
+                "required": [
+                    "primary_guest",
+                    "property",
+                    "arrival_date",
+                    "departure_date",
+                    "room_type_code",
+                    "reservation_status_pms",
+                    "reservation_status_htng",
+                    "pms_reservation_id",
+                    "pms_confirmation_code",
+                    "currency_code",
+                    "is_posting_allowed",
+                    "room_rate_info"
+                ],
+                "readOnly": true
+            },
+            "RoomRate": {
+                "title": "RoomRate",
+                "type": "object",
+                "description": "ISO 8601 Format - The Room Rate entity includes data fields that affects the room rate. This entity is an array so that rates for the entire stay can be sent.\n",
+                "properties": {
+                    "end_date": {
+                        "type": "string",
+                        "example": "2022-09-17",
+                        "description": "ISO 8601 Format - The date that this room rate stops (this is an exclusive date similar to a check out date).   The difference between the start date and the end date can be utilzed to determin how long this rate is effective.  The end date is speaking to a night rate, if the start date and the end date are the same it is assumed it is a day rate.  Since the end date is exclusive, when the start date and the end date are the same then this represents a day rate.",
+                        "readOnly": true
+                    },
+                    "number_of_adults": {
+                        "type": "number",
+                        "example": 2,
+                        "description": "Count of adults on the reservation. The number reflected here is a snapshot of what is current. This may change throughout the stay as additional guests arrive/depart within a reservation.",
+                        "readOnly": true
+                    },
+                    "number_of_children": {
+                        "type": "number",
+                        "example": 2,
+                        "description": "Count of children on the reservation. The number reflected here is a snapshot of what is current. This may change throughout the stay as additional guests arrive/depart within a reservation.",
+                        "readOnly": true
+                    },
+                    "rate_plan_code": {
+                        "type": "string",
+                        "example": "BAR",
+                        "description": "A code that represents the rate structure under which the reservation is being booked. This rate structure is an umbrella that when combined with other aspects of the reservation (Date, room type, package, group code) will set the price for the room for each given night and impact the type of amenities/service the guest receives (Tier of internet, meal included, housekeeping service).  \n\nThe acceptable values will vary from hotel to hotel making this field a hotel enumeration.",
+                        "readOnly": true
+                    },
+                    "rate_plan_name": {
+                        "type": "string",
+                        "example": "Best Available Rate",
+                        "description": "The rate plan name is a human readable version of the rate_plan_code. For example, a hotel may sell a rate plan code of \"BAR\" which may have a rate plan name of \"Best Available Rate.\"",
+                        "readOnly": true
+                    },
+                    "room_rate": {
+                        "type": "string",
+                        "example": "200.00",
+                        "description": "The amount charged for the accommodation is based on the rate_plan_code and room_type. This is typically a day, but does not have to be. This field will roll the rate up into a daily rate. This is the amount that will be posted to the guest's folio on a day by day basis. It should be the exact amount that was quoted to the guest at the time of booking. In some cases, this may include items like taxes (VAT) and packaging inclusions (breakfast), but in other cases it may not include these items.",
+                        "readOnly": true
+                    }
+                },
+                "required": [
+                    "end_date",
+                    "rate_plan_code",
+                    "room_rate"
+                ]
+            }
+        }
+    }
+}
