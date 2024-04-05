@@ -133,7 +133,7 @@ export async function searchHotelsByLocation(
 }
 
 // const run = async()  => {
-//   const res = await poly.ohip.aiGuest.searchHotelsByLocation('Buckingham Palace, London','5','km','walking','en');
+//   const res = await searchHotelsByLocation('Buckingham Palace, London',5,'km','walking','en');
 //   console.log(res);
 // };
 
