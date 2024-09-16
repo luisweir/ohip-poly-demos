@@ -679,9 +679,6 @@
 						},
 						{
 							"name": "Create Client Status",
-							"protocolProfileBehavior": {
-								"disableBodyPruning": true
-							},
 							"request": {
 								"auth": {
 									"type": "bearer",
@@ -693,7 +690,7 @@
 										}
 									]
 								},
-								"method": "GET",
+								"method": "POST",
 								"header": [
 									{
 										"key": "Content-Type",
@@ -715,13 +712,13 @@
 									}
 								},
 								"url": {
-									"raw": "{{Poly-Host}}/variables/6cd53168-d29a-4111-9717-b8a0287d59d2",
+									"raw": "{{Poly-Host}}/variables/{{UPDATE ME}}",
 									"host": [
 										"{{Poly-Host}}"
 									],
 									"path": [
 										"variables",
-										"6cd53168-d29a-4111-9717-b8a0287d59d2"
+										"{{UPDATE ME}}"
 									]
 								}
 							},
@@ -791,15 +788,14 @@
 									}
 								},
 								"url": {
-									"raw": "{{Poly-Host}}/functions/server/a492faea-ad8f-466c-83fb-a9d5ec2faca5/logs",
+									"raw": "{{Poly-Host}}/functions/server/{{UPDATE ME}}",
 									"host": [
 										"{{Poly-Host}}"
 									],
 									"path": [
 										"functions",
 										"server",
-										"a492faea-ad8f-466c-83fb-a9d5ec2faca5",
-										"logs"
+										"{{UPDATE ME}}"
 									]
 								}
 							},
