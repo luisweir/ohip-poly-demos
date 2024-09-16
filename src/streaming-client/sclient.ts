@@ -3,6 +3,7 @@ import WebSocket from 'ws';
 import { Client, createClient as createWSClient, SubscribePayload } from 'graphql-ws';
 import crypto from 'crypto';
 import { v4 as uuidv4 } from 'uuid';
+import { promisify } from 'util';
 
 interface RunStatus {
     run: boolean;
@@ -44,6 +45,7 @@ interface OAuthOptions {
 }
 
 export class GsClient {
+    private static instance: GsClient | null = null;
     private activeSocket: WebSocket | null = null;
     private windowCount: number;
     private statsSummary: IStrIndex;
@@ -51,10 +53,11 @@ export class GsClient {
     private client: Client | undefined;
     private clientId: any;
     private envSettings: any;
-    private offset: number;
     private url: string;
+    public offset: number;
+    private started: boolean;
 
-    public constructor() {
+    private constructor() {
         this.clientId = null;
         this.url = '';
         this.offset = 0;
@@ -62,27 +65,42 @@ export class GsClient {
         this.statsSummary = {};
         this.stats = {};
         this.registerShutdownHook(); // make sure to dispose and terminate the client on shutdown
+        this.started = false;
+    }
+
+    public static getInstance(): GsClient {
+        if (!GsClient.instance) {
+            GsClient.instance = new GsClient();
+        }
+        return GsClient.instance;
     }
 
     public registerShutdownHook(): void {
-        process.on('SIGINT', async() => {
-            console.log('Received SIGINT signal');
-            await this.clearClientStatus(null,false);
-            await this.terminateClient('SIGINT');
-            setTimeout(process.exit(0), 2000);
-        });
-        process.on('SIGTERM', async() => {
-            console.log('Received SIGTERM signal');
-            await this.clearClientStatus(null,false);
-            await this.terminateClient('SIGTERM');
-            setTimeout(process.exit(0), 2000);
-        });
+        const delay = promisify(setTimeout);
+        const handleShutdown = async(signal: string) => {
+            console.log(`Received ${signal} signal`);
+            this.terminateClient(signal);
+            await delay(2000);  // wait for 2 seconds before exiting
+            await this.clearClientStatus(null, false);
+            process.exit(0);
+        };
+        process.on('SIGINT', () => handleShutdown('SIGINT'));
+        process.on('SIGTERM', () => handleShutdown('SIGTERM'));
     }
 
     private async clearClientStatus(clientId: any, status: boolean) {
-        console.log(`Clearing client status as ${clientId}:${status} and offset ${this.offset}`);
-        await vari.ohip.sclient.offset.update(this.offset);
-        await vari.ohip.sclient.clientStatus.update({ clientId: clientId, connected: status });
+        if (this.clientId === (await vari.ohip.sclient.clientStatus.get()).clientId) {
+            if (clientId === null) {
+                console.log(`Shutdown detected. Setting client status to ${clientId}:${status}`);
+            } else {
+                console.log(`Clearing client status as ${clientId}:${status} and offset ${this.offset}`);
+            }
+            await vari.ohip.sclient.offset.update(this.offset);
+            await vari.ohip.sclient.clientStatus.update({ clientId: clientId, connected: status });
+        } else {
+            console.log(`Not clearing status as client ${this.clientId} not connected`);
+        }
+        return;
     }
 
     public terminateClient(reason: string) {
@@ -279,21 +297,26 @@ export class GsClient {
                 setTimeout(() => this.startConsuming(true), this.envSettings.delayToConnect);
             }
         } else {
-            console.log(`Client ${clientStatus.clientId} already connected`);
+            console.log(`Client ${this.clientId} is trying to connect however ${clientStatus.clientId} is already connected`);
             return null;
         }
     }
 
     public async start(envSettings: any, offset: number, url: string) {
+        if (this.started) {
+            console.log('Client has already started.');
+            return;
+        }
         this.clientId = uuidv4();
         if ((await vari.ohip.sclient.clientStatus.get()).clientId === null)
             await vari.ohip.sclient.clientStatus.update({clientId: this.clientId, connected: false});
         // quick delay to avoid conflict due to initial racing condition
-        await new Promise(resolve => setTimeout(resolve, 2000));
+        await new Promise(resolve => setTimeout(resolve, 3000));
         this.client = undefined;
         this.envSettings = envSettings;
         this.offset = offset;
         this.url = url;
+        this.started = true;
         setImmediate(() => this.startConsuming(false));
         setInterval(() => {this.startConsuming(true);}, this.envSettings.tokenExpiry);
     }
@@ -323,18 +346,19 @@ export class GsClient {
 }
 
 // main function
-export async function sclient(status: RunStatus): Promise<string> {
-    const client: GsClient = new GsClient();
+export async function sclient(): Promise<{offset: number, status: vari.Ohip.Sclient.ClientStatus.ValueType}> {
+    const client: GsClient = GsClient.getInstance();
     const envSettings = await vari.ohip.sclient.envSettings.get();
     const offset = await vari.ohip.sclient.offset.get();
     const url = envSettings.wsUrl + '?key=' + await client.generateHash(envSettings.appKey);
     try {
+        console.log('Starting client');
         client.start(envSettings, offset, url);
     } catch {
         console.error('Error establishing socket connection');
     }
-    return `running ${status}`;
+    const status = await vari.ohip.sclient.clientStatus.get();
+    return {offset, status};
 }
 
-// uncomment to test locally
-sclient({run: true});
+sclient().then(status => console.log(status));
