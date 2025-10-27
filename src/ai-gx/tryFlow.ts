@@ -117,13 +117,13 @@ const run = async(options: Options)  => {
     if ('guestCheckedIn' in roomAssigned) {
       log.info(`Successfully checked-in. Room ${roomAssigned.roomNumber} assigned`);
       log.info('Getting available concierge services');
-      const services = await getConciergeServices();
+      const services = await getConciergeServices(hotelName,options.from,options.to,options.adults,options.children);
       log.info(services);
       if ('ConciergeServiceNames' in services) {
         const randomService = Object.keys(services.ConciergeServiceNames)[Math.floor(Math.random() * Object.keys(services.ConciergeServiceNames).length)];
         const randomQuantity = (Math.floor(Math.random() * 2)) + 1;
         log.info(`Randomly picked ${randomService} with quantity ${randomQuantity} and now requesting service`);
-        const request = await requestConciergeService(booking.operaConfirmationNumber, hotelName, randomService,randomQuantity);
+        const request = await requestConciergeService(booking.operaConfirmationNumber, hotelName, randomService,options.from,options.to,options.adults,options.children);
         log.info(request);
         if ('successful' in request) {
           // check the bill

@@ -169,7 +169,8 @@ export async function createResWithPayLink(
         PaymentToken: eventRecord.additionalData['opi.transToken'],
         Last4Digits: eventRecord.additionalData.cardSummary,
         'ExpiryYY-MM': `${eventRecord.additionalData.expiryDate.split('/')[1].substring(2, 4)}-${eventRecord.additionalData.expiryDate.split('/')[0]}`,
-        NameOnCard: eventRecord.additionalData.cardHolderName
+        NameOnCard: eventRecord.additionalData.cardHolderName,
+        citId: '' //place holder for now
       };
 
       // Create reservation against property API
@@ -208,6 +209,7 @@ export async function createResWithPayLink(
         NumberOfUnits: numberOfRooms,
         GuestFirstName: guestName ? guestName[1] : '',
         GuestLastName: guestName ? guestName[2] : '',
+        GuestHouseNameOrNumber: eventRecord.additionalData['billingAddress.houseNumberOrName'],
         GuestAddressStreet: eventRecord.additionalData['billingAddress.street'],
         GuestAddressCity: eventRecord.additionalData['billingAddress.city'],
         GuestAddressPostalCode: eventRecord.additionalData['billingAddress.postalCode'],
@@ -235,7 +237,7 @@ export async function createResWithPayLink(
     }
 
     // now we get the confirmation number
-    const res = await poly.ohip.property.getReservationDetails(env.inject('ohip.hostName'), hotelId, Number(resId), env.inject('ohip.appKey'), token);
+    const res = await poly.ohip.property.getReservationById(env.inject('ohip.hostName'), hotelId, Number(resId), env.inject('ohip.appKey'), token);
     if (res.data.reservations.reservation[0]) {
       confNumber = res.data.reservations.reservation[0].reservationIdList[1].id;
     } else {
@@ -258,8 +260,8 @@ export async function createResWithPayLink(
 //   const from: any = moment().add(0, 'days').format(('YYYY-MM-DD'));
 //   const to: any = moment().add(1, 'days').format(('YYYY-MM-DD'));
 //   // const linkId = generateUUID();
-//   const linkId  = 'PL81233EC185022F57';
-//   const res = await createResWithPayLink('ohip sandbox 1',1,0,'', from,to,1,'BAR20','JSUI',175, 'US', 'en-US','USD', linkId);
+//   const linkId  = 'PL9664EB589D19E2C1403129A';
+//   const res = await createResWithPayLink('ohip sandbox 01',1,0,'', from,to,1,'BARNR','ECO',175, 'US', 'en-US','USD', linkId);
 //   console.log(res);
 // };
 

@@ -40,7 +40,7 @@ export async function searchHotelAvailability(hotelName: string, adults: number,
 
       // search hotel availability
       console.log(`Searching availability in ${hotelId} for ${adults} adults and ${children} children from ${dateFrom} to ${dateTo}`);
-      const availability = await poly.ohip.property.searchHotelAvailability(env.inject('ohip.hostName'), hotelId, dateFrom, dateTo, children, adults, rooms, '',  env.inject('ohip.appKey'), token);
+      const availability = await poly.ohip.property.searchHotelAvailability(env.inject('ohip.hostName'), hotelId, dateFrom, children, adults, rooms, '',  dateTo, env.inject('ohip.appKey'), token);
       if (availability.status !== 200) {
         const errMsg: any = availability.data;
         throw new Error(errMsg.title);
@@ -100,12 +100,12 @@ export async function searchHotelAvailability(hotelName: string, adults: number,
   }
 }
 
-// import moment from 'moment';
-// const run = async()  => {
-//   const from: any = moment().add(0, 'days').format(('YYYY-MM-DD'));
-//   const to: any = moment().add(1, 'days').format(('YYYY-MM-DD'));
-//   const t = await searchHotelAvailability('ohip sandbox 1',1,2,1,from,to);
-//   console.log(t);
-// };
+import moment from 'moment';
+const run = async()  => {
+  const from: any = moment().add(0, 'days').format(('YYYY-MM-DD'));
+  const to: any = moment().add(1, 'days').format(('YYYY-MM-DD'));
+  const t = await searchHotelAvailability('ohip sandbox 01',1,2,1,from,to);
+  console.log(t);
+};
 
-// run();
+run();

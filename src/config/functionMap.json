@@ -1,0 +1,212 @@
+[
+    {
+        "id": "aef32f3c-93b4-460b-8da8-71d572cd66ed",
+        "name": "getReservationByExternalId",
+        "context": "ohip.property",
+        "contextName": "ohip.property.getReservationByExternalId",
+        "oldContextName": "hospitality.reservations.fetch.getByHotelAndDate"
+    },
+    {
+        "id": "6bf030b5-8224-413d-8abb-b607744b8b34",
+        "name": "getProfileById",
+        "context": "ohip.property",
+        "contextName": "ohip.property.getProfileById",
+        "oldContextName": "hospitality.crm.profiles.getDetails"
+    },
+    {
+        "id": "a8acf69d-7634-426e-9e7d-6067dd34bd26",
+        "name": "reinstateCheckout",
+        "context": "ohip.property",
+        "contextName": "ohip.property.reinstateCheckout",
+        "oldContextName": "hospitality.reservations.checkOuts.reinstate"
+    },
+    {
+        "id": "6e188259-9978-4023-9ae5-fcc9853d15f2",
+        "name": "checkout",
+        "context": "ohip.property",
+        "contextName": "ohip.property.checkout",
+        "oldContextName": "hospitality.reservations.checkOuts.process"
+    },
+    {
+        "id": "f7681ab7-4bce-4af9-8685-f1b12ab4b7e5",
+        "name": "createFolio",
+        "context": "ohip.property",
+        "contextName": "ohip.property.createFolio",
+        "oldContextName": "hospitality.reservations.folios.createFolio"
+    },
+    {
+        "id": "f64f8ff6-41a8-4aa4-a1e5-1d4494c0c466",
+        "name": "settleFolio",
+        "context": "ohip.property",
+        "contextName": "ohip.property.settleFolio",
+        "oldContextName": "hospitality.reservations.payments.post"
+    },
+    {
+        "id": "ad74fa59-0bc0-401c-b1df-02f9bcb60e32",
+        "name": "getFolioDetails",
+        "context": "ohip.property",
+        "contextName": "ohip.property.getFolioDetails",
+        "oldContextName": "hospitality.reservations.folios.fetchDetails"
+    },
+    {
+        "id": "05df6058-5581-4897-92c4-d1fcd1f3cce5",
+        "name": "addCharges",
+        "context": "ohip.property",
+        "contextName": "ohip.property.addCharges",
+        "oldContextName": "hospitality.reservations.charges.postCharge"
+    },
+    {
+        "id": "00534145-b07c-4e02-8736-d4f1c8ebfdcf",
+        "name": "getTransactionCodes",
+        "context": "ohip.property",
+        "contextName": "ohip.property.getTransactionCodes",
+        "oldContextName": "hospitality.hotels.transactionCodes.getList"
+    },
+    {
+        "id": "0aa15e36-e8df-4b02-9cf5-c076d63eb63f",
+        "name": "getPackages",
+        "context": "ohip.property",
+        "contextName": "ohip.property.getPackages",
+        "oldContextName": "hospitality.packages.fetch.getDetails"
+    },
+    {
+        "id": "e56e7f2f-b1be-4739-8658-4b5392c771c9",
+        "name": "checkIn",
+        "context": "ohip.property",
+        "contextName": "ohip.property.checkIn",
+        "oldContextName": "hospitality.reservations.checkIns.create"
+    },
+    {
+        "id": "11e37ebc-06c8-4d4f-9742-bb454ad1f197",
+        "name": "assignRoom",
+        "context": "ohip.property",
+        "contextName": "ohip.property.assignRoom",
+        "oldContextName": "hospitality.reservations.roomAssignments.assignRoom"
+    },
+    {
+        "id": "18ddd09a-cee1-4c6e-9b6f-f2facd97bf71",
+        "name": "getAvailableRooms",
+        "context": "ohip.property",
+        "contextName": "ohip.property.getAvailableRooms",
+        "oldContextName": "hospitality.hotels.rooms.getAvailability"
+    },
+    {
+        "id": "e31f5c94-314a-4e20-9ec5-49913b4cb5ab",
+        "name": "searchHotelAvailability",
+        "context": "ohip.property",
+        "contextName": "ohip.property.searchHotelAvailability",
+        "oldContextName": "hospitality.hotels.availability.fetch"
+    },
+    {
+        "id": "dbc1c868-af9b-451b-8b14-1c96068941cf",
+        "name": "preCheckIn",
+        "context": "ohip.property",
+        "contextName": "ohip.property.preCheckIn",
+        "oldContextName": "hospitality.reservations.preCheckIn.initiate"
+    },
+    {
+        "id": "16efeef8-2c7a-4872-86b0-e8238863eda6",
+        "name": "getBusinessDate",
+        "context": "ohip.property",
+        "contextName": "ohip.property.getBusinessDate",
+        "oldContextName": "hospitality.hotels.businessDates.get"
+    },
+    {
+        "id": "d9195d77-45d3-4410-8818-8b0e6b6596fa",
+        "name": "getReservationByConfirmationNumber",
+        "context": "ohip.property",
+        "contextName": "ohip.property.getReservationByConfirmationNumber",
+        "oldContextName": "hospitality.reservations.fetch.getByConfirmationNumber"
+    },
+    {
+        "id": "ebe24cc0-d6f0-4e01-9269-9e3d942bf7b5",
+        "name": "getPaymentToken",
+        "context": "ohip.payments.adyen",
+        "contextName": "ohip.payments.adyen.getPaymentToken",
+        "oldContextName": "adyen.storedPaymentMethods.getList"
+    },
+    {
+        "id": "453c62dd-4b3b-44e0-85ed-8a7d5e244b66",
+        "name": "getPayByLinkDetails",
+        "context": "ohip.payments.adyen",
+        "contextName": "ohip.payments.adyen.getPayByLinkDetails",
+        "oldContextName": "adyen.paymentLinks.retrieve.getDetails"
+    },
+    {
+        "id": "5dc4f3b5-cec7-4d3b-af84-37e94283ccdb",
+        "name": "createPayByLink",
+        "context": "ohip.payments.adyen",
+        "contextName": "ohip.payments.adyen.createPayByLink",
+        "oldContextName": "adyen.paymentLinks.create"
+    },
+    {
+        "id": "efc9c76f-a7a4-4bc8-a97d-ee8520c52c2f",
+        "name": "createReservationWithToken",
+        "context": "ohip.property",
+        "contextName": "ohip.property.createReservationWithToken",
+        "oldContextName": "hospitality.reservations.create.submit"
+    },
+    {
+        "id": "c8dec138-3d80-4545-93c5-da5e9850605a",
+        "name": "getReservationById",
+        "context": "ohip.property",
+        "contextName": "ohip.property.getReservationById",
+        "oldContextName": "hospitality.reservations.fetch.getDetails"
+    },
+    {
+        "id": "0733f83d-5963-4cce-9490-bfbe370056b9",
+        "name": "createReservation",
+        "context": "ohip.property",
+        "contextName": "ohip.property.createReservation",
+        "oldContextName": "hospitality.reservations.create.post"
+    },
+    {
+        "id": "29a8eb6f-0f36-441c-b17d-6c5a6a19d16d",
+        "name": "createReservationWithTokenAndProfileId",
+        "context": "ohip.property",
+        "contextName": "ohip.property.createReservationWithTokenAndProfileId",
+        "oldContextName": "hospitalityApi.reservations.create.submit"
+    },
+    {
+        "id": "03faa960-6746-47fd-a9e1-02549880020b",
+        "name": "getGuaranteeDetails",
+        "context": "ohip.property",
+        "contextName": "ohip.property.getGuaranteeDetails",
+        "oldContextName": "hospitality.hotels.guarantees.fetchDetails"
+    },
+    {
+        "id": "daf7155c-f4b4-4d70-b5cd-fd4a6357eba4",
+        "name": "getPropertyRoomTypes",
+        "context": "ohip.property",
+        "contextName": "ohip.property.getPropertyRoomTypes",
+        "oldContextName": "hospitality.hotels.listOfValues.getResortRoomTypes"
+    },
+    {
+        "id": "bfac570e-6058-4e9f-bc1c-f4466dbbeb10",
+        "name": "distanceToHotels",
+        "context": "google.maps",
+        "contextName": "google.maps.distanceToHotels",
+        "oldContextName": "googleMaps.distanceMatrix.getDrivingDistance"
+    },
+    {
+        "id": "075c0eb8-4911-47ae-aa16-cfe038720cbf",
+        "name": "getHotelDetails",
+        "context": "ohip.property",
+        "contextName": "ohip.property.getHotelDetails",
+        "oldContextName": "hospitality.hotels.configuration.fetchDetails"
+    },
+    {
+        "id": "d8d33e76-1300-4090-b6a9-d3034b7e81dd",
+        "name": "getAllHotelsInChain",
+        "context": "ohip.property",
+        "contextName": "ohip.property.getAllHotelsInChain",
+        "oldContextName": "hospitality.resortChains.getList"
+    },
+    {
+        "id": "ecdab092-b07f-4df1-a9d0-82ca0423a508",
+        "name": "getAccessToken",
+        "context": "ohip.auth",
+        "contextName": "ohip.auth.getAccessToken",
+        "oldContextName": "hospitality.oauth.tokens.generate"
+    }
+]

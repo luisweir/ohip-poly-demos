@@ -186,18 +186,18 @@ export async function searchReservations(params: ExtendedInput): Promise<Reserva
   }
 }
 
-// const run = async()  => {
-//   const res = await searchReservations({ 
-//     fromDate: '2023-08-30',
-//     toDate: '2023-09-12',
-//     rangeType: RangeType.arrivals,
-//     propertyCode: 'SAND01CN',
-//     guestLastName: 'Potter',
-//     guestFirstName: 'Harry',
-//     orderBy: OrderBy.guestLastName,
-//     sortOrder: SortOrder.desc
-//   }); 
-//   console.log(res);
-// };
+const run = async()  => {
+  const res = await searchReservations({ 
+    fromDate: '2025-10-25',
+    toDate: '2025-10-30',
+    rangeType: RangeType.arrivals,
+    propertyCode: 'OHIPSB01',
+    guestLastName: 'Smith',
+    guestFirstName: 'John',
+    orderBy: OrderBy.guestLastName,
+    sortOrder: SortOrder.desc
+  }); 
+  console.log(res);
+};
 
-// run();
+run();

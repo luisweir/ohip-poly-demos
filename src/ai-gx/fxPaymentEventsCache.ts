@@ -24,7 +24,8 @@ export async function paymentEventsCache(paymentId: string, operation: Operation
                 return { error: 'no event payload provided'};
             }
             cache[paymentId] = createRecord;
-            await vari.ohip.paymentEventsCache.update(cache);
+            const upRecord = await vari.ohip.paymentEventsCache.update(cache);
+            console.log("upserted record", upRecord);
             // no need to wait. can happen async. TODO: can be improved for a job that runs periodically
             deleteOlderEvents();
             return createRecord;
@@ -53,13 +54,15 @@ export async function paymentEventsCache(paymentId: string, operation: Operation
 }
 
 // Function to delete events older than 24 hours
-export async function deleteOlderEvents(olderThan = 24): Promise<void> {
+export async function deleteOlderEvents(olderThan: number = 24): Promise<void> {
     const cache: any = await vari.ohip.paymentEventsCache.get();
     const now = new Date();
     for (const paymentId in cache) {
         const eventDate = new Date(cache[paymentId].eventDate);
+        console.log(eventDate);
         const timeDifference = now.getTime() - eventDate.getTime();
         const hoursDifference = timeDifference / (1000 * 60 * 60);
+        console.log(hoursDifference,">",olderThan);
         if (hoursDifference > olderThan) {
             delete cache[paymentId];
         }
@@ -68,7 +71,7 @@ export async function deleteOlderEvents(olderThan = 24): Promise<void> {
 }
 
 // async function run(){
-//     const payEvent: EventRecord = {
+//     const payEvent: any = {
 //         'additionalData': {
 //             'cardSummary': '1111',
 //             'shopperCountry': 'GB',
@@ -102,7 +105,7 @@ export async function deleteOlderEvents(olderThan = 24): Promise<void> {
 //             'value': 10
 //         },
 //         'eventCode': 'AUTHORISATION',
-//         'eventDate': '2023-09-05T20:01:13+02:00',
+//         'eventDate': '2025-10-27T11:01:13+02:00',
 //         'merchantAccountCode': 'Oracle097ECOM',
 //         'merchantReference': 'REF12345910',
 //         'operations': [

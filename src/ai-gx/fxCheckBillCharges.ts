@@ -68,7 +68,7 @@ export async function checkBillCharges(confirmationNumber: string, hotelName: st
         folioWindows.forEach((folioWindow) => {
           paid = paid + folioWindow.revenue.amount;
           if (!folioWindow.emptyFolio) {
-            folioWindow.folios.forEach((folio)=>{
+            (folioWindow.folios ?? []).forEach((folio)=>{
               folio.postings.forEach((posting)=>{
                 let transaction = '';
                 trxCodes.forEach((trxCode)=>{

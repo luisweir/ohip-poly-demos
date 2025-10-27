@@ -34,7 +34,7 @@ export async function getHotelId(hotelName: string): Promise<string> {
 }
 
 // const run = async() => {
-//   const res = await getHotelId('ohip sandbox 1');
+//   const res = await getHotelId('ohip sandbox 01');
 //   console.log(res);
 // };
 

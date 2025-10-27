@@ -70,7 +70,7 @@ export async function checkInGuest(confirmationNumber: string, hotelName: string
     // pre-check in with arrival time
     const dateTime = `${arrivalDate} ${guestArrivalTime}`;
     console.log(dateTime);
-    await poly.ohip.property.preCheckIn(env.inject('ohip.hostName'), hotelId, resId, env.inject('ohip.appKey'),token, { 'arrivalTime' : dateTime })
+    await poly.ohip.property.preCheckIn(env.inject('ohip.hostName'), hotelId, resId, env.inject('ohip.appKey'),token, { 'ArrivalTime' : dateTime })
       .then(()=>{console.log(`successfully pre-checked in reservation with confirmation number ${confNumber}`);});
 
     // find an available room

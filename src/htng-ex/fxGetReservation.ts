@@ -107,7 +107,7 @@ export async function getReservation(params: ExtendedInput): Promise<Reservation
         resId = parseInt(params.reservationId);
     }
 
-    const readResult = await poly.ohip.property.getReservationDetails(env.inject('ohip.hostName'), (params.propertyCode) ? params.propertyCode : env.inject('ohip.hotelId'), resId, env.inject('ohip.appKey'), token);
+    const readResult = await poly.ohip.property.getReservationById(env.inject('ohip.hostName'), (params.propertyCode) ? params.propertyCode : env.inject('ohip.hotelId'), resId, env.inject('ohip.appKey'), token);
     
     if (readResult.status === 204) {
       const notFound: Error = {
@@ -186,12 +186,18 @@ export async function getReservation(params: ExtendedInput): Promise<Reservation
       return htngGuest;
     };
 
-    const companyNames = [
-      ...operaReservation.reservations.reservation[0].reservationProfiles.reservationProfile
-          .filter(profile => profile.reservationProfileType === 'Company')
-          .map(profile => profile.profile?.company?.companyName),
-      operaReservation.reservations.reservation[0].reservationGuests[0]?.profileInfo?.profile?.customer?.personName.find(name => name.nameType === 'Primary')?.surname
-    ];
+    const rawReservation: any = operaReservation?.reservations?.reservation?.[0];
+
+    const profiles = rawReservation?.reservationProfiles?.reservationProfile ?? [];
+    const companyProfiles = profiles
+      .filter((profile: any) => profile?.reservationProfileType === 'Company')
+      .map((profile: any) => profile?.profile?.company?.companyName)
+      .filter(Boolean);
+
+    const primarySurname =
+      rawReservation?.reservationGuests?.[0]?.profileInfo?.profile?.customer?.personName?.find((name: any) => name?.nameType === 'Primary')?.surname;
+
+    const companyNames = [...companyProfiles, primarySurname].filter(Boolean) as string[];
 
     const removeUndefined = (obj: any) => {
       for (const k in obj) {
@@ -220,15 +226,25 @@ export async function getReservation(params: ExtendedInput): Promise<Reservation
       number_of_children: operaReservation?.reservations?.reservation?.[0]?.roomStay?.guestCounts?.children ?? 0,
       room_type_code: operaReservation?.reservations?.reservation?.[0]?.roomStay?.currentRoomInfo?.roomType,
       // room_type_name: operaReservation?.reservations?.reservation?.[0]?.roomStay?.currentRoomInfo?.roomType, // TODO: is this really needed? will require an additional call
-      room_number: operaReservation?.reservations?.reservation?.[0]?.roomStay?.currentRoomInfo?.roomId,
+      room_number: rawReservation?.roomStay?.roomRates?.[0]?.roomId ?? rawReservation?.roomStay?.currentRoomInfo?.roomId,
       company_name: concatenateWithSemicolon(companyNames),
       reservation_status_pms: operaReservation?.reservations?.reservation?.[0]?.reservationStatus,
       reservation_status_htng: undefined, // TODO: map PMS reservations status to HTNG reservation status
-      group_code: concatenateWithSemicolon(operaReservation?.reservations?.reservation?.[0]?.reservationProfiles?.reservationProfile.filter(profile => profile.reservationProfileType === 'Group').map(profile => profile.profileIdList[0].id)),
+      group_code: concatenateWithSemicolon(
+        (rawReservation?.reservationProfiles?.reservationProfile ?? [])
+          .filter((profile: any) => profile?.reservationProfileType === 'Group')
+          .map((profile: any) => profile?.profileIdList?.[0]?.id)
+      ),
       pms_reservation_id: operaReservation?.reservations?.reservation?.[0]?.reservationIdList[0].id,
       pms_confirmation_code: operaReservation?.reservations?.reservation?.[0]?.reservationIdList[1].id,
-      pms_reservation_id_share_with: concatenateWithSemicolon(operaReservation?.reservations?.reservation?.[0]?.linkedReservation?.reservationInfo?.map(info => info.reservationIdList?.find(id => id.type === 'Reservation')?.id)),
-      external_confirmation_code: transformExternalConfirmationCodes(operaReservation?.reservations?.reservation?.[0]?.externalReferences?.map(ref => `${ref.idContext}:${ref.id}`)),
+      pms_reservation_id_share_with: concatenateWithSemicolon(
+        (rawReservation?.linkedReservation?.reservationInfo as any[] | undefined)?.map((info: any) =>
+          info?.reservationIdList?.find((id: any) => id?.type === 'Reservation')?.id
+        ) ?? []
+      ),
+      external_confirmation_code: transformExternalConfirmationCodes(
+        (rawReservation?.externalReferences as any[] | undefined)?.map((ref: any) => `${ref?.idContext}:${ref?.id}`) ?? []
+      ),
       reservation_preference_code: concatenatePreferenceTypeWithValue(operaReservation?.reservations?.reservation?.[0]?.preferenceCollection),
       currency_code: operaReservation?.reservations?.reservation?.[0]?.roomStay?.roomRates?.[0]?.rates?.rate?.[0]?.base?.currencyCode,
       is_posting_allowed: operaReservation?.reservations?.reservation?.[0]?.cashiering?.billingPrivileges?.postStayCharging,
@@ -257,14 +273,13 @@ export async function getReservation(params: ExtendedInput): Promise<Reservation
 
 // const run = async()  => {
 //   const res = await getReservation({ 
-//     reservationId: '118474',
-//     propertyCode: 'SAND01CN',
-//     reservationIdType: ReservationIdentifier.internal,
+//     reservationId: 'LW12345',
+//     propertyCode: 'OHIPSB01',
+//     reservationIdType: ReservationIdentifier.external,
 //     guestFetchInstructions: GuestFetchInstruction.full
 //   }); 
 //   /*
-//     res with partial details: conf number: 1840002
-//     res with all details: red Id: 118474, conf number: 1846543, ext Id: 12344567
+//     Res id: 356127, conf number: 2785522, ext Id: LW12345
 //   */
 //   console.log(res);
 // };

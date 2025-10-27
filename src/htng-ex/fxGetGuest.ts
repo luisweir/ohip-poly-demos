@@ -57,38 +57,66 @@ export async function getGuest(params: ExtendedInput): Promise<Guest| Error> {
     console.log('found profile');
     // transform guest preferences
     const preferences: string[] = [];
-    if (profile.data.profileDetails.preferenceCollection.preferenceType) {
-      profile.data.profileDetails.preferenceCollection.preferenceType.forEach((prefType) => {
-        if (prefType.preference && Array.isArray(prefType.preference)) {
-          prefType.preference.forEach((prefValue) => {
-            const pref = `${prefType.preferenceType}-${prefValue.preferenceValue}`;
-            preferences.push(pref);
-          });
-        }
-      });
+    const prefCollection: any = (profile.data as any)?.profileDetails?.preferenceCollection;
+    if (prefCollection) {
+      // Shape 1: { preferenceType: Array<{ preferenceType: string, preference: Array<{ preferenceValue: string }> }> }
+      if (Array.isArray(prefCollection.preferenceType)) {
+        prefCollection.preferenceType.forEach((pt: any) => {
+          const typeCode = pt?.preferenceType;
+          const prefArr = pt?.preference;
+          if (typeCode && Array.isArray(prefArr)) {
+            prefArr.forEach((p: any) => {
+              const value = p?.preferenceValue;
+              if (value) preferences.push(`${typeCode}:${value}`);
+            });
+          }
+        });
+      }
+      // Shape 2: Array<{ preferenceType: string, preference: Array<{ preferenceValue: string }> }>
+      else if (Array.isArray(prefCollection)) {
+        (prefCollection as any[]).forEach((pt: any) => {
+          const typeCode = pt?.preferenceType;
+          const prefArr = pt?.preference;
+          if (typeCode && Array.isArray(prefArr)) {
+            prefArr.forEach((p: any) => {
+              const value = p?.preferenceValue;
+              if (value) preferences.push(`${typeCode}:${value}`);
+            });
+          }
+        });
+      }
     }
     
     // Transform to HTNG Guest object
+    const details: any = (profile.data as any)?.profileDetails;
+    const customer: any = details?.customer;
+    const personName0: any = customer?.personName?.[0];
+    const personName1: any = customer?.personName?.[1];
+    const telephones: any = details?.telephones?.telephoneInfo?.[0]?.telephone;
+    const emails: any[] | undefined = details?.emails?.emailInfo;
+    const memberships: any[] | undefined = (details?.profileMemberships as any)?.profileMembership;
+    const primaryMembership: any | undefined = Array.isArray(memberships) ? memberships[0] : undefined;
+
     const htngGuest: Guest =  {
-      name_suffix: profile.data.profileDetails.customer.personName[0]?.nameTitle,
-      name_prefix: profile.data.profileDetails.customer.personName[1]?.nameTitle,
-      name_first: profile.data.profileDetails.customer.personName[0]?.givenName,
-      name_middle: profile.data.profileDetails.customer.personName[0]?.middleName,
-      name_last: profile.data.profileDetails.customer.personName[0]?.surname,
-      vip_code: profile.data.profileDetails.customer.vipStatus,
-      company_name: profile.data.profileDetails.customer.legalCompany,
-      prefered_language: profile.data.profileDetails.customer.language,
-      profile_id: profile.data.profileIdList[0]?.id,
-      loyalty: (profile.data.profileDetails.profileMemberships.profileMembership) ? {
-        loyalty_program_type: profile.data.profileDetails.profileMemberships.profileMembership[0]?.programDescription,
-        loyalty_level: profile.data.profileDetails.profileMemberships.profileMembership[0]?.membershipLevel,
-        loyalty_membership_id: profile.data.profileDetails.profileMemberships.profileMembership[0]?.membershipId
+      name_suffix: personName0?.nameTitle ?? personName0?.nameSuffix,
+      name_prefix: personName1?.nameTitle,
+      name_first: personName0?.givenName,
+      name_middle: personName0?.middleName,
+      name_last: personName0?.surname,
+      vip_code: customer?.vipStatus ?? customer?.vip?.vipCode,
+      company_name: customer?.legalCompany ?? customer?.company?.companyName,
+      prefered_language: customer?.language,
+      profile_id: (profile.data as any).profileIdList?.[0]?.id,
+      loyalty: primaryMembership ? {
+        loyalty_program_type: primaryMembership?.programDescription,
+        loyalty_level: primaryMembership?.membershipLevel,
+        loyalty_membership_id: primaryMembership?.membershipId
       } : undefined,
-      phone_mobile: (profile.data.profileDetails.telephones.telephoneInfo) ? profile.data.profileDetails.telephones.telephoneInfo[0]?.telephone.phoneNumber : undefined,
-      email: (profile.data.profileDetails.emails.emailInfo) ? {
-        email_type: profile.data.profileDetails.emails.emailInfo[0]?.email.typeDescription,
-        email_is_primary: profile.data.profileDetails.emails.emailInfo[0]?.email.primaryInd,
-        email_address:  profile.data.profileDetails.emails.emailInfo[0]?.email.emailAddress
+      phone_mobile: telephones?.phoneNumber ?? telephones,
+      email: emails ? {
+        email_type: emails?.[0]?.email?.typeDescription,
+        email_is_primary: emails?.[0]?.email?.primaryInd,
+        email_address:  emails?.[0]?.email?.emailAddress
       } : undefined,
       preferences: preferences
     };
@@ -109,12 +137,12 @@ export async function getGuest(params: ExtendedInput): Promise<Guest| Error> {
   }
 }
 
-// const run = async()  => {
-//   const guest = await getGuest({ 
-//     guestId: '724797'
-//     // propertyCode: 'SAND01CN'
-//   }); // part profile -> 724915, full profile -> 724797
-//   console.log(guest);
-// };
+const run = async()  => {
+  const guest = await getGuest({ 
+    guestId: '1592359'
+    // propertyCode: 'OHIPSB01'
+  }); // part profile -> 1592359, full profile -> TBC
+  console.log(guest);
+};
 
-// run();
+run();

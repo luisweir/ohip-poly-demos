@@ -34,18 +34,14 @@ export async function getOhipToken(): Promise<string> {
         // whatever was stored wasn't a token so new token will be fetched
         console.log(`Stored token = '${storedToken}' isn't a valid JWT. Will fetch a new token`);
     }
-
     if (exp <= thresholdSeconds) {
       // get access token
       const token = (await poly.ohip.auth.getAccessToken(
         env.inject('ohip.hostName'),
         env.inject('ohip.appKey'),
+        env.inject('ohip.enterpriseId'),
         env.inject('ohip.clientSecret'),
-        env.inject('ohip.clientId'),
-        {
-          Username: env.inject('ohip.username'),
-          Password: env.inject('ohip.password')
-        }
+        env.inject('ohip.clientId')
       )).data.access_token;
       await vari.ohip.token.update(token);
       return token;

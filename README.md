@@ -20,12 +20,11 @@ In this repository, we are showcasing samples on how [PolyApi's](https://PolyApi
   - [Prerequisites](#prerequisites)
   - [Installation](#installation)
   - [Install NodeJs and Typescript](#install-nodejs-and-typescript)
-    - [Install Poly](#install-poly)
-    - [Install Dependencies](#install-dependencies)
     - [Configure Poly](#configure-poly)
       - [Create An API Key](#create-an-api-key)
   - [Using AI Guest Experience](#using-ai-guest-experience)
     - [Create and Update Vari's](#create-and-update-varis)
+    - [Training](#training)
     - [Configure Adyen's webhook](#configure-adyens-webhook)
       - [Deploy](#deploy)
       - [Test Locally And Deploy](#test-locally-and-deploy)
@@ -83,11 +82,11 @@ An [HTNG Express](https://www.htngexpress.com/) demo adapter, crafted as a PolyA
   To easily install multiple versions of node locally, it is recommended to first install [node version manager (nvm)](https://github.com/nvm-sh/nvm) and then install the require version as following:
 
   ```bash
-  NODE_VERSION=20.0.0
+  NODE_VERSION=22.20.0
   nvm install $NODE_VERSION
   nvm alias default $NODE_VERSION
   nvm use default #to set this version of node as default in your environment
-  nvm use #to set the node version based on the .nvmrc file
+  nvm use #to set the node version based on the .nvmrc file (if file exists)
   ```
 
   > the above assumes you've installed nvm as described [here](https://github.com/nvm-sh/nvm), including [this step](https://github.com/nvm-sh/nvm#nvmrc).
@@ -100,66 +99,55 @@ An [HTNG Express](https://www.htngexpress.com/) demo adapter, crafted as a PolyA
 
   > don't run `npm install` yet
 
-### Install Poly
-
-- Install PolyApi by running:
-
-```bash
-npm install polyapi
-```
-
-- Run the following command to configure Poly:
-
-```bash
-npx poly generate
-```
-
-> Hit enter to use default URL and then copy/paste your PolyApi key and hit enter again.
-
-- Configure the PolyApi Assistant by also setting **Api Base Url** and **Key** in the VS Code settings.
-
-### Install Dependencies
-
-- Install all dependencies by running:
-
-```bash
-npm install
-```
-
 ### Configure Poly
 
-Configuring PolyApi for the demos on this project consists of 2 basic steps:
+Configuring PolyApi for the demos on this project consists of 2 steps:
 
 #### Create An API Key
 Although you would've received an API key when you registered to access PolyApi, this is likely an admin key which we don't want to use for these projects. Instead create a new API key by:
 
-1- Open Postman and import the collections and environments available in the [postman](./postman) folder.
-2- Open the OHIP-POLY environment and set the corresponding values for the following variables:
+1. [Register](https://na1.polyapi.io/canopy/polyui/signup) to use PolyAPI.
+2. Open Postman and import the collections and environments available in the [postman](./postman) folder.
+3. In a browser, open the follwing URL *https://`{{Poly Host}}`/canopy/polyui/collections/environments* where `Poly Host` is the Poly Instance where your tenant resides. Then login using your `Admin Key` (the one provided after [registation](https://na1.polyapi.io/canopy/polyui/signup) to PolyAPI).
+4. Open the `OHIP-POLY` environment and set the corresponding values for the following variables:
 
-  - *Poly-Host*: The PolyAPI server URL provided upon registration (or during installation if you have your own environment).
+  - *Poly-Host*: The host name of the Poly Instance where your tenant resides (same as step 1)
 
   - *polyApiKey-Admin*: the admin key provided upon registration to PolyAPI.
 
-  - *Poly-Tenant-Id*: this value should've been provided by PolyAPI upon registration. If not available request it to your PolyAPI contact or if you have your own environment you can obtain it via:
+  - *Poly-Tenant-Id*: you can optain it via the Canopy URL: *https://`{{Poly Host}}`/canopy/polyui/collections/environments*
 
-```bash
-curl --location 'https://{Poly-Host}/tenants/' \
---header 'Accept: application/json' \
---header 'Authorization: Bearer {{polyApiKey-Admin}}'
-```
-> replace the `{{variables}}` with their actual value.
+  - *Poly-Environment-Id*: tyou can optain it via the Canopy URL: *https://`{{Poly Host}}`/canopy/polyui/collections/environments*
 
-  - *Poly-Environment-Id*: this value should've been provided by PolyAPI upon registration. If not available request it to your PolyAPI contact. f not available request it to your PolyAPI contact or if you have your own environment you can obtain it via:
+5. Go to *https://`{{Poly Host}}`/canopy/polyui/collections/users* to create a new user with all permissions enabled. 
 
-```bash
-curl --location 'https://{Poly-Host}/tenants/{{Poly-Tenant-Id}}/environments' \
---header 'Accept: application/json' \
---header 'Authorization: Bearer {{polyApiKey-Admin}}'
-```
-> replace the `{{variables}}` with their actual value.
+6. Go to *https://`{{Poly Host}}`/canopy/polyui/collections/api-keys* and then:
+  - Click on `Create`.
+  - Then enter a name of the application.
+  - Select the environment associated with the user (same env as previous step) .
+  - Leave the `User` radio box selected.
+  - Leave the Expires empty (this is demo).
+  - Set all permissions to true (again just for simplicity as this is a demo).
 
-3- Open the OHIP-POLY postman collections and execute `Poly Config > Create Poly Application`. Then from the response payload, select the value of the `id` element, right click on it and set the postman variable `Poly-App-Id`.
-4- Execute the collection `Poly Config > Create API Key`. Then from the response payload, select the value of the `key` element, right click on it and set the postman variable `polyApiKey`.
+7. Install and configure PolyApi as following:
+
+   - To install Poly run:
+
+   ```bash
+   npm install polyapi
+   ```
+
+   - Then to configure Poly run:
+
+   ```bash
+   npx poly setup
+   ```
+
+   - When prompted, enter the Poly Instance URL and and the API Key recently created.
+
+   - Configure the PolyApi Assistant by also setting **Api Base Url** and **Key** in the VS Code settings.
+
+  > Refer to [PolyAPI's Quickstart](https://docs.polyapi.io/quickstart.html) guide for further guidance on how to set up Poly.
 
 ## Using AI Guest Experience
 
@@ -167,7 +155,6 @@ curl --location 'https://{Poly-Host}/tenants/{{Poly-Tenant-Id}}/environments' \
 Vari's is how PolyApi refers to environment variables and secrets. All demos in this project make use of vari's. To create them follow this steps:
 
 1- Open the OHIP-POLY environment and set the corresponding values for the following variables:
-  - *Username* & *Password*: An OPERA Cloud Integration user with chain-admin access rights corresponding to the environment you're connecting to. Refer to the [OHIP user guide](https://docs.oracle.com/cd/F29336_01/doc.201/f27480/c_oracle_hospitality_property_apis.htm#OHIPU-ObtainingDetailsFromTheHotel-9658BF97) for how-to steps. If you are a partner you can use the [partner sandbox](https://docs.oracle.com/cd/F29336_01/doc.201/f27480/t_getting_started_for_partners.htm#OHIPU-QuickStartForPartnersUsingThePartne-7D3250F7) details.
   - *HostName*: OHIPs API Gateway URL. You can obtain this value from the environment tab of the OHIP development portal. Refer to the [OHIP user guide](https://docs.oracle.com/cd/F29336_01/doc.201/f27480/t_environments_gateways_and_credentials.htm#OHIPU-EnvironmentsGatewaysAndCredentials-B637B444) for how-to steps. If you are a partner you can use the [partner sandbox](https://docs.oracle.com/cd/F29336_01/doc.201/f27480/t_getting_started_for_partners.htm#OHIPU-QuickStartForPartnersUsingThePartne-7D3250F7) details.
   - *CLIENT_SECRET* & *CLIENT_SECRET*: 
   - *AppKey*: An OHIP application key. You can obtain this value from the application tab of the OHIP development portal. Refer to the [OHIP user guide](https://docs.oracle.com/cd/F29336_01/doc.201/f27480/c_register_and_manage_applications.htm#OHIPU-RegisterAndManageApplications-D59DF702) for how-to steps.
@@ -175,28 +162,56 @@ Vari's is how PolyApi refers to environment variables and secrets. All demos in 
   - *GoogleMaps-AppKey*: an [application key](https://developers.google.com/maps/documentation/javascript/get-api-key) to be able to call the Google Maps API.
   - *Adyen-HostName*: [Adyen's sandbox](https://www.adyen.com/signup) hostname URl. It's set by default but may be different in your environment.
   - *Adyen-AppKey*: an [Adyen API key](https://docs.adyen.com/development-resources/api-credentials/).
-  - *Adyen-MerchantAccount*: The Adyen's merchant account generated upon the creation of your environment.
+  - *Adyen-MerchantAccount*: The Adyen's merchant account generated upon the creation of your environment. You can also get it from the Adyen Dev Portal via `Settings` >  `Merchant Accounts`.
 - Open the OHIP-POLY postman collections and execute:
   - `Poly Config > Create Env Secrets`
   - `Poly Config > Create Env Settings`
   - `Poly Config > Create Token Variable`
   - `Poly Config > Create Env Descriptions For Model`
   - `Poly Config > Create Concierge LoV`
-  - `Poly Config > Create Payment Events Cache`
+  - `Collections For Training > AI Guest Journey > Pay By Link > Payment Event Hook`
+
+### Training
+
+- [Click here](https://eu1.polyapi.io/postman/scripts.zip) to download the latest Poly Postman training scripts.
+- Unzip the downloaded file.
+- Select the `Train` collection, then click on `Scripts`.
+- Update the `Pre-req` and `Post-req` based on the downloaded scripts earlier.
+- Modify the `Pre-req` script to pick up the Poly env details from the postman environment:
+
+```js
+const polyHost = pm.environment.get('Poly-Host');
+const apiKey = pm.environment.get('polyApiKey');
+
+pm.environment.set('polyData', {
+    hostUrl: polyHost,
+    polyApiKey: apiKey
+});
+```
+
+- Modify the `OHIP-Poly` environment to set the applicable variable values based on your OPERA Cloud instance.
+- Drag the `Collections For Training` and drop it under `Train`.
+- Expand the `Train > AI Guest Journey` folder, and train all calls as following:
+  - First in Postman click on the `console` menu tab at the bottom left of the postman window.
+  - Under ` > Shop & Book > Property` select `List All Properties` and hit `Send`. Look at the console and you should see `Function trained` if training was successful. 
+  - Repeat the same steps for all collections under `Collections For Training`.
+  
+  > Note: for each call you'll be making to train, ensure you've sent the environment variables.
 
 ### Configure Adyen's webhook
 
 Login to Adyen's Sandbox and perform the following steps:
 
-- Open postman and run `Poly Config > Get Webhooks`. The note of the URL for `paymentEventHook`.
+- Open postman and run `Poly Config > Get Webhooks`. Then
+  - Look for the `paymentEventHook` hook. Select the `Id`, right click on top of it, then click on `Set as variable` , find `Adyen-WebhookUrl` and select it.
+  - Run `Poly Config > Get Webhook Details` and take note of `Url` element.
 - From the **Developers** section, click on **Webhooks**.
 - Click on **(+) Webhook** (on the top right) to create a new webhook.
 - **Add** a **Standard Webhook**.
 - Edit **Server Configuration** and enter the URL for `paymentEventHook` (previously obtained) and select **TLSv1.2** as **Encryption protocol**.
 - On the **Additional Settings** edit **Card** and tick all boxes.
 - Finally click **Save**.
-
-> Note: If you have not already send an email to (support@adyen.com) and ask for the following account properties to be enabled: `StoreTokenNoShopperReferenceProvided`, `RechargeSynchronousStoreDetails` and `CheckoutPayByLinkIncludeOpiTransToken`. This is mandatory in order to obtained an OPI compatible payment token.
+- Send an email to (support@adyen.com) and ask for the following account features to be enabled in your account: `StoreTokenNoShopperReferenceProvided`, `RechargeSynchronousStoreDetails` and `CheckoutPayByLinkIncludeOpiTransToken`. This is mandatory in order to obtained an OPI compatible payment token.
 
 #### Deploy
 
