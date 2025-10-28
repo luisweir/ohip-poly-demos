@@ -1,10 +1,10 @@
 {
 	"info": {
-		"_postman_id": "318efddc-ea7c-49e7-82a5-6a2889353605",
+		"_postman_id": "f14d2609-622f-4fa5-8f7d-2e2eb7798587",
 		"name": "OHIP-Poly",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "123968",
-		"_collection_link": "https://luisw19-team.postman.co/workspace/Poly~d4b55a94-6cf5-4435-aafc-284c4765b9a5/collection/123968-318efddc-ea7c-49e7-82a5-6a2889353605?action=share&source=collection_link&creator=123968"
+		"_exporter_id": "49383169",
+		"_collection_link": "https://pickmates-cuasibestia-646843.postman.co/workspace/Pick-Mates's-Workspace~7c0e2d31-e8a8-47f2-82c0-d516e8060d66/collection/49383169-f14d2609-622f-4fa5-8f7d-2e2eb7798587?action=share&source=collection_link&creator=49383169"
 	},
 	"item": [
 		{
@@ -13,104 +13,6 @@
 				{
 					"name": "Initial Config",
 					"item": [
-						{
-							"name": "Create Poly Application",
-							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": [
-										{
-											"key": "token",
-											"value": "{{polyApiKey-Admin}}",
-											"type": "string"
-										}
-									]
-								},
-								"method": "POST",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									},
-									{
-										"key": "Accept",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n  \"name\": \"My PolyApp for OHIP\",\n  \"description\": \"Poly application for OHIP integration\"\n}",
-									"options": {
-										"raw": {
-											"headerFamily": "json",
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{Poly-Host}}/tenants/{{Poly-Tenant-Id}}/applications",
-									"host": [
-										"{{Poly-Host}}"
-									],
-									"path": [
-										"tenants",
-										"{{Poly-Tenant-Id}}",
-										"applications"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Create API Key",
-							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": [
-										{
-											"key": "token",
-											"value": "{{polyApiKey-Admin}}",
-											"type": "string"
-										}
-									]
-								},
-								"method": "POST",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									},
-									{
-										"key": "Accept",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"name\": \"My API Key\",\n    \"permissions\": {\n        \"use\": true,\n        \"teach\": true,\n        \"customDev\": true,\n        \"authConfig\": true,\n        \"manageVariables\": true,\n        \"manageSecretVariables\": true\n    },\n    \"applicationId\": \"{{Poly-App-Id}}\"\n}",
-									"options": {
-										"raw": {
-											"headerFamily": "json",
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{Poly-Host}}/tenants/{{Poly-Tenant-Id}}/environments/{{Poly-Environment-Id}}/api-keys",
-									"host": [
-										"{{Poly-Host}}"
-									],
-									"path": [
-										"tenants",
-										"{{Poly-Tenant-Id}}",
-										"environments",
-										"{{Poly-Environment-Id}}",
-										"api-keys"
-									]
-								}
-							},
-							"response": []
-						},
 						{
 							"name": "Create Env Secrets",
 							"request": {
@@ -137,7 +39,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"context\": \"ohip\",\n    \"name\": \"envSecrets\",\n    \"value\": {\n        \"ohip\": {\n            \"hostName\": \"{{HostName}}\",\n            \"hostNameDist\": \"{{HostNameDist}}\",\n            \"appKey\": \"{{AppKey}}\",\n            \"username\": \"{{Username}}\",\n            \"password\": \"{{Password}}\",\n            \"clientSecret\": \"{{CLIENT_SECRET}}\",\n            \"clientId\": \"{{CLIENT_ID}}\",\n            \"hotelId\": \"{{HotelId}}\"\n        },\n        \"google\": {\n            \"appKey\": \"{{GoogleMaps-AppKey}}\"\n        },\n        \"adyen\": {\n            \"hostName\": \"{{Adyen-HostName}}\",\n            \"appKey\": \"{{Adyen-AppKey}}\",\n            \"merchantAccount\": \"{{Adyen-MerchantAccount}}\"\n        }\n    },\n    \"description\": \"Environment variables for Oracle Hospitality custom server functions for OHIP\",\n    \"secret\": true,\n    \"visibility\": \"ENVIRONMENT\"\n}",
+									"raw": "{\n    \"context\": \"ohip\",\n    \"name\": \"envSecrets\",\n    \"value\": {\n        \"ohip\": {\n            \"hostName\": \"{{HostName}}\",\n            \"hostNameDist\": \"{{HostNameDist}}\",\n            \"appKey\": \"{{AppKey}}\",\n            \"enterpriseId\": \"{{EnterpriseId}}\",\n            \"chainCode\": \"{{ChainCode}}\",\n            \"clientSecret\": \"{{CLIENT_SECRET}}\",\n            \"clientId\": \"{{CLIENT_ID}}\",\n            \"hotelId\": \"{{HotelId}}\"\n        },\n        \"google\": {\n            \"appKey\": \"{{GoogleMaps-AppKey}}\"\n        },\n        \"adyen\": {\n            \"hostName\": \"{{Adyen-HostName}}\",\n            \"appKey\": \"{{Adyen-AppKey}}\",\n            \"merchantAccount\": \"{{Adyen-MerchantAccount}}\"\n        }\n    },\n    \"description\": \"Environment variables for Oracle Hospitality custom server functions for OHIP\",\n    \"secret\": true,\n    \"visibility\": \"ENVIRONMENT\"\n}",
 									"options": {
 										"raw": {
 											"headerFamily": "json",
@@ -146,13 +48,12 @@
 									}
 								},
 								"url": {
-									"raw": "{{Poly-Host}}/variables/3950d522-a01b-40a9-b99f-042d27376016",
+									"raw": "{{Poly-Host}}/variables",
 									"host": [
 										"{{Poly-Host}}"
 									],
 									"path": [
-										"variables",
-										"3950d522-a01b-40a9-b99f-042d27376016"
+										"variables"
 									]
 								}
 							},
@@ -256,7 +157,7 @@
 							"response": []
 						},
 						{
-							"name": "Create Token Variable",
+							"name": "Create Token Variable (old)",
 							"request": {
 								"auth": {
 									"type": "bearer",
@@ -302,6 +203,100 @@
 							"response": []
 						},
 						{
+							"name": "Create Token Table",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{polyApiKey}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"name\": \"tokens\",\n  \"context\": \"ohip\",\n  \"description\": \"Token cache table\",\n//   \"ownerUserId\": \"\",\n  \"visibility\": \"ENVIRONMENT\",\n  \"columns\": [\n    {\n      \"name\": \"hashKey\",\n      \"type\": \"string\",\n      \"default\": \"\",\n      \"required\": true,\n      \"unique\": true,\n      \"primary\": true\n    },\n    {\n      \"name\": \"hostName\",\n      \"type\": \"string\",\n      \"default\": \"\",\n      \"required\": true,\n      \"unique\": false,\n      \"primary\": false\n    },\n    {\n      \"name\": \"enterpriseId\",\n      \"type\": \"string\",\n      \"default\": \"\",\n      \"required\": true,\n      \"unique\": false,\n      \"primary\": false\n    },\n    {\n      \"name\": \"chainCode\",\n      \"type\": \"string\",\n      \"default\": \"\",\n      \"required\": true,\n      \"unique\": false,\n      \"primary\": false\n    },\n    {\n      \"name\": \"scopes\",\n      \"type\": \"string\",\n      \"default\": \"\",\n      \"required\": false,\n      \"unique\": false,\n      \"primary\": false\n    },\n    {\n      \"name\": \"token\",\n      \"type\": \"string\",\n      \"default\": \"\",\n      \"required\": true,\n      \"unique\": false,\n      \"primary\": false\n    },\n    {\n      \"name\": \"expiry\",\n      \"type\": \"number\",\n      \"default\": 0,\n      \"required\": true,\n      \"unique\": false,\n      \"primary\": false\n    }\n  ]\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{Poly-Host}}/tables",
+									"host": [
+										"{{Poly-Host}}"
+									],
+									"path": [
+										"tables"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Select Token Table",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{polyApiKey}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"where\": {}\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{Poly-Host}}/tables/{{TokenTabi}}/select",
+									"host": [
+										"{{Poly-Host}}"
+									],
+									"path": [
+										"tables",
+										"{{TokenTabi}}",
+										"select"
+									]
+								}
+							},
+							"response": []
+						},
+						{
 							"name": "Create Concierge LoV",
 							"request": {
 								"auth": {
@@ -327,7 +322,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"context\": \"ohip\",\n    \"name\": \"conciergeLoV\",\n    \"value\": {\n        \"Breakfast\": {\n            \"description\": \"full breakfast for one\",\n            \"PackageAmount\": 15,\n            \"TransactionCode\": 2000\n        },\n        \"RentABike\": {\n            \"description\": \"rent a bike for a full day and enjoy the city surroundings\",\n            \"PackageAmount\": 20,\n            \"TransactionCode\": 5000\n        },\n        \"TaxiToAirport\": {\n            \"description\": \"taxi service to the airport for a max of 4 people\",\n            \"PackageAmount\": 30,\n            \"TransactionCode\": 2000\n        },\n        \"LondonEyeTicket\": {\n            \"description\": \"London eye ticket for one\",\n            \"PackageAmount\": 50,\n            \"TransactionCode\": 5016\n        }\n    },\n    \"description\": \"Concierge services list of values\",\n    \"secret\": false,\n    \"visibility\": \"ENVIRONMENT\"\n}",
+									"raw": "{\n    \"context\": \"ohip\",\n    \"name\": \"conciergeLoV\",\n    \"value\": {\n        \"Breakfast\": {\n            \"description\": \"Full breakfast for one\",\n            \"PackageAmount\": 48,\n            \"TransactionCode\": 2000\n        },\n        \"RentABike\": {\n            \"description\": \"Rent a bike for a full day and enjoy the city surroundings\",\n            \"PackageAmount\": 20,\n            \"TransactionCode\": 5202\n        },\n        \"TaxiToAirport\": {\n            \"description\": \"Taxi service to the airport for up to 4 people\",\n            \"PackageAmount\": 30,\n            \"TransactionCode\": 5202\n        },\n        \"CityTourTicket\": {\n            \"description\": \"Guided city bus or walking tour for one person\",\n            \"PackageAmount\": 45,\n            \"TransactionCode\": 6600\n        },\n        \"FlowerDelivery\": {\n            \"description\": \"Custom bouquet delivered to the room\",\n            \"PackageAmount\": 35,\n            \"TransactionCode\": 6600\n        },\n        \"LaundryService\": {\n            \"description\": \"Standard wash and fold laundry service (per load)\",\n            \"PackageAmount\": 25,\n            \"TransactionCode\": 1011\n        },\n        \"TheatreTicket\": {\n            \"description\": \"Local theatre or event ticket for one person\",\n            \"PackageAmount\": 60,\n            \"TransactionCode\": 6600\n        },\n        \"CityPass\": {\n            \"description\": \"All-inclusive city pass with access to top attractions\",\n            \"PackageAmount\": 80,\n            \"TransactionCode\": 6600\n        }\n    },\n    \"description\": \"Concierge services list of values\",\n    \"secret\": false,\n    \"visibility\": \"ENVIRONMENT\"\n}\n",
 									"options": {
 										"raw": {
 											"headerFamily": "json",
@@ -396,9 +391,6 @@
 						},
 						{
 							"name": "Get Custom Functions",
-							"protocolProfileBehavior": {
-								"disableBodyPruning": true
-							},
 							"request": {
 								"auth": {
 									"type": "bearer",
@@ -417,15 +409,6 @@
 										"value": "application/json"
 									}
 								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n        \"id\": \"abbe8975-9642-46fe-b9a6-9a4741d451f6\",\n        \"name\": \"getOhipToken\",\n        \"description\": \"Get an OHIP token and cache it. Renew it 5 minutes before it expires\",\n        \"context\": \"ohip.utilities\",\n        \"visibility\": \"ENVIRONMENT\",\n        \"logsEnabled\": false\n    }",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
 								"url": {
 									"raw": "{{Poly-Host}}/functions/server/",
 									"host": [
@@ -486,6 +469,51 @@
 							"response": []
 						},
 						{
+							"name": "Get Webhook Details",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{polyApiKey}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{Poly-Host}}/webhooks/{{Adyen-WebhoolUrl}}",
+									"host": [
+										"{{Poly-Host}}"
+									],
+									"path": [
+										"webhooks",
+										"{{Adyen-WebhoolUrl}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
 							"name": "Create Pay Hook Handler",
 							"request": {
 								"auth": {
@@ -511,7 +539,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"source\": {\n    \"webhookHandleId\": \"936c5826-be24-4286-9048-44f602b3a605\" //paymentEventHook\n  },\n  \"destination\": {\n    \"serverFunctionId\": \"2a8bbcce-ce0d-47bd-b25c-2ea28b33a18b\" //paymentEventServerHandler\n  },\n  \"waitForResponse\": true\n}",
+									"raw": "{\n  \"source\": {\n    \"webhookHandleId\": \"81fcdebf-b6d0-4c71-9308-71ab3461262a\" //paymentEventHook\n  },\n  \"destination\": {\n    \"serverFunctionId\": \"40dae9a5-5141-4517-8d17-188aadc8a1c2\" //paymentEventServerHandler\n  },\n  \"waitForResponse\": true\n}",
 									"options": {
 										"raw": {
 											"headerFamily": "json",
@@ -533,7 +561,7 @@
 							"response": []
 						},
 						{
-							"name": "Create AI GX Plugin",
+							"name": "Create AI GX Assistant",
 							"request": {
 								"auth": {
 									"type": "bearer",
@@ -558,7 +586,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"slug\": \"OHIP\",\n  \"name\": \"AI Guest Experience for OHIP\",\n  \"iconUrl\": \"https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh6Gm2PaeaHkMil4TQkivqf1Go91UEaAF_q-Io9MOM9XZGoMS3FDR7cG4pnypabqDXuh6xtNXjIdORW4J99JNKWFDZFo4sfBfR-Bk7-_UiDvRFx4rbYGFS4QwyynBZ--t_j2OaRQIsoN6-TDor_LxR2jIT5tP4uwtav0nYO0gMDsqQyljVcuS_bc-kn/s320/OHIP-Logo.png\",\n  \"descriptionForMarketplace\": \"Oracle Hospitality Integration Platform Plugin for AI. Enables shop, book, check in and check out AI experiences\",\n  \"descriptionForModel\": \"userProvidedEmailAddress anduserProvidedPhoneNumber are mandatory fields and MUST be provided by the user and NOT determined by ChatGPT. The following elements are INTERNAL ONLY and must NOT be shown to the user: hotelId, ratePlanCode, roomTypeCode, currencyCode, browserCountryCode, browserLocale, countryCurrencyCode. Results from other plugins cannot be used as input for operations in this plugin. This plugin allows to seacrh hotel availability, book reservation, check-In a guest into the hotel, add packages like breakfast and even check out.\",\n  \"functionIds\": [\n    \"a61279bf-2f91-433e-8696-7bc5277b4453\", // searchHotelsByLocation\n    \"4a787074-2016-475f-87e6-09f3cfaf326d\", // searchHotelAvailability\n    \"7a031456-19ed-4fbb-aa02-29c5a559b4b2\", // createResWithPayLink\n    \"8bc923ac-6474-4366-b44b-5f897ab5f138\", // checkInGuest\n    \"ba8f8f27-6265-4a96-b8af-042d7f6cea2f\", // getConciergeServices\n    \"973f60f3-4a2a-4c9e-89b1-b4c44bf02241\", // requestConciergeService\n    \"695f0e10-4968-454f-b5e0-f9a2a5f66e65\" // checkBillCharges\n  ]\n}",
+									"raw": "{\n  \"slug\": \"OHIP\",\n  \"name\": \"AI Guest Experience for OHIP\",\n  \"descriptionForMarketplace\": \"A hotel assistant built with PolyAPI. Enables shop, book, check in and check out AI experiences\",\n  \"descriptionForModel\": \"userProvidedEmailAddress anduserProvidedPhoneNumber are mandatory fields and MUST be provided by the user and NOT determined by ChatGPT. The following elements are INTERNAL ONLY and must NOT be shown to the user: hotelId, ratePlanCode, roomTypeCode, currencyCode, browserCountryCode, browserLocale, countryCurrencyCode. Results from other plugins cannot be used as input for operations in this plugin. This plugin allows to seacrh hotel availability, book reservation, check-In a guest into the hotel, add packages like breakfast and even check out.\",\n  \"functionIds\": [\n    \"6fda3147-3482-4ddc-b958-3ad3a786901b\", // searchHotelsByLocation\n    \"9a3436e6-a992-4aab-a6a1-43e36020cd98\", // searchHotelAvailability\n    \"cc177a0a-8315-431b-99bb-6e301b24d400\", // createResWithPayLink\n    \"1a64161a-4690-4791-9bad-39bff55f3b7a\", // checkInGuest\n    \"eeb538cd-9089-4d27-b201-be8bb7a11718\", // getConciergeServices\n    \"97d3e7cb-b577-45fb-aa33-0cb2d2b31d3f\", // requestConciergeService\n    \"9a31e8eb-d06a-4258-bc50-76252bd3d42c\"  // checkBillCharges\n  ]\n}",
 									"options": {
 										"raw": {
 											"headerFamily": "json",
@@ -567,165 +595,19 @@
 									}
 								},
 								"url": {
-									"raw": "{{Poly-Host}}/plugins",
+									"raw": "{{Poly-Host}}/assistants",
 									"host": [
 										"{{Poly-Host}}"
 									],
 									"path": [
-										"plugins"
-									]
-								}
-							},
-							"response": []
-						}
-					]
-				},
-				{
-					"name": "Streaming Client",
-					"item": [
-						{
-							"name": "Create Env Settings",
-							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": [
-										{
-											"key": "token",
-											"value": "{{polyApiKey}}",
-											"type": "string"
-										}
-									]
-								},
-								"method": "POST",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									},
-									{
-										"key": "Accept",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"context\": \"ohip.sclient\",\n    \"name\": \"envSettings\",\n    \"value\": {\n        \"wsUrl\": \"wss://{{HostName}}/subscriptions\",\n        \"appKey\": \"{{AppKey}}\",\n        \"tokenExpiry\": 3540000,\n        \"delayToConnect\": 10000,\n        \"ping\": 5000,\n        \"chainCode\": \"OHIPCN\",\n        \"hotelId\": null,\n        \"delta\": false,\n        \"stats\": true,\n        \"timeBucket\": \"SECOND\",\n        \"clientId\": null\n    },\n    \"description\": \"Environment settings\",\n    \"secret\": false,\n    \"visibility\": \"ENVIRONMENT\"\n}",
-									"options": {
-										"raw": {
-											"headerFamily": "json",
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{Poly-Host}}/variables/",
-									"host": [
-										"{{Poly-Host}}"
-									],
-									"path": [
-										"variables",
-										""
+										"assistants"
 									]
 								}
 							},
 							"response": []
 						},
 						{
-							"name": "Create Offset",
-							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": [
-										{
-											"key": "token",
-											"value": "{{polyApiKey}}",
-											"type": "string"
-										}
-									]
-								},
-								"method": "POST",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									},
-									{
-										"key": "Accept",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"context\": \"ohip.sclient\",\n    \"name\": \"offset\",\n    \"value\": 0,\n    \"description\": \"Environment settings\",\n    \"secret\": false,\n    \"visibility\": \"ENVIRONMENT\"\n}",
-									"options": {
-										"raw": {
-											"headerFamily": "json",
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{Poly-Host}}/variables/",
-									"host": [
-										"{{Poly-Host}}"
-									],
-									"path": [
-										"variables",
-										""
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Create Client Status",
-							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": [
-										{
-											"key": "token",
-											"value": "{{polyApiKey}}",
-											"type": "string"
-										}
-									]
-								},
-								"method": "POST",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									},
-									{
-										"key": "Accept",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"context\": \"ohip.sclient\",\n    \"name\": \"clientStatus\",\n    \"value\": {\n        \"clientId\": null,\n        \"connected\": false\n    },\n    \"description\": \"Environment settings\",\n    \"secret\": false,\n    \"visibility\": \"ENVIRONMENT\"\n}",
-									"options": {
-										"raw": {
-											"headerFamily": "json",
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{Poly-Host}}/variables/{{UPDATE ME}}",
-									"host": [
-										"{{Poly-Host}}"
-									],
-									"path": [
-										"variables",
-										"{{UPDATE ME}}"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Get Custom Functions",
+							"name": "Create AI GX Assistant Spec",
 							"request": {
 								"auth": {
 									"type": "bearer",
@@ -740,83 +622,6 @@
 								"method": "GET",
 								"header": [
 									{
-										"key": "Accept",
-										"value": "application/json"
-									}
-								],
-								"url": {
-									"raw": "{{Poly-Host}}/functions/server/",
-									"host": [
-										"{{Poly-Host}}"
-									],
-									"path": [
-										"functions",
-										"server",
-										""
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Get Custom Functions",
-							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": [
-										{
-											"key": "token",
-											"value": "{{polyApiKey}}",
-											"type": "string"
-										}
-									]
-								},
-								"method": "PATCH",
-								"header": [
-									{
-										"key": "Accept",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"name\": \"sclient\",\n    \"description\": \"OHIP Streaming API client for PolyAPI\",\n    \"context\": \"ohip.streaming\",\n    \"visibility\": \"ENVIRONMENT\",\n    \"language\": \"javascript\",\n    \"logsEnabled\": true\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{Poly-Host}}/functions/server/{{UPDATE ME}}",
-									"host": [
-										"{{Poly-Host}}"
-									],
-									"path": [
-										"functions",
-										"server",
-										"{{UPDATE ME}}"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Create Scheduler (experimental)",
-							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": [
-										{
-											"key": "token",
-											"value": "{{polyApiKey}}",
-											"type": "string"
-										}
-									]
-								},
-								"method": "POST",
-								"header": [
-									{
 										"key": "Content-Type",
 										"value": "application/json"
 									},
@@ -825,24 +630,15 @@
 										"value": "application/json"
 									}
 								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"executionType\": \"sequential\",\n    \"functions\": [\n        {\n            \"id\": \"a492faea-ad8f-466c-83fb-a9d5ec2faca5\",\n            \"eventPayload\": {},\n            \"headersPayload\": {},\n            \"paramsPayload\": {}\n        }\n    ],\n    \"name\": \"Keep Streaming Client Alive\",\n    \"schedule\": {\n        \"type\": \"periodical\",\n        \"value\": \"*/5 * * * *\"\n    },\n    \"enabled\": true\n}",
-									"options": {
-										"raw": {
-											"headerFamily": "json",
-											"language": "json"
-										}
-									}
-								},
 								"url": {
-									"raw": "{{Poly-Host}}/jobs/",
+									"raw": "{{Poly-Host}}/assistants/ohip/openapi",
 									"host": [
 										"{{Poly-Host}}"
 									],
 									"path": [
-										"jobs",
-										""
+										"assistants",
+										"ohip",
+										"openapi"
 									]
 								}
 							},
@@ -859,25 +655,28 @@
 					"name": "Authentication",
 					"item": [
 						{
-							"name": "Get Property Token (With SSD)",
+							"name": "Get Property Token (With OCIM)",
 							"event": [
 								{
 									"listen": "test",
 									"script": {
 										"exec": [
-											"var jsonData = JSON.parse(responseBody);\r",
-											"postman.setEnvironmentVariable(\"Token\", jsonData.access_token);\r",
-											"//Set other variables\r",
-											"var moment = require('moment');\r",
-											"pm.environment.set('DateFrom', moment().add(0, 'days').format((\"YYYY-MM-DD\")))\r",
-											"pm.environment.set('DateTo', moment().add(1, 'days').format((\"YYYY-MM-DD\")))\r",
-											"pm.environment.set('ArrivalTime', moment().add(0, 'days').format((\"YYYY-MM-DD HH:MM:SS\")))\r",
-											"\r",
-											"var uuid = require('uuid')\r",
-											"randomId = uuid.v4()\r",
+											"var jsonData = pm.response.json();",
+											"var accessToken = jsonData.access_token;",
+											"pm.environment.set(\"Token\", accessToken);",
+											"//Set other variables",
+											"var moment = require('moment');",
+											"pm.environment.set('DateFrom', moment().add(0, 'days').format((\"YYYY-MM-DD\")))",
+											"pm.environment.set('DateTo', moment().add(1, 'days').format((\"YYYY-MM-DD\")))",
+											"pm.environment.set('ArrivalTime', moment().add(0, 'days').format((\"YYYY-MM-DD HH:MM:SS\")))",
+											"",
+											"var uuid = require('uuid')",
+											"randomId = uuid.v4()",
 											"pm.environment.set('uuid',randomId)"
 										],
-										"type": "text/javascript"
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
 									}
 								}
 							],
@@ -894,16 +693,6 @@
 											"key": "username",
 											"value": "{{CLIENT_ID}}",
 											"type": "string"
-										},
-										{
-											"key": "saveHelperData",
-											"value": true,
-											"type": "boolean"
-										},
-										{
-											"key": "showPassword",
-											"value": false,
-											"type": "boolean"
 										}
 									]
 								},
@@ -911,32 +700,28 @@
 								"header": [
 									{
 										"key": "Content-Type",
-										"value": "application/x-www-form-urlencoded",
-										"name": "Content-Type",
-										"type": "text"
+										"value": "application/x-www-form-urlencoded"
 									},
 									{
 										"key": "x-app-key",
-										"value": "{{AppKey}}",
-										"type": "text"
+										"value": "{{AppKey}}"
+									},
+									{
+										"key": "enterpriseId",
+										"value": "{{EnterpriseId}}"
 									}
 								],
 								"body": {
 									"mode": "urlencoded",
 									"urlencoded": [
 										{
-											"key": "username",
-											"value": "{{Username}}",
-											"type": "text"
-										},
-										{
-											"key": "password",
-											"value": "{{Password}}",
-											"type": "text"
-										},
-										{
 											"key": "grant_type",
-											"value": "password",
+											"value": "client_credentials",
+											"type": "text"
+										},
+										{
+											"key": "scope",
+											"value": "urn:opc:hgbu:ws:__myscopes__",
 											"type": "text"
 										}
 									]
@@ -953,7 +738,7 @@
 										"tokens"
 									]
 								},
-								"description": "Fetch an OPERA Cloud json web tokent (JWT) for a given chain"
+								"description": "Generated from cURL: curl --location '/oauth/v1/tokens' \\\n--header 'Content-Type: application/x-www-form-urlencoded' \\\n--header 'x-app-key;' \\\n--header 'enterpriseId: {{EnterpriseId}}' \\\n--header 'Authorization: ••••••' \\\n--data-urlencode 'grant_type=client_credentials' \\\n--data-urlencode 'scope=urn:opc:hgbu:ws:__myscopes__'"
 							},
 							"response": []
 						}
@@ -966,7 +751,7 @@
 							"name": "Shop & Book",
 							"item": [
 								{
-									"name": "Central",
+									"name": "Central (do not use. to be updated.)",
 									"item": [
 										{
 											"name": "Shop Central Offers",
@@ -1302,73 +1087,6 @@
 												}
 											},
 											"response": []
-										},
-										{
-											"name": "Get Property Reservation with Central Id",
-											"protocolProfileBehavior": {
-												"disableBodyPruning": true
-											},
-											"request": {
-												"auth": {
-													"type": "bearer",
-													"bearer": [
-														{
-															"key": "token",
-															"value": "{{Token}}",
-															"type": "string"
-														}
-													]
-												},
-												"method": "GET",
-												"header": [
-													{
-														"key": "Content-Type",
-														"value": "application/json",
-														"name": "Content-Type",
-														"type": "text"
-													},
-													{
-														"key": "x-hotelId",
-														"value": "{{HotelId}}",
-														"type": "text"
-													},
-													{
-														"key": "x-app-key",
-														"value": "{{AppKey}}",
-														"type": "text"
-													}
-												],
-												"body": {
-													"mode": "raw",
-													"raw": "",
-													"options": {
-														"raw": {
-															"language": "json"
-														}
-													}
-												},
-												"url": {
-													"raw": "https://{{HostName}}/rsv/v1/hotels/{{HotelId}}/reservations?externalReferenceIds={{CentralReservationId}}",
-													"protocol": "https",
-													"host": [
-														"{{HostName}}"
-													],
-													"path": [
-														"rsv",
-														"v1",
-														"hotels",
-														"{{HotelId}}",
-														"reservations"
-													],
-													"query": [
-														{
-															"key": "externalReferenceIds",
-															"value": "{{CentralReservationId}}"
-														}
-													]
-												}
-											},
-											"response": []
 										}
 									]
 								},
@@ -1396,7 +1114,6 @@
 													{
 														"key": "Content-Type",
 														"value": "application/json",
-														"name": "Content-Type",
 														"type": "text"
 													},
 													{
@@ -1432,7 +1149,7 @@
 														"ResortChains"
 													]
 												},
-												"description": "List the hotels in the chain being accessed."
+												"description": "List the hotels in the chain being accessed.\n\nContext:  \npoly.ohip.property.getAllHotelsInChain"
 											},
 											"response": []
 										},
@@ -1485,7 +1202,8 @@
 															"value": "GeneralNotes"
 														}
 													]
-												}
+												},
+												"description": "Context:  \npoly.ohip.property.getHotelDetails"
 											},
 											"response": []
 										},
@@ -1508,7 +1226,9 @@
 															"    console.log(\"Dealing with an SSE stream ... \")",
 															"}"
 														],
-														"type": "text/javascript"
+														"type": "text/javascript",
+														"packages": {},
+														"requests": {}
 													}
 												}
 											],
@@ -1555,112 +1275,10 @@
 															"value": "{{DistanceMode}}"
 														}
 													]
-												}
+												},
+												"description": "Context:  \npoly.google.maps.distanceToHotels"
 											},
-											"response": [
-												{
-													"name": "Create chat message completion",
-													"originalRequest": {
-														"method": "POST",
-														"header": [
-															{
-																"key": "Content-Type",
-																"value": "application/json"
-															},
-															{
-																"key": "Accept",
-																"value": "application/json"
-															}
-														],
-														"body": {
-															"mode": "raw",
-															"raw": "{\n    \"model\": \"gpt-3.5-turbo\",\n    \"messages\": [\n        {\n            \"role\": \"user\",\n            \"content\": \"Who won the world series in 2020?\"\n        },\n        {\n            \"role\": \"assistant\",\n            \"content\": \"The Los Angeles Dodgers won the World Series in 2020.\"\n        },\n        {\n            \"role\": \"user\",\n            \"content\": \"Where was it played?\"\n        }\n    ],\n    \"temperature\": 1,\n    \"top_p\": 1,\n    \"n\": 1,\n    \"stream\": false,\n    \"max_tokens\": 250,\n    \"presence_penalty\": 0,\n    \"frequency_penalty\": 0\n}",
-															"options": {
-																"raw": {
-																	"language": "json"
-																}
-															}
-														},
-														"url": {
-															"raw": "{{baseUrl}}/chat/completions",
-															"host": [
-																"{{baseUrl}}"
-															],
-															"path": [
-																"chat",
-																"completions"
-															]
-														}
-													},
-													"status": "OK",
-													"code": 200,
-													"_postman_previewlanguage": "json",
-													"header": [
-														{
-															"key": "Date",
-															"value": "Mon, 20 Mar 2023 23:50:57 GMT"
-														},
-														{
-															"key": "Content-Type",
-															"value": "application/json"
-														},
-														{
-															"key": "Content-Length",
-															"value": "360"
-														},
-														{
-															"key": "Connection",
-															"value": "keep-alive"
-														},
-														{
-															"key": "Access-Control-Allow-Origin",
-															"value": "*"
-														},
-														{
-															"key": "Cache-Control",
-															"value": "no-cache, must-revalidate"
-														},
-														{
-															"key": "Openai-Model",
-															"value": "gpt-3.5-turbo-0301"
-														},
-														{
-															"key": "Openai-Organization",
-															"value": "user-ydfxhof885ycvb52zjw5ly51"
-														},
-														{
-															"key": "Openai-Processing-Ms",
-															"value": "1800"
-														},
-														{
-															"key": "Openai-Version",
-															"value": "2020-10-01"
-														},
-														{
-															"key": "Strict-Transport-Security",
-															"value": "max-age=15724800; includeSubDomains"
-														},
-														{
-															"key": "X-Ratelimit-Limit-Requests",
-															"value": "3500"
-														},
-														{
-															"key": "X-Ratelimit-Remaining-Requests",
-															"value": "3499"
-														},
-														{
-															"key": "X-Ratelimit-Reset-Requests",
-															"value": "17ms"
-														},
-														{
-															"key": "X-Request-Id",
-															"value": "8506a913c39e706fede784458b254ca7"
-														}
-													],
-													"cookie": [],
-													"body": "{\n    \"id\": \"chatcmpl-6wJZ9Ebt8puAO4zW3zUpgFwS8BfJB\",\n    \"object\": \"chat.completion\",\n    \"created\": 1679356255,\n    \"model\": \"gpt-3.5-turbo-0301\",\n    \"usage\": {\n        \"prompt_tokens\": 45,\n        \"completion_tokens\": 19,\n        \"total_tokens\": 64\n    },\n    \"choices\": [\n        {\n            \"message\": {\n                \"role\": \"assistant\",\n                \"content\": \"The 2020 World Series was played in Arlington, Texas, at Globe Life Field.\"\n            },\n            \"finish_reason\": \"stop\",\n            \"index\": 0\n        }\n    ]\n}"
-												}
-											]
+											"response": []
 										},
 										{
 											"name": "Get Property Room Types",
@@ -1683,7 +1301,6 @@
 													{
 														"key": "Content-Type",
 														"value": "application/json",
-														"name": "Content-Type",
 														"type": "text"
 													},
 													{
@@ -1720,7 +1337,8 @@
 														"{{HotelId}}",
 														"resortRoomTypes"
 													]
-												}
+												},
+												"description": "Context:\n\npoly.ohip.property.getPropertyRoomTypes"
 											},
 											"response": []
 										},
@@ -1733,7 +1351,9 @@
 														"exec": [
 															""
 														],
-														"type": "text/javascript"
+														"type": "text/javascript",
+														"packages": {},
+														"requests": {}
 													}
 												}
 											],
@@ -1756,7 +1376,6 @@
 													{
 														"key": "Content-Type",
 														"value": "application/json",
-														"name": "Content-Type",
 														"type": "text"
 													},
 													{
@@ -1780,14 +1399,14 @@
 													}
 												},
 												"url": {
-													"raw": "https://{{HostName}}/par/v0/hotels/{{HotelId}}/availability?roomStayStartDate={{DateFrom}}&roomStayEndDate={{DateTo}}&children={{Children}}&adults={{Adults}}&roomStayQuantity={{NumberOfUnits}}&roomType={{RoomTypeCode}}",
+													"raw": "https://{{HostName}}/par/v1/hotels/{{HotelId}}/availability?roomStayStartDate={{DateFrom}}&children={{Children}}&adults={{Adults}}&roomStayQuantity={{NumberOfUnits}}&roomType={{RoomTypeCode}}&roomStayEndDate={{DateTo}}",
 													"protocol": "https",
 													"host": [
 														"{{HostName}}"
 													],
 													"path": [
 														"par",
-														"v0",
+														"v1",
 														"hotels",
 														"{{HotelId}}",
 														"availability"
@@ -1944,10 +1563,6 @@
 															"value": "{{DateFrom}}"
 														},
 														{
-															"key": "roomStayEndDate",
-															"value": "{{DateTo}}"
-														},
-														{
 															"key": "children",
 															"value": "{{Children}}"
 														},
@@ -1962,9 +1577,14 @@
 														{
 															"key": "roomType",
 															"value": "{{RoomTypeCode}}"
+														},
+														{
+															"key": "roomStayEndDate",
+															"value": "{{DateTo}}"
 														}
 													]
-												}
+												},
+												"description": "Context:  \nohip.property.searchHotelAvailability"
 											},
 											"response": []
 										},
@@ -1975,10 +1595,26 @@
 													"listen": "test",
 													"script": {
 														"exec": [
+															"// Extract ReservationId from the Location header\r",
 															"var data = pm.response.headers.get(\"Location\").split(\"/\").pop();\r",
-															"postman.setEnvironmentVariable(\"ReservationId\", data);"
+															"pm.environment.set(\"ReservationId\", data);\r",
+															"\r",
+															"// Parse response body to JSON\r",
+															"var jsonData = pm.response.json();\r",
+															"\r",
+															"// Find link that contains confirmationNumberList\r",
+															"var confirmationLink = jsonData.links.find(link => link.href.includes(\"confirmationNumberList\"));\r",
+															"\r",
+															"// If found, extract and set ConfirmationNumber\r",
+															"if (confirmationLink) {\r",
+															"    var confirmationNumber = confirmationLink.href.split(\"confirmationNumberList=\")[1];\r",
+															"    pm.environment.set(\"ConfirmationNumber\", confirmationNumber);\r",
+															"}\r",
+															""
 														],
-														"type": "text/javascript"
+														"type": "text/javascript",
+														"packages": {},
+														"requests": {}
 													}
 												}
 											],
@@ -1998,7 +1634,6 @@
 													{
 														"key": "Content-Type",
 														"value": "application/json",
-														"name": "Content-Type",
 														"type": "text"
 													},
 													{
@@ -2014,7 +1649,7 @@
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{\r\n    \"reservations\": {\r\n        \"reservation\": [\r\n            {\r\n                \"sourceOfSale\": {\r\n                    \"sourceType\": \"PMS\",\r\n                    \"sourceCode\": \"{{HotelId}}\"\r\n                },\r\n                \"roomStay\": {\r\n                    \"roomRates\": [\r\n                        {\r\n                            \"total\": {\r\n                                \"amountBeforeTax\": \"{{AmountBeforeTax}}\"\r\n                            },\r\n                            \"rates\": {\r\n                                \"rate\": [\r\n                                    {\r\n                                        \"base\": {\r\n                                            \"amountBeforeTax\": \"{{AmountBeforeTax}}\",\r\n                                            \"currencyCode\": \"{{CurrencyCode}}\"\r\n                                        },\r\n                                        \"shareDistributionInstruction\": \"Full\",\r\n                                        \"total\": {\r\n                                            \"amountBeforeTax\": \"{{AmountBeforeTax}}\"\r\n                                        },\r\n                                        \"start\": \"{{DateFrom}}\",\r\n                                        \"end\": \"{{DateTo}}\"\r\n                                    }\r\n                                ]\r\n                            },\r\n                            \"guestCounts\": {\r\n                                \"adults\": \"{{Adults}}\"\r\n                                ,\"children\": \"{{Children}}\"\r\n                                ,\"childAges\": {{ChildrenAges}}\r\n                            },\r\n                            \"roomType\": \"{{RoomTypeCode}}\",\r\n                            \"ratePlanCode\": \"{{RatePlanCode}}\",\r\n                            \"start\": \"{{DateFrom}}\",\r\n                            \"end\": \"{{DateTo}}\",\r\n                            \"suppressRate\": true,\r\n                            \"marketCode\": \"LEISURE\",\r\n                            \"marketCodeDescription\": \"Leisure\",\r\n                            \"sourceCode\": \"WEB\",\r\n                            \"sourceCodeDescription\": \"Website\",\r\n                            \"numberOfUnits\": \"{{NumberOfUnits}}\",\r\n                            \"pseudoRoom\": false,\r\n                            \"roomTypeCharged\": \"{{RoomTypeCode}}\",\r\n                            \"houseUseOnly\": false,\r\n                            \"complimentary\": false,\r\n                            \"fixedRate\": true,\r\n                            \"discountAllowed\": false,\r\n                            \"bogoDiscount\": false\r\n                        }\r\n                    ],\r\n                    \"arrivalDate\": \"{{DateFrom}}\",\r\n                    \"departureDate\": \"{{DateTo}}\",\r\n                    \"guarantee\": {\r\n                        \"guaranteeCode\": \"6PM\",\r\n                        \"shortDescription\": \"6PM Hold\"\r\n                    },\r\n                    \"roomNumberLocked\": false,\r\n                    \"printRate\": false\r\n                },\r\n                \"reservationGuests\": [\r\n                    {\r\n                        \"profileInfo\": {\r\n                            \"profile\": {\r\n                                \"customer\": {\r\n                                    \"personName\": [\r\n                                        {\r\n                                            \"givenName\": \"{{GuestFirstName}}\",\r\n                                            \"middleName\": \"\",\r\n                                            \"surname\": \"{{GuestLastName}}\",\r\n                                            \"nameType\": \"Primary\"\r\n                                        }\r\n                                    ],\r\n                                    \"language\": \"E\"\r\n                                },\r\n                                \"addresses\": {\r\n                                    \"addressInfo\": [\r\n                                        {\r\n                                            \"address\": {\r\n                                                \"addressLine\": [\r\n                                                    \"{{GuestAddressStreet}}\"\r\n                                                ],\r\n                                                \"cityName\": \"{{GuestAddressCity}}\",\r\n                                                \"postalCode\": \"{{GuestAddressPostalCode}}\",\r\n                                                \"state\": \"{{GuestAddressState}}\",\r\n                                                \"country\": {\r\n                                                    \"value\": \"{{GuestAddressCountry}}\",\r\n                                                    \"code\": \"{{GuestAddressCountry}}\"\r\n                                                },\r\n                                                \"language\": \"EN\",\r\n                                                \"type\": \"HOME\",\r\n                                                \"primaryInd\": true\r\n                                            }\r\n                                        }\r\n                                    ]\r\n                                },\r\n                                \"emails\": {\r\n                                    \"emailInfo\": [\r\n                                        {\r\n                                            \"email\": {\r\n                                                \"emailAddress\": \"{{GuestEmail}}\",\r\n                                                \"type\": \"EMAIL\",\r\n                                                \"typeDescription\": \"Email Address\",\r\n                                                \"primaryInd\": true\r\n                                            }\r\n                                        }\r\n                                    ]\r\n                                },\r\n                                \"profileType\": \"Guest\"\r\n                            }\r\n                        },\r\n                        \"primary\": true\r\n                    }\r\n                ],\r\n                \"reservationPaymentMethods\": [\r\n                    {\r\n                        \"paymentMethod\": \"CA\",\r\n                        \"folioView\": \"1\"\r\n                    }\r\n                ],\r\n                \"hotelId\": \"{{HotelId}}\",\r\n                \"roomStayReservation\": true,\r\n                \"reservationStatus\": \"Reserved\",\r\n                \"computedReservationStatus\": \"DueIn\",\r\n                \"walkIn\": false,\r\n                \"printRate\": false,\r\n                \"preRegistered\": false,\r\n                \"upgradeEligible\": false,\r\n                \"allowAutoCheckin\": false,\r\n                \"hasOpenFolio\": false,\r\n                \"allowMobileCheckout\": false,\r\n                \"allowMobileViewFolio\": false,\r\n                \"allowPreRegistration\": false,\r\n                \"optedForCommunication\": false\r\n            }\r\n        ]\r\n    }\r\n}",
+													"raw": "{\r\n    \"reservations\": {\r\n        \"reservation\": [\r\n            {\r\n                \"sourceOfSale\": {\r\n                    \"sourceType\": \"PMS\",\r\n                    \"sourceCode\": \"{{HotelId}}\"\r\n                },\r\n                \"roomStay\": {\r\n                    \"roomRates\": [\r\n                        {\r\n                            \"total\": {\r\n                                \"amountBeforeTax\": \"{{AmountBeforeTax}}\"\r\n                            },\r\n                            \"rates\": {\r\n                                \"rate\": [\r\n                                    {\r\n                                        \"base\": {\r\n                                            \"amountBeforeTax\": \"{{AmountBeforeTax}}\",\r\n                                            \"currencyCode\": \"{{CurrencyCode}}\"\r\n                                        },\r\n                                        \"shareDistributionInstruction\": \"Full\",\r\n                                        \"total\": {\r\n                                            \"amountBeforeTax\": \"{{AmountBeforeTax}}\"\r\n                                        },\r\n                                        \"start\": \"{{DateFrom}}\",\r\n                                        \"end\": \"{{DateTo}}\"\r\n                                    }\r\n                                ]\r\n                            },\r\n                            \"guestCounts\": {\r\n                                \"adults\": \"{{Adults}}\"\r\n                                ,\"children\": \"{{Children}}\"\r\n                                ,\"childAges\": {{ChildrenAges}}\r\n                            },\r\n                            \"roomType\": \"{{RoomTypeCode}}\",\r\n                            \"ratePlanCode\": \"{{RatePlanCode}}\",\r\n                            \"start\": \"{{DateFrom}}\",\r\n                            \"end\": \"{{DateTo}}\",\r\n                            \"suppressRate\": true,\r\n                            \"marketCode\": \"LEISURE\",\r\n                            \"marketCodeDescription\": \"Leisure\",\r\n                            \"sourceCode\": \"WEB\",\r\n                            \"sourceCodeDescription\": \"Website\",\r\n                            \"numberOfUnits\": \"{{NumberOfUnits}}\",\r\n                            \"pseudoRoom\": false,\r\n                            \"roomTypeCharged\": \"{{RoomTypeCode}}\",\r\n                            \"houseUseOnly\": false,\r\n                            \"complimentary\": false,\r\n                            \"fixedRate\": true,\r\n                            \"discountAllowed\": false,\r\n                            \"bogoDiscount\": false\r\n                        }\r\n                    ],\r\n                    \"arrivalDate\": \"{{DateFrom}}\",\r\n                    \"departureDate\": \"{{DateTo}}\",\r\n                    \"guarantee\": {\r\n                        \"guaranteeCode\": \"CC\",\r\n                        \"shortDescription\": \"Guaranteed by Credit Card\"\r\n                    },\r\n                    \"roomNumberLocked\": false,\r\n                    \"printRate\": false\r\n                },\r\n                \"reservationGuests\": [\r\n                    {\r\n                        \"profileInfo\": {\r\n                            \"profile\": {\r\n                                \"customer\": {\r\n                                    \"personName\": [\r\n                                        {\r\n                                            \"givenName\": \"{{GuestFirstName}}\",\r\n                                            \"middleName\": \"\",\r\n                                            \"surname\": \"{{GuestLastName}}\",\r\n                                            \"nameType\": \"Primary\"\r\n                                        }\r\n                                    ],\r\n                                    \"language\": \"E\"\r\n                                },\r\n                                \"addresses\": {\r\n                                    \"addressInfo\": [\r\n                                        {\r\n                                            \"address\": {\r\n                                                \"addressLine\": [\r\n                                                    \"{{GuestHouseNameOrNumber}}\",\r\n                                                    \"{{GuestAddressStreet}}\"\r\n                                                ],\r\n                                                \"cityName\": \"{{GuestAddressCity}}\",\r\n                                                \"postalCode\": \"{{GuestAddressPostalCode}}\",\r\n                                                \"state\": \"{{GuestAddressState}}\",\r\n                                                \"country\": {\r\n                                                    \"value\": \"{{GuestAddressCountry}}\",\r\n                                                    \"code\": \"{{GuestAddressCountry}}\"\r\n                                                },\r\n                                                \"language\": \"EN\",\r\n                                                \"type\": \"HOME\",\r\n                                                \"primaryInd\": true\r\n                                            }\r\n                                        }\r\n                                    ]\r\n                                },\r\n                                \"emails\": {\r\n                                    \"emailInfo\": [\r\n                                        {\r\n                                            \"email\": {\r\n                                                \"emailAddress\": \"{{GuestEmail}}\",\r\n                                                \"type\": \"EMAIL\",\r\n                                                \"typeDescription\": \"Email Address\",\r\n                                                \"primaryInd\": true\r\n                                            }\r\n                                        }\r\n                                    ]\r\n                                },\r\n                                \"profileType\": \"Guest\"\r\n                            }\r\n                        },\r\n                        \"primary\": true\r\n                    }\r\n                ],\r\n                \"reservationPaymentMethods\": [\r\n                    {\r\n                        \"paymentMethod\": \"CA\",\r\n                        \"folioView\": \"1\"\r\n                    }\r\n                ],\r\n                \"hotelId\": \"{{HotelId}}\",\r\n                \"roomStayReservation\": true,\r\n                \"reservationStatus\": \"Reserved\",\r\n                \"computedReservationStatus\": \"DueIn\",\r\n                \"walkIn\": false,\r\n                \"printRate\": false,\r\n                \"preRegistered\": false,\r\n                \"upgradeEligible\": false,\r\n                \"allowAutoCheckin\": false,\r\n                \"hasOpenFolio\": false,\r\n                \"allowMobileCheckout\": false,\r\n                \"allowMobileViewFolio\": false,\r\n                \"allowPreRegistration\": false,\r\n                \"optedForCommunication\": false\r\n            }\r\n        ]\r\n    }\r\n}",
 													"options": {
 														"raw": {
 															"language": "json"
@@ -2034,7 +1669,8 @@
 														"{{HotelId}}",
 														"reservations"
 													]
-												}
+												},
+												"description": "Context:\n\nohip.property.createReservation"
 											},
 											"response": []
 										},
@@ -2045,10 +1681,26 @@
 													"listen": "test",
 													"script": {
 														"exec": [
+															"// Extract ReservationId from the Location header\r",
 															"var data = pm.response.headers.get(\"Location\").split(\"/\").pop();\r",
-															"postman.setEnvironmentVariable(\"ReservationId\", data);"
+															"pm.environment.set(\"ReservationId\", data);\r",
+															"\r",
+															"// Parse response body to JSON\r",
+															"var jsonData = pm.response.json();\r",
+															"\r",
+															"// Find link that contains confirmationNumberList\r",
+															"var confirmationLink = jsonData.links.find(link => link.href.includes(\"confirmationNumberList\"));\r",
+															"\r",
+															"// If found, extract and set ConfirmationNumber\r",
+															"if (confirmationLink) {\r",
+															"    var confirmationNumber = confirmationLink.href.split(\"confirmationNumberList=\")[1];\r",
+															"    pm.environment.set(\"ConfirmationNumber\", confirmationNumber);\r",
+															"}\r",
+															""
 														],
-														"type": "text/javascript"
+														"type": "text/javascript",
+														"packages": {},
+														"requests": {}
 													}
 												}
 											],
@@ -2068,7 +1720,6 @@
 													{
 														"key": "Content-Type",
 														"value": "application/json",
-														"name": "Content-Type",
 														"type": "text"
 													},
 													{
@@ -2084,7 +1735,7 @@
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{\r\n    \"reservations\": {\r\n        \"reservation\": [\r\n            {\r\n                \"sourceOfSale\": {\r\n                    \"sourceType\": \"PMS\",\r\n                    \"sourceCode\": \"{{HotelId}}\"\r\n                },\r\n                \"roomStay\": {\r\n                    \"roomRates\": [\r\n                        {\r\n                            \"total\": {\r\n                                \"amountBeforeTax\": \"{{AmountBeforeTax}}\"\r\n                            },\r\n                            \"rates\": {\r\n                                \"rate\": [\r\n                                    {\r\n                                        \"base\": {\r\n                                            \"amountBeforeTax\": \"{{AmountBeforeTax}}\",\r\n                                            \"currencyCode\": \"{{CurrencyCode}}\"\r\n                                        },\r\n                                        \"shareDistributionInstruction\": \"Full\",\r\n                                        \"total\": {\r\n                                            \"amountBeforeTax\": \"{{AmountBeforeTax}}\"\r\n                                        },\r\n                                        \"start\": \"{{DateFrom}}\",\r\n                                        \"end\": \"{{DateTo}}\"\r\n                                    }\r\n                                ]\r\n                            },\r\n                            \"guestCounts\": {\r\n                                \"adults\": \"{{Adults}}\",\r\n                                \"children\": \"{{Children}}\",\r\n                                \"childAges\": {{ChildrenAges}}\r\n                            },\r\n                            \"roomType\": \"{{RoomTypeCode}}\",\r\n                            \"ratePlanCode\": \"{{RatePlanCode}}\",\r\n                            \"start\": \"{{DateFrom}}\",\r\n                            \"end\": \"{{DateTo}}\",\r\n                            \"suppressRate\": true,\r\n                            \"marketCode\": \"LEISURE\",\r\n                            \"marketCodeDescription\": \"Leisure\",\r\n                            \"sourceCode\": \"WEB\",\r\n                            \"sourceCodeDescription\": \"Website\",\r\n                            \"numberOfUnits\": \"{{NumberOfUnits}}\",\r\n                            \"pseudoRoom\": false,\r\n                            \"roomTypeCharged\": \"{{RoomTypeCode}}\",\r\n                            \"houseUseOnly\": false,\r\n                            \"complimentary\": false,\r\n                            \"fixedRate\": true,\r\n                            \"discountAllowed\": false,\r\n                            \"bogoDiscount\": false\r\n                        }\r\n                    ],\r\n                    \"arrivalDate\": \"{{DateFrom}}\",\r\n                    \"departureDate\": \"{{DateTo}}\",\r\n                    \"guarantee\": {\r\n                        \"guaranteeCode\": \"6PM\",\r\n                        \"shortDescription\": \"6PM Hold\"\r\n                    },\r\n                    \"roomNumberLocked\": false,\r\n                    \"printRate\": false\r\n                },\r\n                \"reservationGuests\": [\r\n                    {\r\n                        \"profileInfo\": {\r\n                            \"profile\": {\r\n                                \"customer\": {\r\n                                    \"personName\": [\r\n                                        {\r\n                                            \"givenName\": \"{{GuestFirstName}}\",\r\n                                            \"middleName\": \"\",\r\n                                            \"surname\": \"{{GuestLastName}}\",\r\n                                            \"nameType\": \"Primary\"\r\n                                        }\r\n                                    ],\r\n                                    \"language\": \"E\"\r\n                                },\r\n                                \"addresses\": {\r\n                                    \"addressInfo\": [\r\n                                        {\r\n                                            \"address\": {\r\n                                                \"addressLine\": [\r\n                                                    \"{{GuestHouseNameOrNumber}}\",\r\n                                                    \"{{GuestAddressStreet}}\"\r\n                                                ],\r\n                                                \"cityName\": \"{{GuestAddressCity}}\",\r\n                                                \"postalCode\": \"{{GuestAddressPostalCode}}\",\r\n                                                \"state\": \"{{GuestAddressState}}\",\r\n                                                \"country\": {\r\n                                                    \"value\": \"{{GuestAddressCountry}}\",\r\n                                                    \"code\": \"{{GuestAddressCountry}}\"\r\n                                                },\r\n                                                \"language\": \"EN\",\r\n                                                \"type\": \"HOME\",\r\n                                                \"primaryInd\": true\r\n                                            }\r\n                                        }\r\n                                    ]\r\n                                },\r\n                                \"emails\": {\r\n                                    \"emailInfo\": [\r\n                                        {\r\n                                            \"email\": {\r\n                                                \"emailAddress\": \"{{GuestEmail}}\",\r\n                                                \"type\": \"EMAIL\",\r\n                                                \"typeDescription\": \"Email Address\",\r\n                                                \"primaryInd\": true\r\n                                            }\r\n                                        }\r\n                                    ]\r\n                                },\r\n                                \"telephones\": {\r\n                                    \"telephoneInfo\": [\r\n                                        {\r\n                                            \"telephone\": {\r\n                                                \"phoneTechType\": \"PHONE\",\r\n                                                \"phoneUseType\": \"MOBILE\",\r\n                                                \"phoneUseTypeDescription\": \"Mobile Phone Number\",\r\n                                                \"phoneNumber\": \"{{GuestPhoneNumber}}\",\r\n                                                \"primaryInd\": true,\r\n                                                \"orderSequence\": \"1\"\r\n                                            }\r\n                                        }\r\n                                    ]\r\n                                },\r\n                                \"profileType\": \"Guest\"\r\n                            }\r\n                        },\r\n                        \"primary\": true\r\n                    }\r\n                ],\r\n                \"reservationPaymentMethods\": [\r\n                    {\r\n                        \"paymentCard\": {\r\n                            \"cardType\": \"{{CardType}}\",\r\n                            \"cardNumber\": \"{{PaymentToken}}\",\r\n                            \"cardNumberMasked\": \"XXXXXXXXXXXX{{Last4Digits}}\",\r\n                            \"expirationDate\": \"20{{ExpiryYY-MM}}-00\",\r\n                            \"cardHolderName\": \"{{NameOnCard}}\",\r\n                            \"cardOrToken\": \"Token\"\r\n                        },\r\n                        \"paymentMethod\": \"{{CardType}}\",\r\n                        \"description\": \"Card token\",\r\n                        \"folioView\": \"1\"\r\n                    }\r\n                ],\r\n                \"hotelId\": \"{{HotelId}}\",\r\n                \"roomStayReservation\": true,\r\n                \"reservationStatus\": \"Reserved\",\r\n                \"computedReservationStatus\": \"DueIn\",\r\n                \"walkIn\": false,\r\n                \"printRate\": false,\r\n                \"preRegistered\": false,\r\n                \"upgradeEligible\": false,\r\n                \"allowAutoCheckin\": false,\r\n                \"hasOpenFolio\": false,\r\n                \"allowMobileCheckout\": false,\r\n                \"allowMobileViewFolio\": false,\r\n                \"allowPreRegistration\": false,\r\n                \"optedForCommunication\": false\r\n            }\r\n        ]\r\n    }\r\n}",
+													"raw": "{\r\n    \"reservations\": {\r\n        \"reservation\": [\r\n            {\r\n                \"sourceOfSale\": {\r\n                    \"sourceType\": \"PMS\",\r\n                    \"sourceCode\": \"{{HotelId}}\"\r\n                },\r\n                \"roomStay\": {\r\n                    \"roomRates\": [\r\n                        {\r\n                            \"total\": {\r\n                                \"amountBeforeTax\": \"{{AmountBeforeTax}}\"\r\n                            },\r\n                            \"rates\": {\r\n                                \"rate\": [\r\n                                    {\r\n                                        \"base\": {\r\n                                            \"amountBeforeTax\": \"{{AmountBeforeTax}}\",\r\n                                            \"currencyCode\": \"{{CurrencyCode}}\"\r\n                                        },\r\n                                        \"shareDistributionInstruction\": \"Full\",\r\n                                        \"total\": {\r\n                                            \"amountBeforeTax\": \"{{AmountBeforeTax}}\"\r\n                                        },\r\n                                        \"start\": \"{{DateFrom}}\",\r\n                                        \"end\": \"{{DateTo}}\"\r\n                                    }\r\n                                ]\r\n                            },\r\n                            \"guestCounts\": {\r\n                                \"adults\": \"{{Adults}}\",\r\n                                \"children\": \"{{Children}}\",\r\n                                \"childAges\": {{ChildrenAges}}\r\n                            },\r\n                            \"roomType\": \"{{RoomTypeCode}}\",\r\n                            \"ratePlanCode\": \"{{RatePlanCode}}\",\r\n                            \"start\": \"{{DateFrom}}\",\r\n                            \"end\": \"{{DateTo}}\",\r\n                            \"suppressRate\": true,\r\n                            \"marketCode\": \"LEISURE\",\r\n                            \"marketCodeDescription\": \"Leisure\",\r\n                            \"sourceCode\": \"WEB\",\r\n                            \"sourceCodeDescription\": \"Website\",\r\n                            \"numberOfUnits\": \"{{NumberOfUnits}}\",\r\n                            \"pseudoRoom\": false,\r\n                            \"roomTypeCharged\": \"{{RoomTypeCode}}\",\r\n                            \"houseUseOnly\": false,\r\n                            \"complimentary\": false,\r\n                            \"fixedRate\": true,\r\n                            \"discountAllowed\": false,\r\n                            \"bogoDiscount\": false\r\n                        }\r\n                    ],\r\n                    \"arrivalDate\": \"{{DateFrom}}\",\r\n                    \"departureDate\": \"{{DateTo}}\",\r\n                    \"guarantee\": {\r\n                        \"guaranteeCode\": \"CC\",\r\n                        \"shortDescription\": \"Guaranteed by Credit Card\"\r\n                    },\r\n                    \"roomNumberLocked\": false,\r\n                    \"printRate\": false\r\n                },\r\n                \"reservationGuests\": [\r\n                    {\r\n                        \"profileInfo\": {\r\n                            \"profile\": {\r\n                                \"customer\": {\r\n                                    \"personName\": [\r\n                                        {\r\n                                            \"givenName\": \"{{GuestFirstName}}\",\r\n                                            \"middleName\": \"\",\r\n                                            \"surname\": \"{{GuestLastName}}\",\r\n                                            \"nameType\": \"Primary\"\r\n                                        }\r\n                                    ],\r\n                                    \"language\": \"E\"\r\n                                },\r\n                                \"addresses\": {\r\n                                    \"addressInfo\": [\r\n                                        {\r\n                                            \"address\": {\r\n                                                \"addressLine\": [\r\n                                                    \"{{GuestHouseNameOrNumber}}\",\r\n                                                    \"{{GuestAddressStreet}}\"\r\n                                                ],\r\n                                                \"cityName\": \"{{GuestAddressCity}}\",\r\n                                                \"postalCode\": \"{{GuestAddressPostalCode}}\",\r\n                                                \"state\": \"{{GuestAddressState}}\",\r\n                                                \"country\": {\r\n                                                    \"value\": \"{{GuestAddressCountry}}\",\r\n                                                    \"code\": \"{{GuestAddressCountry}}\"\r\n                                                },\r\n                                                \"language\": \"EN\",\r\n                                                \"type\": \"HOME\",\r\n                                                \"primaryInd\": true\r\n                                            }\r\n                                        }\r\n                                    ]\r\n                                },\r\n                                \"emails\": {\r\n                                    \"emailInfo\": [\r\n                                        {\r\n                                            \"email\": {\r\n                                                \"emailAddress\": \"{{GuestEmail}}\",\r\n                                                \"type\": \"EMAIL\",\r\n                                                \"typeDescription\": \"Email Address\",\r\n                                                \"primaryInd\": true\r\n                                            }\r\n                                        }\r\n                                    ]\r\n                                },\r\n                                \"telephones\": {\r\n                                    \"telephoneInfo\": [\r\n                                        {\r\n                                            \"telephone\": {\r\n                                                \"phoneTechType\": \"PHONE\",\r\n                                                \"phoneUseType\": \"MOBILE\",\r\n                                                \"phoneUseTypeDescription\": \"Mobile Phone Number\",\r\n                                                \"phoneNumber\": \"{{GuestPhoneNumber}}\",\r\n                                                \"primaryInd\": true,\r\n                                                \"orderSequence\": \"1\"\r\n                                            }\r\n                                        }\r\n                                    ]\r\n                                },\r\n                                \"profileType\": \"Guest\"\r\n                            }\r\n                        },\r\n                        \"primary\": true\r\n                    }\r\n                ],\r\n                \"reservationPaymentMethods\": [\r\n                    {\r\n                        \"paymentCard\": {\r\n                            \"cardType\": \"{{CardType}}\",\r\n                            \"cardNumber\": \"{{PaymentToken}}\",\r\n                            \"cardNumberMasked\": \"XXXXXXXXXXXX{{Last4Digits}}\",\r\n                            \"expirationDate\": \"20{{ExpiryYY-MM}}-00\",\r\n                            \"cardHolderName\": \"{{NameOnCard}}\",\r\n                            \"cardOrToken\": \"Token\",\r\n                            \"processing\": \"Manual\",\r\n                            \"swiped\": false,\r\n                            \"citId\": {{citId}}\r\n                        },\r\n                        \"authorizationRule\": {\r\n                            \"code\": \"2\" //Authorise amount for stay or deposit\r\n                        },\r\n                        \"paymentMethod\": \"{{CardType}}\",\r\n                        \"description\": \"Card token\",\r\n                        \"folioView\": \"1\"\r\n                    }\r\n                ],\r\n                \"hotelId\": \"{{HotelId}}\",\r\n                \"roomStayReservation\": true,\r\n                \"reservationStatus\": \"Reserved\",\r\n                \"computedReservationStatus\": \"DueIn\",\r\n                \"walkIn\": false,\r\n                \"printRate\": false,\r\n                \"preRegistered\": false,\r\n                \"upgradeEligible\": false,\r\n                \"allowAutoCheckin\": false,\r\n                \"hasOpenFolio\": false,\r\n                \"allowMobileCheckout\": false,\r\n                \"allowMobileViewFolio\": false,\r\n                \"allowPreRegistration\": false,\r\n                \"optedForCommunication\": false\r\n            }\r\n        ]\r\n    }\r\n}",
 													"options": {
 														"raw": {
 															"language": "json"
@@ -2104,7 +1755,8 @@
 														"{{HotelId}}",
 														"reservations"
 													]
-												}
+												},
+												"description": "Context:\n\nohip.property.createReservationWithToken"
 											},
 											"response": []
 										},
@@ -2115,10 +1767,26 @@
 													"listen": "test",
 													"script": {
 														"exec": [
+															"// Extract ReservationId from the Location header\r",
 															"var data = pm.response.headers.get(\"Location\").split(\"/\").pop();\r",
-															"postman.setEnvironmentVariable(\"ReservationId\", data);"
+															"pm.environment.set(\"ReservationId\", data);\r",
+															"\r",
+															"// Parse response body to JSON\r",
+															"var jsonData = pm.response.json();\r",
+															"\r",
+															"// Find link that contains confirmationNumberList\r",
+															"var confirmationLink = jsonData.links.find(link => link.href.includes(\"confirmationNumberList\"));\r",
+															"\r",
+															"// If found, extract and set ConfirmationNumber\r",
+															"if (confirmationLink) {\r",
+															"    var confirmationNumber = confirmationLink.href.split(\"confirmationNumberList=\")[1];\r",
+															"    pm.environment.set(\"ConfirmationNumber\", confirmationNumber);\r",
+															"}\r",
+															""
 														],
-														"type": "text/javascript"
+														"type": "text/javascript",
+														"packages": {},
+														"requests": {}
 													}
 												}
 											],
@@ -2138,7 +1806,6 @@
 													{
 														"key": "Content-Type",
 														"value": "application/json",
-														"name": "Content-Type",
 														"type": "text"
 													},
 													{
@@ -2154,7 +1821,7 @@
 												],
 												"body": {
 													"mode": "raw",
-													"raw": "{\r\n    \"reservations\": {\r\n        \"reservation\": [\r\n            {\r\n                \"sourceOfSale\": {\r\n                    \"sourceType\": \"PMS\",\r\n                    \"sourceCode\": \"{{HotelId}}\"\r\n                },\r\n                \"roomStay\": {\r\n                    \"roomRates\": [\r\n                        {\r\n                            \"total\": {\r\n                                \"amountBeforeTax\": \"{{AmountBeforeTax}}\"\r\n                            },\r\n                            \"rates\": {\r\n                                \"rate\": [\r\n                                    {\r\n                                        \"base\": {\r\n                                            \"amountBeforeTax\": \"{{AmountBeforeTax}}\",\r\n                                            \"currencyCode\": \"{{CurrencyCode}}\"\r\n                                        },\r\n                                        \"shareDistributionInstruction\": \"Full\",\r\n                                        \"total\": {\r\n                                            \"amountBeforeTax\": \"{{AmountBeforeTax}}\"\r\n                                        },\r\n                                        \"start\": \"{{DateFrom}}\",\r\n                                        \"end\": \"{{DateTo}}\"\r\n                                    }\r\n                                ]\r\n                            },\r\n                            \"guestCounts\": {\r\n                                \"adults\": \"{{Adults}}\",\r\n                                \"children\": \"{{Children}}\",\r\n                                \"childAges\": {{ChildrenAges}}\r\n                            },\r\n                            \"roomType\": \"{{RoomTypeCode}}\",\r\n                            \"ratePlanCode\": \"{{RatePlanCode}}\",\r\n                            \"start\": \"{{DateFrom}}\",\r\n                            \"end\": \"{{DateTo}}\",\r\n                            \"suppressRate\": true,\r\n                            \"marketCode\": \"LEISURE\",\r\n                            \"marketCodeDescription\": \"Leisure\",\r\n                            \"sourceCode\": \"WEB\",\r\n                            \"sourceCodeDescription\": \"Website\",\r\n                            \"numberOfUnits\": \"{{NumberOfUnits}}\",\r\n                            \"pseudoRoom\": false,\r\n                            \"roomTypeCharged\": \"{{RoomTypeCode}}\",\r\n                            \"houseUseOnly\": false,\r\n                            \"complimentary\": false,\r\n                            \"fixedRate\": true,\r\n                            \"discountAllowed\": false,\r\n                            \"bogoDiscount\": false\r\n                        }\r\n                    ],\r\n                    \"arrivalDate\": \"{{DateFrom}}\",\r\n                    \"departureDate\": \"{{DateTo}}\",\r\n                    \"guarantee\": {\r\n                        \"guaranteeCode\": \"6PM\",\r\n                        \"shortDescription\": \"6PM Hold\"\r\n                    },\r\n                    \"roomNumberLocked\": false,\r\n                    \"printRate\": false\r\n                },\r\n                \"reservationGuests\": {\r\n                    \"profileInfo\": {\r\n                        \"profileIdList\": {\r\n                            \"id\": {{ProfileId}},\r\n                            \"type\": \"Profile\"\r\n                        }\r\n                    }\r\n                },\r\n                \"reservationPaymentMethods\": [\r\n                    {\r\n                        \"paymentCard\": {\r\n                            \"cardType\": \"{{CardType}}\",\r\n                            \"cardNumber\": \"{{PaymentToken}}\",\r\n                            \"cardNumberMasked\": \"XXXXXXXXXXXX{{Last4Digits}}\",\r\n                            \"expirationDate\": \"20{{ExpiryYY-MM}}-00\",\r\n                            \"cardHolderName\": \"{{NameOnCard}}\",\r\n                            \"cardOrToken\": \"Token\"\r\n                        },\r\n                        \"paymentMethod\": \"{{CardType}}\",\r\n                        \"description\": \"Card token\",\r\n                        \"folioView\": \"1\"\r\n                    }\r\n                ],\r\n                \"hotelId\": \"{{HotelId}}\",\r\n                \"roomStayReservation\": true,\r\n                \"reservationStatus\": \"Reserved\",\r\n                \"computedReservationStatus\": \"DueIn\",\r\n                \"walkIn\": false,\r\n                \"printRate\": false,\r\n                \"preRegistered\": false,\r\n                \"upgradeEligible\": false,\r\n                \"allowAutoCheckin\": false,\r\n                \"hasOpenFolio\": false,\r\n                \"allowMobileCheckout\": false,\r\n                \"allowMobileViewFolio\": false,\r\n                \"allowPreRegistration\": false,\r\n                \"optedForCommunication\": false\r\n            }\r\n        ]\r\n    }\r\n}",
+													"raw": "{\r\n    \"reservations\": {\r\n        \"reservation\": [\r\n            {\r\n                \"sourceOfSale\": {\r\n                    \"sourceType\": \"PMS\",\r\n                    \"sourceCode\": \"{{HotelId}}\"\r\n                },\r\n                \"roomStay\": {\r\n                    \"roomRates\": [\r\n                        {\r\n                            \"total\": {\r\n                                \"amountBeforeTax\": \"{{AmountBeforeTax}}\"\r\n                            },\r\n                            \"rates\": {\r\n                                \"rate\": [\r\n                                    {\r\n                                        \"base\": {\r\n                                            \"amountBeforeTax\": \"{{AmountBeforeTax}}\",\r\n                                            \"currencyCode\": \"{{CurrencyCode}}\"\r\n                                        },\r\n                                        \"shareDistributionInstruction\": \"Full\",\r\n                                        \"total\": {\r\n                                            \"amountBeforeTax\": \"{{AmountBeforeTax}}\"\r\n                                        },\r\n                                        \"start\": \"{{DateFrom}}\",\r\n                                        \"end\": \"{{DateTo}}\"\r\n                                    }\r\n                                ]\r\n                            },\r\n                            \"guestCounts\": {\r\n                                \"adults\": \"{{Adults}}\",\r\n                                \"children\": \"{{Children}}\",\r\n                                \"childAges\": {{ChildrenAges}}\r\n                            },\r\n                            \"roomType\": \"{{RoomTypeCode}}\",\r\n                            \"ratePlanCode\": \"{{RatePlanCode}}\",\r\n                            \"start\": \"{{DateFrom}}\",\r\n                            \"end\": \"{{DateTo}}\",\r\n                            \"suppressRate\": true,\r\n                            \"marketCode\": \"LEISURE\",\r\n                            \"marketCodeDescription\": \"Leisure\",\r\n                            \"sourceCode\": \"WEB\",\r\n                            \"sourceCodeDescription\": \"Website\",\r\n                            \"numberOfUnits\": \"{{NumberOfUnits}}\",\r\n                            \"pseudoRoom\": false,\r\n                            \"roomTypeCharged\": \"{{RoomTypeCode}}\",\r\n                            \"houseUseOnly\": false,\r\n                            \"complimentary\": false,\r\n                            \"fixedRate\": true,\r\n                            \"discountAllowed\": false,\r\n                            \"bogoDiscount\": false\r\n                        }\r\n                    ],\r\n                    \"arrivalDate\": \"{{DateFrom}}\",\r\n                    \"departureDate\": \"{{DateTo}}\",\r\n                    \"guarantee\": {\r\n                        \"guaranteeCode\": \"CC\",\r\n                        \"shortDescription\": \"Guaranteed by Credit Card\"\r\n                    },\r\n                    \"roomNumberLocked\": false,\r\n                    \"printRate\": false\r\n                },\r\n                \"reservationGuests\": {\r\n                    \"profileInfo\": {\r\n                        \"profileIdList\": {\r\n                            \"id\": {{ProfileId}},\r\n                            \"type\": \"Profile\"\r\n                        }\r\n                    }\r\n                },\r\n               \"reservationPaymentMethods\": [\r\n                    {\r\n                        \"paymentCard\": {\r\n                            \"cardType\": \"{{CardType}}\",\r\n                            \"cardNumber\": \"{{PaymentToken}}\",\r\n                            \"cardNumberMasked\": \"XXXXXXXXXXXX{{Last4Digits}}\",\r\n                            \"expirationDate\": \"20{{ExpiryYY-MM}}-00\",\r\n                            \"cardHolderName\": \"{{NameOnCard}}\",\r\n                            \"cardOrToken\": \"Token\",\r\n                            \"processing\": \"Manual\",\r\n                            \"swiped\": false,\r\n                            \"citId\": {{citId}}\r\n                        },\r\n                        \"authorizationRule\": {\r\n                            \"code\": \"2\" //Authorise amount for stay or deposit\r\n                        },\r\n                        \"paymentMethod\": \"{{CardType}}\",\r\n                        \"description\": \"Card token\",\r\n                        \"folioView\": \"1\"\r\n                    }\r\n                ],\r\n                \"hotelId\": \"{{HotelId}}\",\r\n                \"roomStayReservation\": true,\r\n                \"reservationStatus\": \"Reserved\",\r\n                \"computedReservationStatus\": \"DueIn\",\r\n                \"walkIn\": false,\r\n                \"printRate\": false,\r\n                \"preRegistered\": false,\r\n                \"upgradeEligible\": false,\r\n                \"allowAutoCheckin\": false,\r\n                \"hasOpenFolio\": false,\r\n                \"allowMobileCheckout\": false,\r\n                \"allowMobileViewFolio\": false,\r\n                \"allowPreRegistration\": false,\r\n                \"optedForCommunication\": false\r\n            }\r\n        ]\r\n    }\r\n}",
 													"options": {
 														"raw": {
 															"language": "json"
@@ -2174,7 +1841,8 @@
 														"{{HotelId}}",
 														"reservations"
 													]
-												}
+												},
+												"description": "Context:  \nohip.property.createReservationWithTokenAndProfileId"
 											},
 											"response": []
 										},
@@ -2199,7 +1867,6 @@
 													{
 														"key": "Content-Type",
 														"value": "application/json",
-														"name": "Content-Type",
 														"type": "text"
 													},
 													{
@@ -2428,7 +2095,7 @@
 														}
 													]
 												},
-												"description": "To fetch reservation from OPERA using ID"
+												"description": "Context:\n\nohip.property.getReservationById"
 											},
 											"response": []
 										}
@@ -2472,7 +2139,8 @@
 												"v70",
 												"paymentLinks"
 											]
-										}
+										},
+										"description": "Context:\n\nohip.payments.adyen.createPayByLink"
 									},
 									"response": []
 								},
@@ -2507,7 +2175,8 @@
 												"paymentLinks",
 												"{{PaymentId}}"
 											]
-										}
+										},
+										"description": "Context:\n\nohip.payments.adyen.getPayByLinkDetails"
 									},
 									"response": []
 								},
@@ -2552,7 +2221,8 @@
 													"value": "{{Adyen-ShopperReference}}"
 												}
 											]
-										}
+										},
+										"description": "Context:\n\nohip.payments.adyen.getPaymentToken"
 									},
 									"response": []
 								},
@@ -2599,7 +2269,8 @@
 												"webhooks",
 												""
 											]
-										}
+										},
+										"description": "Context:\n\nohip.payments.adyen.paymentEventHook"
 									},
 									"response": []
 								}
@@ -2629,7 +2300,6 @@
 											{
 												"key": "Content-Type",
 												"value": "application/json",
-												"name": "Content-Type",
 												"type": "text"
 											},
 											{
@@ -2691,7 +2361,7 @@
 												}
 											]
 										},
-										"description": "To fetch reservation from OPERA using ID"
+										"description": "Context:  \nohip.property.getReservationByConfirmationNumber"
 									},
 									"response": []
 								},
@@ -2716,7 +2386,6 @@
 											{
 												"key": "Content-Type",
 												"value": "application/json",
-												"name": "Content-Type",
 												"type": "text"
 											},
 											{
@@ -2752,7 +2421,8 @@
 												"{{HotelId}}",
 												"businessDate"
 											]
-										}
+										},
+										"description": "Context:\n\nohip.property.getBusinessDate"
 									},
 									"response": []
 								},
@@ -2774,7 +2444,6 @@
 											{
 												"key": "Content-Type",
 												"value": "application/json",
-												"name": "Content-Type",
 												"type": "text"
 											},
 											{
@@ -2812,7 +2481,8 @@
 												"{{ReservationId}}",
 												"preCheckIn"
 											]
-										}
+										},
+										"description": "Context:\n\nohip.property.preCheckIn"
 									},
 									"response": []
 								},
@@ -2837,7 +2507,6 @@
 											{
 												"key": "Content-Type",
 												"value": "application/json",
-												"name": "Content-Type",
 												"type": "text"
 											},
 											{
@@ -2861,14 +2530,14 @@
 											}
 										},
 										"url": {
-											"raw": "https://{{HostName}}/fof/v0/hotels/{{HotelId}}/rooms?hotelRoomStartDate={{DateFrom}}&hotelRoomEndDate={{DateTo}}&hotelRoomStatus=Inspected&hotelRoomFrontOfficeStatus=Vacant&roomType={{RoomTypeCode}}",
+											"raw": "https://{{HostName}}/fof/v1/hotels/{{HotelId}}/rooms?hotelRoomStartDate={{DateFrom}}&hotelRoomEndDate={{DateTo}}&hotelRoomStatus=Inspected&hotelRoomFrontOfficeStatus=Vacant&roomType={{RoomTypeCode}}",
 											"protocol": "https",
 											"host": [
 												"{{HostName}}"
 											],
 											"path": [
 												"fof",
-												"v0",
+												"v1",
 												"hotels",
 												"{{HotelId}}",
 												"rooms"
@@ -2901,7 +2570,7 @@
 												}
 											]
 										},
-										"description": "To fetch rooms from OPERA "
+										"description": "Context:\n\nohip.property.getAvailableRooms"
 									},
 									"response": []
 								},
@@ -2923,7 +2592,6 @@
 											{
 												"key": "Content-Type",
 												"value": "application/json",
-												"name": "Content-Type",
 												"type": "text"
 											},
 											{
@@ -2962,7 +2630,7 @@
 												"roomAssignments"
 											]
 										},
-										"description": "Use this API to add/assign a room number to a guests reservation. This is required before they can check into the property."
+										"description": "Context:\n\nohip.property.assignRoom"
 									},
 									"response": []
 								},
@@ -2984,7 +2652,6 @@
 											{
 												"key": "Content-Type",
 												"value": "application/json",
-												"name": "Content-Type",
 												"type": "text"
 											},
 											{
@@ -3023,7 +2690,7 @@
 												"checkIns"
 											]
 										},
-										"description": "To check in a guest at the property."
+										"description": "Context:\n\nohip.property.checkIn"
 									},
 									"response": []
 								}
@@ -3120,7 +2787,7 @@
 												}
 											]
 										},
-										"description": "Use this operation to search for available packages at a property. You can search by date range, to see what packages are available to add to a reservation for example."
+										"description": "Context:\n\nohip.property.getPackages"
 									},
 									"response": []
 								},
@@ -3145,7 +2812,6 @@
 											{
 												"key": "Content-Type",
 												"value": "application/json",
-												"name": "Content-Type",
 												"type": "text"
 											},
 											{
@@ -3237,7 +2903,8 @@
 													"disabled": true
 												}
 											]
-										}
+										},
+										"description": "Context:\n\nohip.property.getTransactionCodes"
 									},
 									"response": []
 								},
@@ -3259,7 +2926,6 @@
 											{
 												"key": "Content-Type",
 												"value": "application/json",
-												"name": "Content-Type",
 												"type": "text"
 											},
 											{
@@ -3275,7 +2941,7 @@
 										],
 										"body": {
 											"mode": "raw",
-											"raw": "{\r\n    \"criteria\": {\r\n        \"charges\": {\r\n            \"postingQuantity\": 1,\r\n            \"usePackageAllowance\": false,\r\n            \"price\": {\r\n                \"amount\": {{PackageAmount}},\r\n                \"currencyCode\": \"USD\"\r\n            },\r\n            \"transactionCode\": {{TransactionCode}},\r\n            \"applyRoutingInstructions\": false\r\n        },\r\n        \"reservationId\": {\r\n            \"idContext\": \"OPERA\",\r\n            \"id\": {{ReservationId}},\r\n            \"type\": \"Reservation\"\r\n        },\r\n        \"cashierId\": 1,\r\n        \"hotelId\": \"{{HotelId}}\",\r\n        \"postIt\": false\r\n    }\r\n}",
+											"raw": "{\r\n    \"criteria\": {\r\n        \"charges\": {\r\n            \"postingQuantity\": 1,\r\n            \"usePackageAllowance\": false,\r\n            \"price\": {\r\n                \"amount\": {{PackageAmount}},\r\n                \"currencyCode\": {{CurrencyCode}}\r\n            },\r\n            \"transactionCode\": {{TransactionCode}},\r\n            \"applyRoutingInstructions\": false\r\n        },\r\n        \"reservationId\": {\r\n            \"idContext\": \"OPERA\",\r\n            \"id\": {{ReservationId}},\r\n            \"type\": \"Reservation\"\r\n        },\r\n        \"cashierId\": 1,\r\n        \"hotelId\": \"{{HotelId}}\",\r\n        \"postIt\": false\r\n    }\r\n}",
 											"options": {
 												"raw": {
 													"language": "json"
@@ -3283,21 +2949,22 @@
 											}
 										},
 										"url": {
-											"raw": "https://{{HostName}}/csh/v0/hotels/{{HotelId}}/reservations/{{ReservationId}}/charges",
+											"raw": "https://{{HostName}}/csh/v1/hotels/{{HotelId}}/reservations/{{ReservationId}}/charges",
 											"protocol": "https",
 											"host": [
 												"{{HostName}}"
 											],
 											"path": [
 												"csh",
-												"v0",
+												"v1",
 												"hotels",
 												"{{HotelId}}",
 												"reservations",
 												"{{ReservationId}}",
 												"charges"
 											]
-										}
+										},
+										"description": "Context:\n\nohip.property.addCharges"
 									},
 									"response": []
 								},
@@ -3322,7 +2989,6 @@
 											{
 												"key": "Content-Type",
 												"value": "application/json",
-												"name": "Content-Type",
 												"type": "text"
 											},
 											{
@@ -3421,7 +3087,8 @@
 													"disabled": true
 												}
 											]
-										}
+										},
+										"description": "Context:\n\nohip.property.getFolioDetails"
 									},
 									"response": []
 								}
@@ -3448,7 +3115,6 @@
 											{
 												"key": "Content-Type",
 												"value": "application/json",
-												"name": "Content-Type",
 												"type": "text"
 											},
 											{
@@ -3464,7 +3130,7 @@
 										],
 										"body": {
 											"mode": "raw",
-											"raw": "{\r\n    \"criteria\": {\r\n        \"overrideInsufficientCC\": false,\r\n        \"applyCCSurcharge\": false,\r\n        \"vATOffset\": false,\r\n        \"reservationId\": {\r\n            \"idContext\": \"OPERA\",\r\n            \"id\": {{ReservationId}},\r\n            \"type\": \"Reservation\"\r\n        },\r\n        \"paymentMethod\": {\r\n            \"paymentMethod\": \"CA\"\r\n        },\r\n        \"postingReference\": \"CA Posting - Window 1\",\r\n        \"postingAmount\": {\r\n            \"amount\": {{PaymentAmount}},\r\n            \"currencyCode\": \"USD\"\r\n        },\r\n        \"cashierId\": 1,\r\n        \"hotelId\": \"{{HotelId}}\",\r\n        \"folioWindowNo\": \"1\",\r\n        \"overrideARCreditLimit\": false\r\n    }\r\n}",
+											"raw": "{\r\n    \"criteria\": {\r\n        \"overrideInsufficientCC\": false,\r\n        \"applyCCSurcharge\": false,\r\n        \"vATOffset\": false,\r\n        \"reservationId\": {\r\n            \"idContext\": \"OPERA\",\r\n            \"id\": {{ReservationId}},\r\n            \"type\": \"Reservation\"\r\n        },\r\n        \"paymentMethod\": {\r\n            \"paymentMethod\": \"CA\"\r\n        },\r\n        \"postingReference\": \"{{PostingReference}}\",\r\n        \"postingAmount\": {\r\n            \"amount\": {{PaymentAmount}},\r\n            \"currencyCode\": \"{{CurrencyCode}}\"\r\n        },\r\n        \"cashierId\": {{CashierId}},\r\n        \"hotelId\": \"{{HotelId}}\",\r\n        \"folioWindowNo\": {{FolioWindow}},\r\n        \"overrideARCreditLimit\": false\r\n    }\r\n}",
 											"options": {
 												"raw": {
 													"language": "json"
@@ -3486,7 +3152,8 @@
 												"{{ReservationId}}",
 												"payments"
 											]
-										}
+										},
+										"description": "Context:\n\nohip.property.settleFolio"
 									},
 									"response": []
 								},
@@ -3508,7 +3175,6 @@
 											{
 												"key": "Content-Type",
 												"value": "application/json",
-												"name": "Content-Type",
 												"type": "text"
 											},
 											{
@@ -3553,7 +3219,8 @@
 													"disabled": true
 												}
 											]
-										}
+										},
+										"description": "Context:\n\nohip.property.createFolio"
 									},
 									"response": []
 								},
@@ -3575,7 +3242,6 @@
 											{
 												"key": "Content-Type",
 												"value": "application/json",
-												"name": "Content-Type",
 												"type": "text"
 											},
 											{
@@ -3613,7 +3279,8 @@
 												"{{ReservationId}}",
 												"checkOuts"
 											]
-										}
+										},
+										"description": "Context:\n\nohip.property.checkout"
 									},
 									"response": []
 								},
@@ -3635,7 +3302,6 @@
 											{
 												"key": "Content-Type",
 												"value": "application/json",
-												"name": "Content-Type",
 												"type": "text"
 											},
 											{
@@ -3674,7 +3340,8 @@
 												"checkOuts",
 												"reinstate"
 											]
-										}
+										},
+										"description": "Context:\n\nohip.property.reinstateCheckout"
 									},
 									"response": []
 								}
@@ -3830,7 +3497,75 @@
 											"value": "Correspondence"
 										}
 									]
-								}
+								},
+								"description": "Context:\n\nohip.property.getProfileById"
+							},
+							"response": []
+						},
+						{
+							"name": "Get Property Reservation with External Id",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{Token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "x-hotelId",
+										"value": "{{HotelId}}",
+										"type": "text"
+									},
+									{
+										"key": "x-app-key",
+										"value": "{{AppKey}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://{{HostName}}/rsv/v1/hotels/{{HotelId}}/reservations?externalReferenceIds={{ExternalReservationId}}",
+									"protocol": "https",
+									"host": [
+										"{{HostName}}"
+									],
+									"path": [
+										"rsv",
+										"v1",
+										"hotels",
+										"{{HotelId}}",
+										"reservations"
+									],
+									"query": [
+										{
+											"key": "externalReferenceIds",
+											"value": "{{ExternalReservationId}}"
+										}
+									]
+								},
+								"description": "Context:\n\nohip.property.getReservationByExternalId"
 							},
 							"response": []
 						},
@@ -3855,7 +3590,6 @@
 									{
 										"key": "Content-Type",
 										"value": "application/json",
-										"name": "Content-Type",
 										"type": "text"
 									},
 									{
@@ -3960,7 +3694,8 @@
 											"disabled": true
 										}
 									]
-								}
+								},
+								"description": "Context.\n\nohip.property.searchReservationsByDateRangeAndGuestNames"
 							},
 							"response": []
 						}
@@ -3970,49 +3705,13 @@
 		},
 		{
 			"name": "Train",
-			"item": [
-				{
-					"name": "Sample Train Call",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "header1",
-								"value": "{{hello}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"input\": {{world}}\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "https://httpbin.org/anything/{{hello}}/{{world}}",
-							"protocol": "https",
-							"host": [
-								"httpbin",
-								"org"
-							],
-							"path": [
-								"anything",
-								"{{hello}}",
-								"{{world}}"
-							]
-						}
-					},
-					"response": []
-				}
-			],
+			"item": [],
 			"event": [
 				{
 					"listen": "prerequest",
 					"script": {
 						"type": "text/javascript",
+						"requests": {},
 						"exec": [
 							"const { headers, body, auth, url } = pm.request;",
 							"",
@@ -4020,6 +3719,15 @@
 							"pm.environment.set('templateBody', body);",
 							"pm.environment.set('templateAuth', auth);",
 							"pm.environment.set('templateUrl', url);",
+							"",
+							"const polyHost = pm.environment.get('Poly-Host');",
+							"const apiKey = pm.environment.get('polyApiKey');",
+							"",
+							"pm.environment.set('polyData', {",
+							"    hostUrl: polyHost,",
+							"    polyApiKey: apiKey",
+							"    // ,id: 'aef32f3c-93b4-460b-8da8-71d572cd66ed'",
+							"});",
 							"",
 							"/*",
 							"    You can use code snippets bellow in specific requests to change Poly behavior when training.",
@@ -4030,6 +3738,8 @@
 							"/**",
 							" * To set api context, description and/or name you can do:",
 							" * pm.environment.set('polyData', {",
+							" *   hostUrl: 'https://eu1.polyapi.io',",
+							" *   polyApiKey: 'YourApiKeyHere',",
 							" *   description: 'lorem ipsum...',",
 							" *   name: 'createPost',",
 							" *   context: 'jsonplaceholder",
@@ -4039,6 +3749,8 @@
 							"/**",
 							" * To set response payload path you can do:",
 							" * pm.environment.set('polyData', {",
+							" *   hostUrl: 'https://eu1.polyapi.io',",
+							" *   polyApiKey: 'YourApiKeyHere',",
 							" *   payload: '$.results[0].geometry.location'",
 							" * });",
 							" */",
@@ -4046,6 +3758,8 @@
 							"/**",
 							" * To explicitly create a new api function and skip retraining rules, pass { id: 'new' } to polyData environment variable:",
 							" * pm.environment.set('polyData', {",
+							" *   hostUrl: 'https://eu1.polyapi.io',",
+							" *   polyApiKey: 'YourApiKeyHere',",
 							" *   id: 'new'",
 							" * });",
 							" */",
@@ -4053,6 +3767,8 @@
 							"/**",
 							" * To explicitly override a saved api function, pass { id: string } with api function id to polyData environment variable:",
 							" * pm.environment.set('polyData', {",
+							" *   hostUrl: 'https://eu1.polyapi.io',",
+							" *   polyApiKey: 'YourApiKeyHere',",
 							" *   id: '2915f8c3-1740-4d3b-8165-510d4089c580'",
 							" * });",
 							" */",
@@ -4062,7 +3778,9 @@
 							" * For graphql functions, variable types are inferred from graphql introspection call by default. If you want to infer them from",
 							" * Postman's graphql variables, you can pass:",
 							" * pm.environment.set('polyData', {",
-							" *  inferArgTypesFromPostmanGraphqlVariables: true",
+							" *   hostUrl: 'https://eu1.polyapi.io',",
+							" *   polyApiKey: 'YourApiKeyHere',",
+							" *   inferArgTypesFromPostmanGraphqlVariables: true",
 							" * });",
 							" * This can be useful for custom scalar types since by default are typed as string | number | boolean | object | array. This is because",
 							" * graphql doesn't give information about custom scalar types when introspecting, so, a custom scalar type can be `any` value.",
@@ -4074,18 +3792,20 @@
 					"listen": "test",
 					"script": {
 						"type": "text/javascript",
+						"requests": {},
 						"exec": [
 							"const postmanCollection = require('postman-collection');",
 							"",
-							"const scriptVersion = '0.3.0';",
-							"const polyData = pm.environment.get('polyData');",
-							"const apiKey = pm.environment.get('polyApiKey');",
+							"const scriptVersion = '0.4.4'; // increased minor version",
+							"const { polyApiKey: apiKey, hostUrl, ...polyData } = pm.environment.get('polyData') || {};",
 							"const { method, description, url, body } = pm.request;",
 							"",
 							"const templateBody = new postmanCollection.RequestBody(pm.environment.get('templateBody'));",
 							"const templateHeaders = new postmanCollection.HeaderList(null, pm.environment.get('templateHeaders'));",
 							"const templateAuth = new postmanCollection.RequestAuth(pm.environment.get('templateAuth'));",
 							"const templateUrl = new postmanCollection.Url(pm.environment.get('templateUrl'));",
+							"",
+							"const ARGUMENT_PATTERN = /(?<=\\{\\{)([^}{]+)(?=\\}\\})/g;",
 							"",
 							"pm.environment.unset('polyData');",
 							"pm.environment.unset('polyFunctionId');",
@@ -4100,7 +3820,7 @@
 							"const responseContentType = pm.response.headers.get('content-type') || '';",
 							"const responseStatusCode = pm.response.code;",
 							"",
-							"if(responseStatusCode === 204) {",
+							"if (responseStatusCode === 204 || method.toLowerCase() === 'head') {",
 							"  response = null;",
 							"} else if (responseContentType.match(/application\\/.*json/) !== null) {",
 							"  response = pm.response.json();",
@@ -4111,27 +3831,154 @@
 							"const collectionVariables = pm.collectionVariables.toObject();",
 							"const environmentVariables = pm.environment.toObject();",
 							"",
+							"let processedTemplateAuth = templateAuth;",
+							"",
+							"/* START-POSTMAN-SANITISATION-CODE */",
+							"",
+							"if (templateAuth.type === 'bearer') {",
+							"  const bearerAuth = {",
+							"    type: 'bearer',",
+							"    bearer: [],",
+							"  };",
+							"",
+							"  // Filter invalid bearer objects.",
+							"  bearerAuth.bearer = templateAuth.bearer.filter(bearer => typeof bearer.value !== 'undefined');",
+							"",
+							"  const foundArgs = bearerAuth.bearer.filter(bearer => bearer.value?.match(ARGUMENT_PATTERN)).length;",
+							"",
+							"  if (foundArgs > 1) {",
+							"    const [firstBearer, ...restBearerParts] = bearerAuth.bearer;",
+							"    bearerAuth.bearer = [firstBearer, ...restBearerParts.filter(bearer => !bearer.value?.match(ARGUMENT_PATTERN))];",
+							"  }",
+							"",
+							"  processedTemplateAuth = bearerAuth;",
+							"} else if (templateAuth.type === 'basic') {",
+							"  // Filter keys that are not 'username' | 'password'",
+							"  const basicAuth = {",
+							"    type: 'basic',",
+							"    basic: templateAuth.basic.filter(entry => ['username', 'password'].includes(entry.key)),",
+							"  };",
+							"  processedTemplateAuth = basicAuth;",
+							"} else if (templateAuth.type === 'apikey' && Array.isArray(templateAuth.apikey)) {",
+							"  const keyEntry   = templateAuth.apikey.find((p) => p.key === 'key'   && typeof p.value !== 'undefined');",
+							"  const valueEntry = templateAuth.apikey.find((p) => p.key === 'value' && typeof p.value !== 'undefined');",
+							"  let   inEntry    = templateAuth.apikey.find((p) => p.key === 'in'    && typeof p.value !== 'undefined');",
+							"",
+							"  if (!inEntry) {",
+							"    inEntry = { key: 'in', value: 'header', type: 'any' };",
+							"  }",
+							"",
+							"  if (keyEntry && valueEntry) {",
+							"    processedTemplateAuth = { type: 'apikey', apikey: [inEntry, keyEntry, valueEntry] };",
+							"  } else {",
+							"    // FIX: apikey was incomplete and backend rejects it. Normalise to noauth so validation passes.",
+							"    processedTemplateAuth = { type: 'noauth' };",
+							"  }",
+							"} else {",
+							"  // FIX: unsupported or missing auth types (oauth2, digest, undefined) caused validation error.",
+							"  // Map them to noauth which backend accepts.",
+							"  processedTemplateAuth = { type: 'noauth' };",
+							"}",
+							"",
+							"if (!templateHeaders.find(h => h.key === 'Accept')) {",
+							"  // Postman will add this header automatically so we add it to mirror postman behaviour",
+							"  templateHeaders.add({ key: 'Accept', value: '*/*' });",
+							"}",
+							"if (!templateHeaders.find(h => h.key === 'Accept-Encoding')) {",
+							"  // Postman will add this header automatically so we add it to mirror postman behaviour",
+							"  templateHeaders.add({ key: 'Accept-Encoding', value: 'gzip, deflate, br' });",
+							"}",
+							"",
+							"/* END-POSTMAN-SANITISATION-CODE */",
+							"",
+							"/* START-BODY-SANITISATION-FOR-TRAINING */",
+							"",
+							"function isLikelyEmpty(value) {",
+							"  return value === undefined || value === null || (typeof value === 'string' && value.trim() === '');",
+							"}",
+							"",
+							"// FIX: previously we tried to JSON.parse raw bodies to validate them.",
+							"// This breaks when the body contains Postman variables like {{ChildrenAges}} which are not valid JSON before substitution.",
+							"// New behaviour: for non-GET we pass through any non empty raw string as-is.",
+							"// For GET or HEAD we still force { mode: 'empty' } to satisfy backend guidance.",
+							"function sanitiseBodyForTraining(reqMethod, pmBodyLike) {",
+							"  const m = String(reqMethod || '').toLowerCase();",
+							"",
+							"  // No body for GET or HEAD",
+							"  if (m === 'get' || m === 'head') {",
+							"    return { mode: 'empty' }; // FIX: prevents invalid JSON errors on GET or HEAD",
+							"  }",
+							"",
+							"  if (!pmBodyLike) {",
+							"    return { mode: 'empty' };",
+							"  }",
+							"",
+							"  // Normalise to a plain object",
+							"  const isPMBody = pmBodyLike instanceof postmanCollection.RequestBody;",
+							"  const mode = isPMBody ? pmBodyLike.mode : pmBodyLike.mode;",
+							"",
+							"  if (mode === 'raw') {",
+							"    // Read raw string from either RequestBody instance or plain object",
+							"    const raw = isPMBody ? pmBodyLike.raw : pmBodyLike.raw;",
+							"",
+							"    if (isLikelyEmpty(raw)) {",
+							"      return { mode: 'empty' }; // empty raw, nothing to train on",
+							"    }",
+							"",
+							"    // FIX: do not JSON-parse here, allow Postman variables to remain in the template.",
+							"    // This preserves training bodies like \"childAges\": {{ChildrenAges}} which are intended to be arrays at runtime.",
+							"    return { mode: 'raw', raw: String(raw) };",
+							"  }",
+							"",
+							"  if (mode === 'graphql') {",
+							"    // GraphQL body is typically an object with {query, variables}",
+							"    const graph = isPMBody ? pmBodyLike.graphql : pmBodyLike.graphql;",
+							"    if (graph && typeof graph === 'object') {",
+							"      return { mode: 'graphql', graphql: graph };",
+							"    }",
+							"    return { mode: 'empty' };",
+							"  }",
+							"",
+							"  if (mode === 'urlencoded' && Array.isArray(isPMBody ? pmBodyLike.urlencoded : pmBodyLike.urlencoded)) {",
+							"    return { mode: 'urlencoded', urlencoded: isPMBody ? pmBodyLike.urlencoded : pmBodyLike.urlencoded };",
+							"  }",
+							"",
+							"  if (mode === 'formdata' && Array.isArray(isPMBody ? pmBodyLike.formdata : pmBodyLike.formdata)) {",
+							"    return { mode: 'formdata', formdata: isPMBody ? pmBodyLike.formdata : pmBodyLike.formdata };",
+							"  }",
+							"",
+							"  // Safe default",
+							"  return { mode: 'empty' };",
+							"}",
+							"",
+							"const trainingBody = sanitiseBodyForTraining(method, body);",
+							"const sanitisedTemplateBody = sanitiseBodyForTraining(method, templateBody);",
+							"",
+							"/* END-BODY-SANITISATION-FOR-TRAINING */",
+							"",
 							"const rawObject = {",
 							"  description: description?.context,",
 							"  requestName: pm.info.requestName,",
 							"  ...polyData,",
 							"  url: url.toString(),",
-							"  body,",
+							"  // FIX: use sanitised bodies. For non-GET with raw mode, this now preserves the original raw string with variables.",
+							"  body: trainingBody,",
 							"  templateHeaders,",
 							"  method,",
-							"  templateAuth,",
+							"  templateAuth: processedTemplateAuth,",
+							"  responseContentType,",
 							"  response,",
 							"  variables: {",
 							"    ...environmentVariables,",
 							"    ...collectionVariables,",
 							"  },",
 							"  statusCode: pm.response.code,",
-							"  templateUrl: `${templateUrl.protocol ? `${templateUrl.protocol}://` : ''}${templateUrl.getRemote()}${templateUrl.getPathWithQuery()}`,",
-							"  templateBody,",
+							"  templateUrl:`${templateUrl.protocol ? `${templateUrl.protocol}://` : ''}${templateUrl.getRemote()}${templateUrl.getPathWithQuery() !== '/' ? templateUrl.getPathWithQuery() : ''}`,",
+							"  templateBody: sanitisedTemplateBody,",
 							"};",
 							"",
 							"const postRequest = {",
-							"  url: 'https://na1.polyapi.io/functions/api/training/postman',",
+							"  url: `${hostUrl}/functions/api/training/postman`,",
 							"  method: 'POST',",
 							"  header: {",
 							"    'Content-Type': 'application/json',",
@@ -4219,12 +4066,17 @@
 							"",
 							"(async () => {",
 							"",
+							"  if(typeof apiKey === 'undefined' || apiKey === 'YourApiKeyHere') {",
+							"    console.error('Your key needs to be set in the pre-request script, look for line \"polyApiKey: \\'YourAPIKeyHere\\'');",
+							"    return;",
+							"  }",
+							"",
 							"  try {",
 							"    console.info('Training poly function...');",
 							"",
 							"    let response = null;",
 							"",
-							"    if (body.mode === 'graphql' && !polyData?.inferArgTypesFromPostmanGraphqlVariables) {",
+							"    if (body?.mode === 'graphql' && !polyData?.inferArgTypesFromPostmanGraphqlVariables) {",
 							"",
 							"      console.info('Introspecting api...');",
 							"",
@@ -4237,7 +4089,7 @@
 							"      response = await teachPoly(introspectionResponse.data);",
 							"",
 							"    } else {",
-							"      if(body.mode === 'graphql') {",
+							"      if(body?.mode === 'graphql') {",
 							"        console.info('`inferArgTypesFromPostmanGraphqlVariables` flag activated, inferring argument types from postman graphql variables box...');",
 							"      }",
 							"      response = await teachPoly();",
@@ -4258,7 +4110,6 @@
 							"    console.error('Training of poly function failed.', err);",
 							"  }",
 							"})();",
-							"",
 							""
 						]
 					}
