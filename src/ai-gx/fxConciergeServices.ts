@@ -218,34 +218,34 @@ export async function requestConciergeService(
 }
 
 // /** Example runner */
-const run = async () => {
-  const hotelName = 'ohip sandbox 01';
-  const dateFrom = '2025-10-27';
-  const dateTo = '2025-10-29'; // 2 nights
-  const adults = 2;
-  const children = 2;
+// const run = async () => {
+//   const hotelName = 'ohip sandbox 01';
+//   const dateFrom = '2025-10-27';
+//   const dateTo = '2025-10-29'; // 2 nights
+//   const adults = 2;
+//   const children = 2;
 
-  const services = await getConciergeServices(hotelName, dateFrom, dateTo, adults, children);
-  console.log(services);
+//   const services = await getConciergeServices(hotelName, dateFrom, dateTo, adults, children);
+//   console.log(services);
 
-  if ('ConciergeServiceNames' in services) {
-    const keys = Object.keys(services.ConciergeServiceNames);
-    if (keys.length > 0) {
-      const randomService = keys[Math.floor(Math.random() * keys.length)];
-      console.log(`Requesting ${randomService} driven by nights * persons`);
-      const request = await requestConciergeService(
-        '2797189',
-        hotelName,
-        randomService,
-        dateFrom,
-        dateTo,
-        adults,
-        children
-      );
-      console.log(request);
-    } else {
-      console.log('No concierge services available for the given params.');
-    }
-  }
-};
-run();
+//   if ('ConciergeServiceNames' in services) {
+//     const keys = Object.keys(services.ConciergeServiceNames);
+//     if (keys.length > 0) {
+//       const randomService = keys[Math.floor(Math.random() * keys.length)];
+//       console.log(`Requesting ${randomService} driven by nights * persons`);
+//       const request = await requestConciergeService(
+//         '2797189',
+//         hotelName,
+//         randomService,
+//         dateFrom,
+//         dateTo,
+//         adults,
+//         children
+//       );
+//       console.log(request);
+//     } else {
+//       console.log('No concierge services available for the given params.');
+//     }
+//   }
+// };
+// run();

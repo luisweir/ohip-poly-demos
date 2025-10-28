@@ -33,7 +33,9 @@ jest.mock('polyapi', () => ({
       assignRoom: jest.fn(),
       checkIn: jest.fn(),
       addCharges: jest.fn(),
-      getFolioDetails: jest.fn()
+      getFolioDetails: jest.fn(),
+      getPackages: jest.fn(),
+      getReservationById: jest.fn()
     },
     payments: {
       adyen: {
@@ -99,7 +101,7 @@ describe('searchHotelsByLocation', () => {
       }
     };
     const mockHotelDistances = {
-      data: { rows: [{ elements: [{ distance: { text: '1' } }] }] }
+      data: { rows: [{ elements: [{ status: 'OK', distance: { value: 1609 } }] }] }
     };
 
     (poly.ohip.utilities.getOhipToken as jest.Mock).mockResolvedValue(mockToken);
@@ -339,13 +341,13 @@ describe('createResWithPayLink', () => {
       status: 201,
       data: { links: [{ rel: 'self', href: '/reservations/123' }] }
     });
-    (poly.ohip.property.getReservationDetails as jest.Mock).mockResolvedValue(mockReservationDetails);
+    (poly.ohip.property.getReservationById as jest.Mock).mockResolvedValue(mockReservationDetails);
     (vari.ohip.envSettings.get as jest.Mock).mockResolvedValue(mockEnvSettings);
     (vari.ohip.envSecrets.inject as jest.Mock).mockReturnValue('mockInjectedValue');
 
     // Perform the test
-    const dateFrom = { year: 2023, month: 1, day: 1 };
-    const dateTo = { year: 2023, month: 1, day: 2 };
+    const dateFrom = "2025-01-01";
+    const dateTo = "2025-01-02";
     const result = await createResWithPayLink(
       'hotelName',
       1,
@@ -373,7 +375,7 @@ describe('createResWithPayLink', () => {
     expect(poly.ohip.aiGuest.paymentEventsCache).toHaveBeenCalled();
     expect(poly.ohip.payments.adyen.getPayByLinkDetails).toHaveBeenCalled();
     expect(poly.ohip.property.createReservationWithToken).toHaveBeenCalled();
-    expect(poly.ohip.property.getReservationDetails).toHaveBeenCalled();
+    expect(poly.ohip.property.getReservationById).toHaveBeenCalled();
     expect(vari.ohip.envSettings.get).toHaveBeenCalled();
   });
 
@@ -390,8 +392,8 @@ describe('createResWithPayLink', () => {
     (vari.ohip.envSettings.get as jest.Mock).mockResolvedValue(mockEnvSettingsOpiFalse);
 
     // Perform the test
-    const dateFrom = { year: 2023, month: 1, day: 1 };
-    const dateTo = { year: 2023, month: 1, day: 2 };
+    const dateFrom = "2025-01-01";
+    const dateTo = "2025-01-02";
     const result = await createResWithPayLink(
       'hotelName',
       1,
@@ -418,7 +420,7 @@ describe('createResWithPayLink', () => {
     expect(poly.ohip.utilities.getHotelId).toHaveBeenCalled();
     expect(poly.ohip.payments.adyen.getPayByLinkDetails).toHaveBeenCalled();
     expect(poly.ohip.property.createReservation).toHaveBeenCalled(); // This should be called when opi is false
-    expect(poly.ohip.property.getReservationDetails).toHaveBeenCalled();
+    expect(poly.ohip.property.getReservationById).toHaveBeenCalled();
     expect(vari.ohip.envSettings.get).toHaveBeenCalled();
   });
 });
@@ -469,7 +471,7 @@ describe('checkInGuest', () => {
     (poly.ohip.property.preCheckIn as jest.Mock).mockResolvedValue({});
     (vari.ohip.envSecrets.inject as jest.Mock).mockReturnValue('mockInjectedValue');
 
-    const guestArrivalTime = { hour: 10, minute: 30, second: 0 };
+    const guestArrivalTime = "2025-01-01 16:00:00";
     const result = await checkInGuest('12345', 'Test Hotel', guestArrivalTime);
 
     // Assertions
@@ -494,19 +496,75 @@ describe('checkInGuest', () => {
 
 describe('getConciergeServices', () => {
   it('should return a list of concierge services', async() => {
-    const mockConciergeServices = {
-      Service1: { Description: 'Description1', PackageAmount: 10 },
-      Service2: { Description: 'Description2', PackageAmount: 20 }
+    const hotelName = 'Test Hotel';
+    const dateFrom = '2025-01-01';
+    const dateTo = '2025-01-02';
+    const adults = 2;
+    const children = 0;
+
+    const mockToken = 'mockToken';
+    const mockHotelId = 'H1';
+
+    (poly.ohip.utilities.getOhipToken as jest.Mock).mockResolvedValue(mockToken);
+    (poly.ohip.utilities.getHotelId as jest.Mock).mockResolvedValue(mockHotelId);
+
+    const getPackagesResponse = {
+      data: {
+        packageCodesList: {
+          packageCodes: [
+            {
+              packageCodeInfo: [
+                {
+                  code: 'Service1',
+                  header: {
+                    primaryDetails: {
+                      shortDescription: 'Description1'
+                    },
+                    transactionDetails: {
+                      currency: 'USD',
+                      packagePostingRules: { transactionCode: { code: '1001' } }
+                    },
+                    postingAttributes: {
+                      sellSeparate: true,
+                      calculatedPrice: 10
+                    }
+                  }
+                },
+                {
+                  code: 'GroupPkg',
+                  group: true,
+                  header: {
+                    primaryDetails: { shortDescription: 'ShouldSkip' },
+                    transactionDetails: {
+                      currency: 'USD',
+                      packagePostingRules: { transactionCode: { code: '1002' } }
+                    },
+                    postingAttributes: { sellSeparate: true, calculatedPrice: 20 }
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      }
     };
 
-    (vari.ohip.conciergeLoV.get as jest.Mock).mockResolvedValue(mockConciergeServices);
+    (poly.ohip.property.getPackages as jest.Mock).mockResolvedValue(getPackagesResponse);
+    (vari.ohip.envSecrets.inject as jest.Mock).mockImplementation((key: string) => key);
 
-    const result = await getConciergeServices();
+    const result = await getConciergeServices(hotelName, dateFrom, dateTo, adults, children);
 
     expect(result).toEqual({
-      ConciergeServiceNames: mockConciergeServices
+      ConciergeServiceNames: {
+        Service1: {
+          Description: 'Description1',
+          PackageAmount: 10,
+          CurrencyCode: 'USD',
+          TransactionCode: 1001
+        }
+      }
     });
-    expect(vari.ohip.conciergeLoV.get).toHaveBeenCalled();
+    expect(poly.ohip.property.getPackages).toHaveBeenCalled();
   });
 });
 
@@ -515,9 +573,11 @@ describe('requestConciergeService', () => {
     // Mock data
     const mockToken = 'mockToken';
     const mockHotelId = 'mockHotelId';
-    const mockConciergeServices = {
-      Service1: { TransactionCode: 'T1', Description: 'Description1', PackageAmount: 10 }
-    };
+    const dateFrom = '2025-01-01';
+    const dateTo = '2025-01-02';
+    const adults = 2;
+    const children = 0;
+
     const mockReservation = {
       data: {
         reservations: {
@@ -538,9 +598,42 @@ describe('requestConciergeService', () => {
     (poly.ohip.utilities.getHotelId as jest.Mock).mockResolvedValue(mockHotelId);
     (poly.ohip.property.getReservationByConfirmationNumber as jest.Mock).mockResolvedValue(mockReservation);
     (poly.ohip.property.addCharges as jest.Mock).mockResolvedValue({ status: 201 });
-    (vari.ohip.conciergeLoV.get as jest.Mock).mockResolvedValue(mockConciergeServices);
+    (vari.ohip.envSecrets.inject as jest.Mock).mockImplementation((key: string) => key);
 
-    const result = await requestConciergeService('12345', 'Test Hotel', 'Service1', 2);
+    const getPackagesResponse = {
+      data: {
+        packageCodesList: {
+          packageCodes: [
+            {
+              packageCodeInfo: [
+                {
+                  code: 'Service1',
+                  header: {
+                    primaryDetails: { shortDescription: 'Description1' },
+                    transactionDetails: {
+                      currency: 'USD',
+                      packagePostingRules: { transactionCode: { code: '1001' } }
+                    },
+                    postingAttributes: { sellSeparate: true, calculatedPrice: 10 }
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      }
+    };
+    (poly.ohip.property.getPackages as jest.Mock).mockResolvedValue(getPackagesResponse);
+
+    const result = await requestConciergeService(
+      '12345',
+      'Test Hotel',
+      'Service1',
+      dateFrom,
+      dateTo,
+      adults,
+      children
+    );
 
     expect(result).toEqual({ successful: true });
     expect(poly.ohip.utilities.getOhipToken).toHaveBeenCalled();
@@ -552,8 +645,8 @@ describe('requestConciergeService', () => {
       expect.any(String),
       mockToken
     );
-    expect(poly.ohip.property.addCharges).toHaveBeenCalledTimes(2); // because quantity is 2
-    expect(vari.ohip.conciergeLoV.get).toHaveBeenCalled();
+    expect(poly.ohip.property.addCharges).toHaveBeenCalledTimes(2); // nights(1) * persons(2)
+    expect(poly.ohip.property.getPackages).toHaveBeenCalled();
   });
 });
 

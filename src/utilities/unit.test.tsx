@@ -7,7 +7,8 @@ import { getHotelId } from './fxGetHotelId';
 jest.mock('polyapi', () => ({
   ohip: {
     utilities: {
-      getOhipToken: jest.fn()
+      getOhipToken: jest.fn(),
+      createHash: jest.fn().mockResolvedValue('mock-hash')
     },
     auth: {
       getAccessToken: jest.fn()
@@ -18,12 +19,17 @@ jest.mock('polyapi', () => ({
   },
   vari: {
     ohip: {
-      token: {
-        get: jest.fn(),
-        update: jest.fn()
-      },
       envSecrets: {
         inject: jest.fn()
+      }
+    }
+  },
+  tabi: {
+    ohip: {
+      tokens: {
+        selectOne: jest.fn(),
+        insertOne: jest.fn(),
+        upsertOne: jest.fn()
       }
     }
   }
@@ -67,7 +73,11 @@ describe('getOhipToken function', () => {
   
   beforeEach(() => {
     jest.clearAllMocks();
-    (vari.ohip.token.get as jest.Mock).mockResolvedValue('mockToken');
+    (poly.ohip.utilities.createHash as jest.Mock).mockResolvedValue('mock-hash');
+    (vari.ohip.envSecrets.inject as jest.Mock).mockImplementation((k: string) => k);
+    ((poly as any).tabi.ohip.tokens.selectOne as jest.Mock).mockResolvedValue({ token: 'mockToken' });
+    ((poly as any).tabi.ohip.tokens.insertOne as jest.Mock).mockResolvedValue({});
+    ((poly as any).tabi.ohip.tokens.upsertOne as jest.Mock).mockResolvedValue({});
   });
 
   it('should fetch a new token if the stored token is invalid', async() => {

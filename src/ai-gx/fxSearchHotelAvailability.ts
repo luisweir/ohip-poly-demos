@@ -100,12 +100,12 @@ export async function searchHotelAvailability(hotelName: string, adults: number,
   }
 }
 
-import moment from 'moment';
-const run = async()  => {
-  const from: any = moment().add(0, 'days').format(('YYYY-MM-DD'));
-  const to: any = moment().add(1, 'days').format(('YYYY-MM-DD'));
-  const t = await searchHotelAvailability('ohip sandbox 01',1,2,1,from,to);
-  console.log(t);
-};
+// import moment from 'moment';
+// const run = async()  => {
+//   const from: any = moment().add(0, 'days').format(('YYYY-MM-DD'));
+//   const to: any = moment().add(1, 'days').format(('YYYY-MM-DD'));
+//   const t = await searchHotelAvailability('ohip sandbox 01',1,2,1,from,to);
+//   console.log(t);
+// };
 
-run();
+// run();

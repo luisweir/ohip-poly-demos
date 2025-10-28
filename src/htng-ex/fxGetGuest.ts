@@ -67,7 +67,7 @@ export async function getGuest(params: ExtendedInput): Promise<Guest| Error> {
           if (typeCode && Array.isArray(prefArr)) {
             prefArr.forEach((p: any) => {
               const value = p?.preferenceValue;
-              if (value) preferences.push(`${typeCode}:${value}`);
+              if (value) preferences.push(`${typeCode}-${value}`);
             });
           }
         });
@@ -80,7 +80,7 @@ export async function getGuest(params: ExtendedInput): Promise<Guest| Error> {
           if (typeCode && Array.isArray(prefArr)) {
             prefArr.forEach((p: any) => {
               const value = p?.preferenceValue;
-              if (value) preferences.push(`${typeCode}:${value}`);
+              if (value) preferences.push(`${typeCode}-${value}`);
             });
           }
         });
@@ -136,13 +136,3 @@ export async function getGuest(params: ExtendedInput): Promise<Guest| Error> {
     return error;
   }
 }
-
-const run = async()  => {
-  const guest = await getGuest({ 
-    guestId: '1592359'
-    // propertyCode: 'OHIPSB01'
-  }); // part profile -> 1592359, full profile -> TBC
-  console.log(guest);
-};
-
-run();

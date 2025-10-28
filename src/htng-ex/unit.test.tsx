@@ -15,6 +15,7 @@ jest.mock('polyapi', () => ({
       getReservationByConfirmationNumber: jest.fn(),
       getReservationByExternalId: jest.fn(),
       getReservationDetails: jest.fn(), 
+      getReservationById: jest.fn(),
       searchReservationsByDateRangeAndGuestNames: jest.fn()
     },
     htngexpress: {
@@ -195,7 +196,7 @@ describe('getReservation function',() => {
         }
       }
     });
-    (poly.ohip.property.getReservationDetails as jest.Mock).mockResolvedValue({
+    (poly.ohip.property.getReservationById as jest.Mock).mockResolvedValue({
       status: 200,
       data: operaReservations.read
     });
@@ -221,7 +222,7 @@ describe('getReservation function',() => {
 
     const result = await getReservation(inputParams);
     expect(result).toEqual(htngReservations.full);
-    expect(poly.ohip.property.getReservationDetails).toHaveBeenCalledTimes(1);
+    expect(poly.ohip.property.getReservationById).toHaveBeenCalledTimes(1);
     expect(poly.ohip.htngexpress.getGuest).toHaveBeenCalledTimes(2);
   });
 
