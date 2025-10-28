@@ -5,12 +5,6 @@ interface Error { error: string }
 //TODO: this should not be required. Bug needs fixing so complex interfaces from external files are maintained in custom functions
 type EventRecord = Ohip.Payments.Adyen.PaymentEventHook$Callback$Event.NotificationRequestItem;
 
-type Date = {
-  year: number;
-  month: number;
-  day: number;
-};
-
 type ConfirmationNumber= {
   operaConfirmationNumber: string;
 };
@@ -20,8 +14,9 @@ type ChildrenAges = {
 }
 
 type PaymentLink = {
-  message: string,
-  linkId: string,
+  messageToUser: string;
+  instructionsForModel: string;
+  linkId: string;
   url: string;
 };
 
@@ -50,8 +45,8 @@ export async function createResWithPayLink(
   numberOfAdults: number,
   numberOfChildren: number,
   commaSeparatedChildrenAges: string,
-  dateFrom: Date,
-  dateTo: Date,
+  dateFrom: string,
+  dateTo: string,
   numberOfRooms: number,
   ratePlanCode: string,
   roomTypeCode: string,
@@ -67,6 +62,12 @@ export async function createResWithPayLink(
     // get access token
     console.log('Fetching ohip token');
     const token = await poly.ohip.utilities.getOhipToken();
+
+    // validate date format YYYY-MM-DD
+    const isYYYYMMDD = (s: string) => /^\d{4}-\d{2}-\d{2}$/.test(s);
+    if (!isYYYYMMDD(dateFrom) || !isYYYYMMDD(dateTo)) {
+      throw new Error('dateFrom and dateTo must be strings in format YYYY-MM-DD');
+    }
 
     // prepare children ages and if not sent correctly throw error
     const rawAges = commaSeparatedChildrenAges.split(',');
@@ -84,7 +85,13 @@ export async function createResWithPayLink(
     // verify that a pay by link has been generated including guest details
     console.log(`Verifying if payment link ${linkId} exists or if it has been completed`);
     const getPayLinkDetails = await poly.ohip.payments.adyen.getPayByLinkDetails(env.inject('adyen.hostName'),(linkId) ? linkId : '', env.inject('adyen.appKey'));
-    const linkMessage =  `Please click on the provided URL to securely provide guest and payment details and then resubmit the reservation. Your card will be charged with 0.10 ${countryCodeCurrency} for authorization purposes. By entering the details on the provided link you are given us concent to store your payment details for later processing during hotel check out`;
+    // const linkMessage =  `Please click on the provided URL to securely provide guest and payment details and then resubmit the reservation. Your card will be charged with 0.10 ${countryCodeCurrency} for authorization purposes. By entering the details on the provided link you are given us concent to store your payment details for later processing during hotel check out`;
+
+    const linkMessage = {
+      messageToUser: `Open the secure link below to enter guest and payment details, then return here to tell me you've completed it. We will not complete the booking at this step. A small authorisation of 0.10 ${countryCodeCurrency} will be placed on your card. By submitting the form you give consent for us to store your payment details for processing at hotel check out.`,
+      instructionsForModel: `Do not consider the booking as complete. Wait for the user to confirm they have completed the payment link step (for example, by saying "done", "completed", "finished", or any equivalent confirmation). When they do, attempt the booking again and include the provided linkId so the payment details are linked to the reservation. Keep the same hotel and room selection unless the user changes them.`
+    };
+
     if (getPayLinkDetails.status !== 200) {
       console.log('Payment link does not exist. Generating a new one');
       const uniqueRef = generateUUID();
@@ -104,7 +111,7 @@ export async function createResWithPayLink(
       );
       if (createLink.status === 201) {
         return {
-          message: linkMessage,
+          ...linkMessage,
           linkId: createLink.data.id,
           url: createLink.data.url
         };
@@ -115,7 +122,7 @@ export async function createResWithPayLink(
     } else if (getPayLinkDetails.data.status !== 'completed') {
       console.log('Payment link exists but not completed. Returning again');
       return {
-        message: linkMessage,
+        ...linkMessage,
         linkId: getPayLinkDetails.data.id,
         url: getPayLinkDetails.data.url
       };
@@ -147,8 +154,8 @@ export async function createResWithPayLink(
       const resBody =  {
         AmountBeforeTax: AmountBeforeTax,
         CurrencyCode: countryCodeCurrency,
-        DateFrom: dateFrom.toString(),
-        DateTo: dateTo.toString(),
+        DateFrom: dateFrom,
+        DateTo: dateTo,
         Adults: numberOfAdults,
         Children: numberOfChildren,
         ChildrenAges: childrenAges,
@@ -199,8 +206,8 @@ export async function createResWithPayLink(
       const resBody =  {
         AmountBeforeTax: AmountBeforeTax,
         CurrencyCode: countryCodeCurrency,
-        DateFrom: dateFrom.toString(),
-        DateTo: dateTo.toString(),
+        DateFrom: dateFrom,
+        DateTo: dateTo,
         Adults: numberOfAdults,
         Children: numberOfChildren,
         ChildrenAges: childrenAges,
@@ -257,10 +264,10 @@ export async function createResWithPayLink(
 
 // import moment from 'moment';
 // const run = async() => {
-//   const from: any = moment().add(0, 'days').format(('YYYY-MM-DD'));
-//   const to: any = moment().add(1, 'days').format(('YYYY-MM-DD'));
+//   const from: string = moment().add(0, 'days').format('YYYY-MM-DD');
+//   const to: string = moment().add(1, 'days').format('YYYY-MM-DD');
 //   // const linkId = generateUUID();
-//   const linkId  = 'PL9664EB589D19E2C1403129A';
+//   const linkId  = 'DUMMYTEXT'; // change dummy text to paylink ID for res creation
 //   const res = await createResWithPayLink('ohip sandbox 01',1,0,'', from,to,1,'BARNR','ECO',175, 'US', 'en-US','USD', linkId);
 //   console.log(res);
 // };

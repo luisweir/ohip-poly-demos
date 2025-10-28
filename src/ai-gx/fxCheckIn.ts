@@ -3,24 +3,25 @@ import moment from 'moment';
 
 interface Error { error: string }
 
-interface Time {
-  hour: number;
-  minute: number;
-  second: number;
-}
 
 interface Response {
   guestCheckedIn: boolean, 
   roomNumber: number
 }
 
-export async function checkInGuest(confirmationNumber: string, hotelName: string, guestArrivalTime: Time): Promise<Response | Error> {
+export async function checkInGuest(confirmationNumber: string, hotelName: string, guestArrivalTime: string): Promise<Response | Error> {
   try {
     // get environment variables
     const env = vari.ohip.envSecrets;
     // get access token
     console.log('Fetching ohip token');
     const token = await poly.ohip.utilities.getOhipToken();
+
+    // validate guestArrivalTime format YYYY-MM-DD HH:mm:ss
+    const isYYYYMMDD = (s: string) => /^\d{4}-\d{2}-\d{2}\s+\d{2}:\d{2}:\d{2}$/.test(s);
+    if (!isYYYYMMDD(guestArrivalTime)) {
+      throw new Error('guestArrivalTime must be a string in format YYYY-MM-DD HH:mm:ss');
+    }
 
     // get all hotels in the chain and let's find the one that matches the name of the hotel entered
     console.log(`Searching hotelId for hotelName '${hotelName}'`);
@@ -68,7 +69,7 @@ export async function checkInGuest(confirmationNumber: string, hotelName: string
     }
 
     // pre-check in with arrival time
-    const dateTime = `${arrivalDate} ${guestArrivalTime}`;
+    const dateTime = guestArrivalTime;
     console.log(dateTime);
     await poly.ohip.property.preCheckIn(env.inject('ohip.hostName'), hotelId, resId, env.inject('ohip.appKey'),token, { 'ArrivalTime' : dateTime })
       .then(()=>{console.log(`successfully pre-checked in reservation with confirmation number ${confNumber}`);});
@@ -122,8 +123,8 @@ export async function checkInGuest(confirmationNumber: string, hotelName: string
 }
 
 // const run = async()  => {
-//   const now: any = moment().format('HH:mm:ss');
-//   const t = await checkInGuest('1920898', 'ohip sandbox 1', now);
+//   const arrivalDate: string = moment().format('YYYY-MM-DD HH:mm:ss');
+//   const t = await checkInGuest('1920898', 'ohip sandbox 1', arrivalDate);
 //   console.log(t);
 // };
 
