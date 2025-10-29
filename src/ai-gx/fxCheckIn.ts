@@ -117,11 +117,11 @@ export async function checkInGuest(confirmationNumber: string, hotelName: string
   }
 }
 
-/*
+
 // const run = async()  => {
-//   const t = await checkInGuest('2798268', 'ohip sandbox 01');
+//   const t = await checkInGuest('2798561', 'ohip sandbox 01');
 //   console.log(t);
 // };
 
 // run();
-*/
+
