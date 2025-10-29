@@ -65,7 +65,7 @@
 					"name": "AI Guest Journey",
 					"item": [
 						{
-							"name": "Create Env Settings",
+							"name": "Create Env Settings (vari)",
 							"request": {
 								"auth": {
 									"type": "bearer",
@@ -111,7 +111,54 @@
 							"response": []
 						},
 						{
-							"name": "Create Env Descriptions For Model",
+							"name": "Create Env Descriptions For Model (vari)",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{polyApiKey}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"context\": \"ohip\",\n    \"name\": \"descriptionsForModel\",\n    \"value\": {\n        \"searchHotelAvailability\": [\n            \"Do not display ratePlanCode and roomTypeCode to the user\",\n            \"Display currency amounts in local currency\",\n            \"browserCountryCode and browserLocale should be based on the browser settings\",\n            \"Currency code should be ISO and based on the currency for the user country\"\n        ],\n        \"createResWithPayLink\" : {\n            \"linkMessage\" :{\n                \"messageToUser\": \"Open the secure link below to enter guest and payment details, then return here to tell me you've completed it. We will not complete the booking at this step. A small authorisation of 0.10 will be placed on your card. By submitting the form you give consent for us to store your payment details for processing at hotel check out.\",\n                \"instructionsForModel\" : \"Do not consider the booking as complete. Wait for the user to confirm they have completed the payment link step (for example, by saying 'done', 'completed', 'finished', or any equivalent confirmation). When they do, attempt the booking again and include the provided linkId so the payment details are linked to the reservation. Keep the same hotel and room selection unless the user changes them.\"\n            }\n        }\n    },\n    \"description\": \"Description for models to be used on custom function responses\",\n    \"secret\": false,\n    \"visibility\": \"ENVIRONMENT\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{Poly-Host}}/variables/ee610e0a-a572-445d-b5f5-d251e65e5d18",
+									"host": [
+										"{{Poly-Host}}"
+									],
+									"path": [
+										"variables",
+										"ee610e0a-a572-445d-b5f5-d251e65e5d18"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create Pay Events Cache (tabi)",
 							"request": {
 								"auth": {
 									"type": "bearer",
@@ -136,7 +183,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"context\": \"ohip\",\n    \"name\": \"descriptionsForModel\",\n    \"value\": {\n        \"searchHotelAvailability\": [\n            \"Do not display ratePlanCode and roomTypeCode to the user\",\n            \"Display currency amounts in local currency\",\n            \"browserCountryCode and browserLocale should be based on the browser settings\",\n            \"Currency code should be ISO and based on the currency for the user country\"\n        ]\n    },\n    \"description\": \"Description for models to be used on custom function responses\",\n    \"secret\": false,\n    \"visibility\": \"ENVIRONMENT\"\n}",
+									"raw": "{\n  \"name\": \"paymentEventsCache\",\n  \"context\": \"ohip\",\n  \"description\": \"Store payments events for processing reservations\",\n  \"visibility\": \"ENVIRONMENT\",\n  \"columns\": [\n    {\n      \"name\": \"linkId\",\n      \"type\": \"string\",\n      \"required\": true,\n      \"unique\": true,\n      \"primary\": true\n    },\n    {\n      \"name\": \"event\",\n      \"type\": \"object\",\n      \"required\": true,\n      \"schema\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"additionalData\": {\n            \"type\": \"object\",\n            \"additionalProperties\": { \"type\": \"string\" }\n          },\n          \"amount\": {\n            \"type\": \"object\",\n            \"properties\": {\n              \"currency\": { \"type\": \"string\" },\n              \"value\": { \"type\": \"number\" }\n            },\n            \"required\": [\"currency\", \"value\"]\n          },\n          \"eventCode\": { \"type\": \"string\" },\n          \"eventDate\": { \"type\": \"string\" },\n          \"merchantAccountCode\": { \"type\": \"string\" },\n          \"merchantReference\": { \"type\": \"string\" },\n          \"operations\": {\n            \"type\": \"array\",\n            \"items\": { \"type\": \"string\" }\n          },\n          \"paymentMethod\": { \"type\": \"string\" },\n          \"pspReference\": { \"type\": \"string\" },\n          \"reason\": { \"type\": \"string\" },\n          \"success\": { \"type\": \"string\" }\n        },\n        \"required\": [\n          \"additionalData\",\n          \"amount\",\n          \"eventCode\",\n          \"eventDate\",\n          \"merchantAccountCode\",\n          \"merchantReference\",\n          \"operations\",\n          \"paymentMethod\",\n          \"pspReference\",\n          \"reason\",\n          \"success\"\n        ]\n      }\n    }\n  ]\n}\n",
 									"options": {
 										"raw": {
 											"headerFamily": "json",
@@ -145,19 +192,19 @@
 									}
 								},
 								"url": {
-									"raw": "{{Poly-Host}}/variables",
+									"raw": "{{Poly-Host}}/tables",
 									"host": [
 										"{{Poly-Host}}"
 									],
 									"path": [
-										"variables"
+										"tables"
 									]
 								}
 							},
 							"response": []
 						},
 						{
-							"name": "Create Token Variable (old)",
+							"name": "Select From (tabi)",
 							"request": {
 								"auth": {
 									"type": "bearer",
@@ -182,7 +229,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"context\": \"ohip\",\n  \"name\": \"token\",\n  \"value\": \"string\",\n  \"description\": \"Token cache\",\n  \"secret\": false,\n  \"visibility\": \"ENVIRONMENT\"\n}",
+									"raw": "{\n    \"where\": {}\n}",
 									"options": {
 										"raw": {
 											"headerFamily": "json",
@@ -191,19 +238,67 @@
 									}
 								},
 								"url": {
-									"raw": "{{Poly-Host}}/variables",
+									"raw": "{{Poly-Host}}/tables/{{TabiId}}/select",
 									"host": [
 										"{{Poly-Host}}"
 									],
 									"path": [
-										"variables"
+										"tables",
+										"{{TabiId}}",
+										"select"
 									]
 								}
 							},
 							"response": []
 						},
 						{
-							"name": "Create Token Table",
+							"name": "Prune Pay Events Cache (tabi)",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{polyApiKey}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"executionType\": \"sequential\",\n    \"functions\": [\n        {\n            \"id\": \"44cbab5e-fa16-49b7-b792-713862d5011e\",\n            \"eventPayload\": {},\n            \"headersPayload\": {},\n            \"paramsPayload\": {\n                \"olderThan\" : 168 // 2 weeks in hours\n            }\n        }\n    ],\n    \"name\": \"Prune Payment Events Cache\",\n    \"schedule\": {\n        \"type\": \"periodical\",\n        \"value\": \"*/5 * * * *\"\n    },\n    \"enabled\": true\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{Poly-Host}}/jobs",
+									"host": [
+										"{{Poly-Host}}"
+									],
+									"path": [
+										"jobs"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create Token Cache (tabi)",
 							"request": {
 								"auth": {
 									"type": "bearer",
@@ -243,147 +338,6 @@
 									],
 									"path": [
 										"tables"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Select Token Table",
-							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": [
-										{
-											"key": "token",
-											"value": "{{polyApiKey}}",
-											"type": "string"
-										}
-									]
-								},
-								"method": "POST",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									},
-									{
-										"key": "Accept",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"where\": {}\n}",
-									"options": {
-										"raw": {
-											"headerFamily": "json",
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{Poly-Host}}/tables/{{TokenTabi}}/select",
-									"host": [
-										"{{Poly-Host}}"
-									],
-									"path": [
-										"tables",
-										"{{TokenTabi}}",
-										"select"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Create Concierge LoV",
-							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": [
-										{
-											"key": "token",
-											"value": "{{polyApiKey}}",
-											"type": "string"
-										}
-									]
-								},
-								"method": "POST",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									},
-									{
-										"key": "Accept",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"context\": \"ohip\",\n    \"name\": \"conciergeLoV\",\n    \"value\": {\n        \"Breakfast\": {\n            \"description\": \"Full breakfast for one\",\n            \"PackageAmount\": 48,\n            \"TransactionCode\": 2000\n        },\n        \"RentABike\": {\n            \"description\": \"Rent a bike for a full day and enjoy the city surroundings\",\n            \"PackageAmount\": 20,\n            \"TransactionCode\": 5202\n        },\n        \"TaxiToAirport\": {\n            \"description\": \"Taxi service to the airport for up to 4 people\",\n            \"PackageAmount\": 30,\n            \"TransactionCode\": 5202\n        },\n        \"CityTourTicket\": {\n            \"description\": \"Guided city bus or walking tour for one person\",\n            \"PackageAmount\": 45,\n            \"TransactionCode\": 6600\n        },\n        \"FlowerDelivery\": {\n            \"description\": \"Custom bouquet delivered to the room\",\n            \"PackageAmount\": 35,\n            \"TransactionCode\": 6600\n        },\n        \"LaundryService\": {\n            \"description\": \"Standard wash and fold laundry service (per load)\",\n            \"PackageAmount\": 25,\n            \"TransactionCode\": 1011\n        },\n        \"TheatreTicket\": {\n            \"description\": \"Local theatre or event ticket for one person\",\n            \"PackageAmount\": 60,\n            \"TransactionCode\": 6600\n        },\n        \"CityPass\": {\n            \"description\": \"All-inclusive city pass with access to top attractions\",\n            \"PackageAmount\": 80,\n            \"TransactionCode\": 6600\n        }\n    },\n    \"description\": \"Concierge services list of values\",\n    \"secret\": false,\n    \"visibility\": \"ENVIRONMENT\"\n}\n",
-									"options": {
-										"raw": {
-											"headerFamily": "json",
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{Poly-Host}}/variables",
-									"host": [
-										"{{Poly-Host}}"
-									],
-									"path": [
-										"variables"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Create Payment Events Cache",
-							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": [
-										{
-											"key": "token",
-											"value": "{{polyApiKey}}",
-											"type": "string"
-										}
-									]
-								},
-								"method": "POST",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									},
-									{
-										"key": "Accept",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"context\": \"ohip\",\n    \"name\": \"paymentEventsCache\",\n    \"value\": {},\n    \"description\": \"Store payments events for processing reservations\",\n    \"secret\": false,\n    \"visibility\": \"ENVIRONMENT\"\n}",
-									"options": {
-										"raw": {
-											"headerFamily": "json",
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{Poly-Host}}/variables/",
-									"host": [
-										"{{Poly-Host}}"
-									],
-									"path": [
-										"variables",
-										""
 									]
 								}
 							},

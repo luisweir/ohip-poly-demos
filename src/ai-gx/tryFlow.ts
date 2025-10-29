@@ -113,7 +113,7 @@ const run = async(options: Options)  => {
       }
     }
     // now check in guest, book service and get bill
-    const roomAssigned = await checkInGuest(booking.operaConfirmationNumber, hotelName, options.now);
+    const roomAssigned = await checkInGuest(booking.operaConfirmationNumber, hotelName);
     if ('guestCheckedIn' in roomAssigned) {
       log.info(`Successfully checked-in. Room ${roomAssigned.roomNumber} assigned`);
       log.info('Getting available concierge services');

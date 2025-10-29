@@ -1,78 +1,92 @@
 import poly from 'polyapi';
-import { vari, polyCustom } from 'polyapi';
+import { tabi, vari, polyCustom } from 'polyapi';
 import { searchHotelsByLocation } from './fxSearchHotelsByLocation';
 import { searchHotelAvailability } from './fxSearchHotelAvailability';
 import { createResWithPayLink } from './fxCreateResWithPayLink';
 import { checkInGuest } from './fxCheckIn';
 import { getConciergeServices, requestConciergeService } from './fxConciergeServices';
 import { checkBillCharges } from './fxCheckBillCharges';
-import { paymentEventsCache, deleteOlderEvents, OperationType } from './fxPaymentEventsCache';
+import { paymentEventsCache, prunePayEvents, OperationType } from './fxPaymentEventsCache';
 import { paymentEventServerHandler } from './fxPaymentEventHandler';
 
-jest.mock('polyapi', () => ({
-  ohip: {
-    utilities: {
-      getOhipToken: jest.fn(),
-      getHotelId: jest.fn()
-    },
-    aiGuest: {
-      paymentEventsCache: jest.fn()
-    },
-    property: {
-      searchHotelAvailability: jest.fn(),
-      getHotelDetails: jest.fn(),
-      getAllHotelsInChain: jest.fn(),
-      getPropertyRoomTypes: jest.fn(),
-      createReservationWithToken: jest.fn(),
-      createReservation: jest.fn(),
-      getReservationDetails: jest.fn(),
-      getReservationByConfirmationNumber: jest.fn(),
-      getBusinessDate: jest.fn(),
-      preCheckIn: jest.fn(),
-      getAvailableRooms: jest.fn(),
-      assignRoom: jest.fn(),
-      checkIn: jest.fn(),
-      addCharges: jest.fn(),
-      getFolioDetails: jest.fn(),
-      getPackages: jest.fn(),
-      getReservationById: jest.fn()
-    },
-    payments: {
-      adyen: {
-        getPayByLinkDetails: jest.fn(),
-        createPayByLink: jest.fn()
-      }
-    }
-  },
-  polyCustom: {
-    responseStatusCode: jest.fn()
-  },
-  google: {
-    maps: {
-      distanceToHotels: jest.fn()
-    }
-  },
-  vari: {
+jest.mock('polyapi', () => {
+  const mock = {
     ohip: {
-      envSettings: {
-        get: jest.fn() 
+      utilities: {
+        getOhipToken: jest.fn(),
+        getHotelId: jest.fn()
       },
-      envSecrets: {
-        inject: jest.fn()
+      aiGuest: {
+        paymentEventsCache: jest.fn()
       },
-      descriptionsForModel: {
-        get: jest.fn()
+      property: {
+        searchHotelAvailability: jest.fn(),
+        getHotelDetails: jest.fn(),
+        getAllHotelsInChain: jest.fn(),
+        getPropertyRoomTypes: jest.fn(),
+        createReservationWithToken: jest.fn(),
+        createReservation: jest.fn(),
+        getReservationDetails: jest.fn(),
+        getReservationByConfirmationNumber: jest.fn(),
+        getBusinessDate: jest.fn(),
+        preCheckIn: jest.fn(),
+        getAvailableRooms: jest.fn(),
+        assignRoom: jest.fn(),
+        checkIn: jest.fn(),
+        addCharges: jest.fn(),
+        getFolioDetails: jest.fn(),
+        getPackages: jest.fn(),
+        getReservationById: jest.fn()
       },
-      conciergeLoV: {
-        get: jest.fn()
-      },
-      paymentEventsCache: {
-        get: jest.fn(),
-        update: jest.fn()
+      payments: {
+        adyen: {
+          getPayByLinkDetails: jest.fn(),
+          createPayByLink: jest.fn()
+        }
+      }
+    },
+    polyCustom: {
+      responseStatusCode: jest.fn()
+    },
+    google: {
+      maps: {
+        distanceToHotels: jest.fn()
+      }
+    },
+    vari: {
+      ohip: {
+        envSettings: {
+          get: jest.fn()
+        },
+        envSecrets: {
+          inject: jest.fn()
+        },
+        descriptionsForModel: {
+          get: jest.fn()
+        },
+        conciergeLoV: {
+          get: jest.fn()
+        },
+        paymentEventsCache: {
+          get: jest.fn(),
+          update: jest.fn()
+        }
+      }
+    },
+    tabi: {
+      ohip: {
+        paymentEventsCache: {
+          selectOne: jest.fn(),
+          insertOne: jest.fn(),
+          upsertOne: jest.fn(),
+          deleteOne: jest.fn(),
+          deleteMany: jest.fn()
+        }
       }
     }
-  }
-}));
+  };
+  return mock;
+});
 
 describe('searchHotelsByLocation', () => {
   it('should search for hotels based on location and distance', async() => {
@@ -344,6 +358,9 @@ describe('createResWithPayLink', () => {
     (poly.ohip.property.getReservationById as jest.Mock).mockResolvedValue(mockReservationDetails);
     (vari.ohip.envSettings.get as jest.Mock).mockResolvedValue(mockEnvSettings);
     (vari.ohip.envSecrets.inject as jest.Mock).mockReturnValue('mockInjectedValue');
+    (vari.ohip.descriptionsForModel.get as jest.Mock).mockResolvedValue({
+      createResWithPayLink: { linkMessage: { messageToUser: 'msg', instructionsForModel: 'instr' } }
+    });
 
     // Perform the test
     const dateFrom = "2025-01-01";
@@ -390,6 +407,9 @@ describe('createResWithPayLink', () => {
       data: { links: [{ rel: 'self', href: '/reservations/123' }] }
     });
     (vari.ohip.envSettings.get as jest.Mock).mockResolvedValue(mockEnvSettingsOpiFalse);
+    (vari.ohip.descriptionsForModel.get as jest.Mock).mockResolvedValue({
+      createResWithPayLink: { linkMessage: { messageToUser: 'msg', instructionsForModel: 'instr' } }
+    });
 
     // Perform the test
     const dateFrom = "2025-01-01";
@@ -472,7 +492,7 @@ describe('checkInGuest', () => {
     (vari.ohip.envSecrets.inject as jest.Mock).mockReturnValue('mockInjectedValue');
 
     const guestArrivalTime = "2025-01-01 16:00:00";
-    const result = await checkInGuest('12345', 'Test Hotel', guestArrivalTime);
+    const result = await checkInGuest('12345', 'Test Hotel');
 
     // Assertions
     expect(result).toEqual({
@@ -814,8 +834,8 @@ describe('paymentEventsCache', () => {
       paymentId3: { ...mockEventRecord, eventDate: pastDate.toISOString()},
       paymentId4: { ...mockEventRecord, eventDate: pastDate.toISOString()}
     };
-    (vari.ohip.paymentEventsCache.get as jest.Mock).mockResolvedValue(mockCache);
-    (vari.ohip.paymentEventsCache.update as jest.Mock).mockResolvedValue(mockCache);
+    (tabi.ohip.paymentEventsCache.insertOne as jest.Mock).mockResolvedValue({});
+    (tabi.ohip.paymentEventsCache.selectOne as jest.Mock).mockResolvedValue(null);
   });
 
   it('should upsert a payment event successfully', async() => {
@@ -825,24 +845,28 @@ describe('paymentEventsCache', () => {
   });
 
   it('should read a payment event successfully', async() => {
+    (tabi.ohip.paymentEventsCache.selectOne as jest.Mock).mockResolvedValue({
+      id: 'paymentId1',
+      event: mockCache['paymentId1']
+    });
     const result = await paymentEventsCache('paymentId1', OperationType.READ);
     expect(result).toEqual(mockCache['paymentId1']);
   });
 
   it('should delete a payment event successfully', async() => {
+    (tabi.ohip.paymentEventsCache.selectOne as jest.Mock).mockResolvedValue({
+      id: 'paymentId2',
+      event: { ...mockEventRecord, eventDate: currentDate.toISOString() }
+    });
     await paymentEventsCache('paymentId2', OperationType.DELETE);
-    expect(vari.ohip.paymentEventsCache.update).toHaveBeenCalled;
+    expect(tabi.ohip.paymentEventsCache.deleteOne).toHaveBeenCalledWith('paymentId2');
   });
 
-  it('should delete events older than 24 hours', async() => {
-    const currentEvents = {
-      paymentId1: { ...mockEventRecord, eventDate: currentDate.toISOString() },
-      paymentId2: { ...mockEventRecord, eventDate: currentDate.toISOString() }
-    };
-    await deleteOlderEvents();
-    expect(vari.ohip.paymentEventsCache.get).toHaveBeenCalled;
-    expect(vari.ohip.paymentEventsCache.update).toHaveBeenCalledTimes(4); // 1 from this test 3 from before
-    expect(vari.ohip.paymentEventsCache.update).toHaveBeenCalledWith(currentEvents);
+  it('should delete events older than x hours', async() => {
+    await prunePayEvents({},{},{ olderThan: 0.01 });
+    expect(tabi.ohip.paymentEventsCache.deleteMany).toHaveBeenCalledWith({
+      where: { createdAt: { lt: expect.any(String) } }
+    });
   });
 });
 

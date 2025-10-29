@@ -87,9 +87,15 @@ export async function createResWithPayLink(
     const getPayLinkDetails = await poly.ohip.payments.adyen.getPayByLinkDetails(env.inject('adyen.hostName'),(linkId) ? linkId : '', env.inject('adyen.appKey'));
     // const linkMessage =  `Please click on the provided URL to securely provide guest and payment details and then resubmit the reservation. Your card will be charged with 0.10 ${countryCodeCurrency} for authorization purposes. By entering the details on the provided link you are given us concent to store your payment details for later processing during hotel check out`;
 
+    // const linkMessage = {
+    //   messageToUser: `Open the secure link below to enter guest and payment details, then return here to tell me you've completed it. We will not complete the booking at this step. A small authorisation of 0.10 ${countryCodeCurrency} will be placed on your card. By submitting the form you give consent for us to store your payment details for processing at hotel check out.`,
+    //   instructionsForModel: `Do not consider the booking as complete. Wait for the user to confirm they have completed the payment link step (for example, by saying "done", "completed", "finished", or any equivalent confirmation). When they do, attempt the booking again and include the provided linkId so the payment details are linked to the reservation. Keep the same hotel and room selection unless the user changes them.`
+    // };
+
+    const messages = await vari.ohip.descriptionsForModel.get();
     const linkMessage = {
-      messageToUser: `Open the secure link below to enter guest and payment details, then return here to tell me you've completed it. We will not complete the booking at this step. A small authorisation of 0.10 ${countryCodeCurrency} will be placed on your card. By submitting the form you give consent for us to store your payment details for processing at hotel check out.`,
-      instructionsForModel: `Do not consider the booking as complete. Wait for the user to confirm they have completed the payment link step (for example, by saying "done", "completed", "finished", or any equivalent confirmation). When they do, attempt the booking again and include the provided linkId so the payment details are linked to the reservation. Keep the same hotel and room selection unless the user changes them.`
+      messageToUser: messages.createResWithPayLink.linkMessage.messageToUser,
+      instructionsForModel: messages.createResWithPayLink.linkMessage.instructionsForModel
     };
 
     if (getPayLinkDetails.status !== 200) {

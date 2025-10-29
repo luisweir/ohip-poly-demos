@@ -1,73 +1,144 @@
-import { vari, Ohip } from 'polyapi';
+import { tabi, Ohip } from 'polyapi';
 
 // TODO: use next line instead once Poly supports using interface imports
 interface EventRecord extends Ohip.Payments.Adyen.PaymentEventHook$Callback$Event.NotificationRequestItem {}
 
-// interface PaymentCache {
-//     [key: string]: EventRecord;
-// }
-
-interface Error { error: string }
+interface Error {
+  error: string;
+}
 
 export enum OperationType {
-    UPSERT = 'upsert',
-    READ = 'read',
-    DELETE = 'delete'
+  UPSERT = 'upsert',
+  READ = 'read',
+  DELETE = 'delete',
 }
 
-export async function paymentEventsCache(paymentId: string, operation: OperationType, createRecord?: EventRecord, ): Promise<EventRecord | Error | void> {
-    const cache: any = await vari.ohip.paymentEventsCache.get();
-    switch (operation) {
-        case OperationType.UPSERT:
-            if (!createRecord) {
-                console.warn('Event must be provided for upsert operation.');
-                return { error: 'no event payload provided'};
-            }
-            cache[paymentId] = createRecord;
-            const upRecord = await vari.ohip.paymentEventsCache.update(cache);
-            console.log("upserted record", upRecord);
-            // no need to wait. can happen async. TODO: can be improved for a job that runs periodically
-            deleteOlderEvents();
-            return createRecord;
+export async function paymentEventsCache( paymentId: string, operation: OperationType, createRecord?: EventRecord): Promise<EventRecord | Error | void> {
+  
+  // declare in outer scope so it is visible after the try/catch
+  let existing: { id: string; event: EventRecord } | null = null;
 
-        case OperationType.READ:
-            const readRecord = cache[paymentId];
-            if (readRecord) {
-                return readRecord;
-            } else {
-                return { error : `Record with Payment ID ${paymentId} not found.`};
-            }
+  try {
+    existing = await tabi.ohip.paymentEventsCache.selectOne({
+      where: { linkId: { equals: paymentId } },
+    });
+  } catch (e) {
+    console.error('Error searching for event', e);
+    return { error: 'Error searching for event.' };
+  }
+  
+  switch (operation) {
+    case OperationType.UPSERT: {
+      if (!createRecord) {
+        console.warn('Event must be provided for upsert operation.');
+        return { error: 'no event payload provided' };
+      }
 
-        case OperationType.DELETE:
-            const deleteRecord = cache[paymentId];
-            if (deleteRecord) {
-                delete cache[paymentId];
-                await vari.ohip.paymentEventsCache.update(cache);
-                return;
-            } else {
-                return { error : `Record with Payment ID ${paymentId} not found.` };
-            }
+      const rowData: any = {
+        linkId: paymentId,
+        event: createRecord,
+      };
 
-        default:
-            return { error : 'Invalid operation type.' };
-    }
-}
-
-// Function to delete events older than 24 hours
-export async function deleteOlderEvents(olderThan: number = 24): Promise<void> {
-    const cache: any = await vari.ohip.paymentEventsCache.get();
-    const now = new Date();
-    for (const paymentId in cache) {
-        const eventDate = new Date(cache[paymentId].eventDate);
-        console.log(eventDate);
-        const timeDifference = now.getTime() - eventDate.getTime();
-        const hoursDifference = timeDifference / (1000 * 60 * 60);
-        console.log(hoursDifference,">",olderThan);
-        if (hoursDifference > olderThan) {
-            delete cache[paymentId];
+      try {
+        if (!existing) {
+          await tabi.ohip.paymentEventsCache
+            .insertOne({ data: rowData })
+            .then(() => {
+              console.log('✅ Successfully inserted payment event in tabi');
+            })
+            .catch((e: any) => {
+              console.error(
+                `❌ Problem inserting payment event: ${e?.response?.data?.error}: ${e?.response?.data?.message}`,
+              );
+            });
+        } else {
+          await tabi.ohip.paymentEventsCache
+            .upsertOne({ data: rowData })
+            .then(() => {
+              console.log('✅ Successfully upserted payment event in tabi');
+            })
+            .catch((e: any) => {
+              console.error(
+                `❌ Problem upserting payment event: ${e?.response?.data?.error}: ${e?.response?.data?.message}`,
+              );
+            });
         }
+
+        // Re-implemented as an schedule job
+        // deleteOlderEvents().catch((e) => {
+        //   console.warn('deleteOlderEvents encountered an error:', e);
+        // });
+
+        return createRecord;
+      } catch (e) {
+        console.error('Error during UPSERT for payment event', e);
+        return { error: 'Error upserting payment event.' };
+      }
     }
-    await vari.ohip.paymentEventsCache.update(cache);
+
+    case OperationType.READ: {
+      try {
+        if (existing) {
+          return existing.event as any;
+        } else {
+          return { error: `Record with Payment ID ${paymentId} not found.` };
+        }
+      } catch (e) {
+        console.error('Error reading payment event', e);
+        return { error: `Record with Payment ID ${paymentId} not found.` };
+      }
+    }
+
+    case OperationType.DELETE: {
+      try {
+        if(!existing)
+          return { error: `Record with Payment ID ${paymentId} not found.` };
+
+        // Physical delete of the payment event by linkId
+        const row: any = await tabi.ohip.paymentEventsCache.deleteOne(existing.id)
+        .then(() => {
+          console.log('✅ Deleted payment event in tabi');
+        })
+        .catch((e: any) => {
+          console.error(
+            `❌ Problem marking payment event as deleted: ${e?.response?.data?.error}: ${e?.response?.data?.message}`,
+          );
+        });
+        return;
+
+      } catch (e) {
+        console.error('Error deleting payment event', e);
+        return { error: `Record with Payment ID ${paymentId} not found.` };
+      }
+    }
+
+    default:
+      return { error: 'Invalid operation type.' };
+  }
+}
+
+ // Function to delete events older than x hours
+export async function prunePayEvents(eventPayload: any, headersPayload: any, paramsPayload: any): Promise<void> {
+  try {
+    const olderThan = paramsPayload.olderThan;
+    const cutoff = new Date(Date.now() - olderThan * 60 * 60 * 1000).toISOString();
+    await tabi.ohip.paymentEventsCache
+      .deleteMany({
+        where: {
+          createdAt: { lt: cutoff },
+        },
+      })
+      .then((res) => {
+        console.log(`🧹 Pruned ${res.deleted} payment events older than ${olderThan}h`);
+      })
+      .catch((e: any) => {
+        console.error(
+          `❌ Problem pruning old payment events: ${e?.response?.data?.error}: ${e?.response?.data?.message}`,
+        );
+      });
+  } catch (e) {
+    console.warn('deleteOlderEvents failed:', e);
+  }
 }
 
 // async function run(){
@@ -123,6 +194,7 @@ export async function deleteOlderEvents(olderThan: number = 24): Promise<void> {
 //     const event = await paymentEventsCache(linkId, OperationType.READ);
 //     console.log(event);
 //     await paymentEventsCache(linkId, OperationType.DELETE);
+//     await prunePayEvents({},{},{ olderThan: 0.01 });
 // }
 
 // run();
