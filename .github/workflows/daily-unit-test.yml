@@ -19,7 +19,7 @@ jobs:
           node-version: "22.20.0"
 
       - name: Install poly
-        run: npm install polyapi@eu1
+        run: npm install polyapi
 
       - name: Set environment variables
         run: |
