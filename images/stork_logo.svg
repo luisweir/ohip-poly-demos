@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="800" height="800" viewBox="0 0 800 800" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="softShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="2" stdDeviation="2" flood-opacity="0.15"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="100%" height="100%" fill="white"/>
+
+  <g transform="translate(140,120) scale(1.05)">
+    <!-- Leg -->
+    <rect x="206" y="430" width="18" height="130" rx="9" fill="#1F1F1F" filter="url(#softShadow)"/>
+    
+    <!-- Head (blue circle) -->
+    <circle cx="215" cy="145" r="110" fill="#2F8BFF"/>
+    
+    <!-- Eye -->
+    <circle cx="250" cy="145" r="34" fill="white"/>
+    <circle cx="260" cy="145" r="16" fill="#1F2B4D"/>
+
+    <!-- Neck connector -->
+    <rect x="300" y="160" width="36" height="28" fill="#2F8BFF"/>
+
+    <!-- Beak -->
+    <rect x="336" y="160" width="210" height="28" rx="14" fill="#EF3E2D"/>
+    <rect x="336" y="172" width="36" height="16" fill="#EF3E2D"/>
+
+    <!-- Body (blue) -->
+    <path d="M120,190
+             C60,210 20,270 20,330
+             C20,440 110,520 210,520
+             C310,520 380,450 380,350
+             C380,250 300,200 230,190
+             C210,255 160,255 120,190 Z"
+          fill="#2F8BFF"/>
+
+    <!-- Wing (red) -->
+    <path d="M95,285
+             C95,360 150,420 225,420
+             C270,420 300,390 300,350
+             C300,290 240,255 180,255
+             C155,255 120,260 95,285 Z"
+          fill="#EF3E2D"/>
+
+    <!-- Shopping bag -->
+    <g transform="translate(410,220)" filter="url(#softShadow)">
+      <!-- Bag body -->
+      <path d="M40,90
+               C40,70 56,54 76,54
+               L190,54
+               C210,54 226,70 226,90
+               L240,290
+               C242,315 222,335 196,335
+               L70,335
+               C44,335 24,315 26,290
+               Z"
+            fill="#F4B000"/>
+      <!-- Handles -->
+      <path d="M96,54
+               C96,10 166,10 166,54"
+            fill="none" stroke="#F4B000" stroke-width="24" stroke-linecap="round"/>
+      <path d="M136,54
+               C136,18 216,18 216,54"
+            fill="none" stroke="#F4B000" stroke-width="24" stroke-linecap="round"/>
+      <!-- Cloth inside bag -->
+      <path d="M32,120
+               C70,70 130,96 168,92
+               C210,88 244,60 276,96
+               C300,122 286,160 244,176
+               C188,198 128,168 82,172
+               C52,176 34,152 32,120 Z"
+            fill="#EF3E2D"/>
+    </g>
+  </g>
+</svg>
