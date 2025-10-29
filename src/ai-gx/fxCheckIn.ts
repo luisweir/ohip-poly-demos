@@ -1,8 +1,6 @@
 import poly, { vari } from 'polyapi';
-import moment from 'moment';
 
 interface Error { error: string }
-
 
 interface Response {
   guestCheckedIn: boolean, 
@@ -53,7 +51,7 @@ export async function checkInGuest(confirmationNumber: string, hotelName: string
         arrivalDate = res.data.reservations.reservationInfo[0].roomStay.arrivalDate;
         departureDate = res.data.reservations.reservationInfo[0].roomStay.departureDate;
         console.log(`arrival date = ${arrivalDate}`);
-        if (!moment(arrivalDate, 'YYYY-MM-DD').isSame(businessDate)) {
+        if (arrivalDate !== businessDate) {
           throw new Error(`Property not ready for online check-in (business date ${businessDate} different to arrival date ${arrivalDate})`);
         } else {
           console.log(`resId ${resId} and roomType ${roomType} identified for confirmation number ${confNumber}`);
@@ -64,7 +62,9 @@ export async function checkInGuest(confirmationNumber: string, hotelName: string
     }
 
     // pre-check in with arrival time
-    const dateTime = moment().format('YYYY-MM-DD HH:mm:ss');
+    const pad = (n: number) => String(n).padStart(2, '0');
+    const now = new Date();
+    const dateTime = `${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())} ${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`;
     console.log(dateTime);
     await poly.ohip.property.preCheckIn(env.inject('ohip.hostName'), hotelId, resId, env.inject('ohip.appKey'),token, { 'ArrivalTime' : dateTime })
       .then(()=>{console.log(`successfully pre-checked in reservation with confirmation number ${confNumber}`);});
@@ -119,9 +119,8 @@ export async function checkInGuest(confirmationNumber: string, hotelName: string
 
 
 // const run = async()  => {
-//   const t = await checkInGuest('2798561', 'ohip sandbox 01');
+//   const t = await checkInGuest('2798570', 'ohip sandbox 01');
 //   console.log(t);
 // };
 
 // run();
-
